@@ -65,6 +65,7 @@ public class VentanaInicio extends JFrame {
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaRegistrar();
+				VentanaInicio.this.dispose();
 			}
 		});
 		panelSur.add(btnRegistrar);
@@ -73,6 +74,7 @@ public class VentanaInicio extends JFrame {
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDecision();
+				VentanaInicio.this.dispose();
 			}
 		});
 		panelSur.add(btnAtrs);

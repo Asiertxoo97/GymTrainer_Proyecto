@@ -67,6 +67,7 @@ public class VentanaRegistrar extends JFrame {
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaInicio();
+				VentanaRegistrar.this.dispose();
 			}
 		});
 		panelSur.add(btnAtrs);
