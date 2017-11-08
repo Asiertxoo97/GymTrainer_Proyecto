@@ -57,6 +57,7 @@ public class VentanaDecision extends JFrame {
 		btnGimnasio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaInicio();
+				VentanaDecision.this.dispose();
 			}
 		});
 		btnGimnasio.setBounds(255, 117, 117, 29);
@@ -66,6 +67,7 @@ public class VentanaDecision extends JFrame {
 		btnCharlas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaCharlas();
+				VentanaDecision.this.dispose();
 			}
 		});
 		btnCharlas.setBounds(226, 238, 185, 29);

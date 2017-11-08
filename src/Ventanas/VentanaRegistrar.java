@@ -21,7 +21,7 @@ public class VentanaRegistrar extends JFrame {
 	private JTextField textFieldNick;
 	private JPasswordField passwordFieldContrasenia;
 	private JTextField textFieldCuentaBancaria;
-	private JTextField textField;
+	private JTextField textFieldDNI;
 
 	/**
 	 * Launch the application.
@@ -123,10 +123,10 @@ public class VentanaRegistrar extends JFrame {
 		lblDni.setBounds(52, 97, 61, 16);
 		panelCentro.add(lblDni);
 		
-		textField = new JTextField();
-		textField.setBounds(232, 93, 130, 26);
-		panelCentro.add(textField);
-		textField.setColumns(10);
+		textFieldDNI = new JTextField();
+		textFieldDNI.setBounds(232, 93, 130, 26);
+		panelCentro.add(textFieldDNI);
+		textFieldDNI.setColumns(10);
 		
 		this.setVisible(true);
 	}
