@@ -21,6 +21,7 @@ public class VentanaRegistrar extends JFrame {
 	private JTextField textFieldNick;
 	private JPasswordField passwordFieldContrasenia;
 	private JTextField textFieldCuentaBancaria;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -42,8 +43,9 @@ public class VentanaRegistrar extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaRegistrar() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -82,15 +84,15 @@ public class VentanaRegistrar extends JFrame {
 		panelCentro.add(lblApellido);
 		
 		JLabel lblNick = new JLabel("Nick");
-		lblNick.setBounds(52, 98, 61, 16);
+		lblNick.setBounds(52, 140, 61, 16);
 		panelCentro.add(lblNick);
 		
 		JLabel lblContrasenia = new JLabel("Contraseña");
-		lblContrasenia.setBounds(52, 131, 71, 16);
+		lblContrasenia.setBounds(52, 179, 71, 16);
 		panelCentro.add(lblContrasenia);
 		
 		JLabel lblCuentaBancaria = new JLabel("Cuenta bancaria");
-		lblCuentaBancaria.setBounds(52, 168, 101, 16);
+		lblCuentaBancaria.setBounds(52, 219, 101, 16);
 		panelCentro.add(lblCuentaBancaria);
 		
 		textFieldNombre = new JTextField();
@@ -104,20 +106,28 @@ public class VentanaRegistrar extends JFrame {
 		textFieldApellido.setColumns(10);
 		
 		textFieldNick = new JTextField();
-		textFieldNick.setBounds(232, 93, 130, 26);
+		textFieldNick.setBounds(232, 135, 130, 26);
 		panelCentro.add(textFieldNick);
 		textFieldNick.setColumns(10);
 		
 		passwordFieldContrasenia = new JPasswordField();
-		passwordFieldContrasenia.setBounds(232, 126, 130, 21);
+		passwordFieldContrasenia.setBounds(232, 176, 130, 21);
 		panelCentro.add(passwordFieldContrasenia);
 		
 		textFieldCuentaBancaria = new JTextField();
-		textFieldCuentaBancaria.setBounds(232, 158, 130, 26);
+		textFieldCuentaBancaria.setBounds(232, 214, 130, 26);
 		panelCentro.add(textFieldCuentaBancaria);
 		textFieldCuentaBancaria.setColumns(10);
 		
+		JLabel lblDni = new JLabel("DNI");
+		lblDni.setBounds(52, 97, 61, 16);
+		panelCentro.add(lblDni);
+		
+		textField = new JTextField();
+		textField.setBounds(232, 93, 130, 26);
+		panelCentro.add(textField);
+		textField.setColumns(10);
+		
 		this.setVisible(true);
 	}
-
 }

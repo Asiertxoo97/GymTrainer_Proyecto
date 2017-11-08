@@ -35,8 +35,9 @@ public class VentanaDecision extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaDecision() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -58,7 +59,7 @@ public class VentanaDecision extends JFrame {
 				new VentanaInicio();
 			}
 		});
-		btnGimnasio.setBounds(155, 49, 117, 29);
+		btnGimnasio.setBounds(255, 117, 117, 29);
 		panelCentro.add(btnGimnasio);
 		
 		JButton btnCharlas = new JButton("CHARLAS DEPORTIVAS");
@@ -67,7 +68,7 @@ public class VentanaDecision extends JFrame {
 				new VentanaCharlas();
 			}
 		});
-		btnCharlas.setBounds(127, 108, 185, 29);
+		btnCharlas.setBounds(226, 238, 185, 29);
 		panelCentro.add(btnCharlas);
 		
 		this.setVisible(true);

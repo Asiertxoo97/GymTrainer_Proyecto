@@ -39,8 +39,9 @@ public class VentanaInscripcionCharlas extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaInscripcionCharlas() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -73,33 +74,33 @@ public class VentanaInscripcionCharlas extends JFrame {
 		panelCentro.setLayout(null);
 		
 		JTextArea textAreaCharlasInscritas = new JTextArea();
-		textAreaCharlasInscritas.setBounds(6, 6, 428, 77);
+		textAreaCharlasInscritas.setBounds(17, 6, 606, 165);
 		panelCentro.add(textAreaCharlasInscritas);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(56, 95, 61, 16);
+		lblNombre.setBounds(56, 194, 61, 16);
 		panelCentro.add(lblNombre);
 		
 		JLabel lblApellidos = new JLabel("Apellido");
-		lblApellidos.setBounds(56, 128, 61, 16);
+		lblApellidos.setBounds(56, 245, 61, 16);
 		panelCentro.add(lblApellidos);
 		
 		JLabel lblCuentaBancaria = new JLabel("Cuenta bancaria");
-		lblCuentaBancaria.setBounds(56, 166, 101, 16);
+		lblCuentaBancaria.setBounds(56, 296, 101, 16);
 		panelCentro.add(lblCuentaBancaria);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(223, 95, 130, 26);
+		textFieldNombre.setBounds(161, 189, 130, 26);
 		panelCentro.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(223, 123, 130, 26);
+		textFieldApellido.setBounds(161, 240, 130, 26);
 		panelCentro.add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		textFieldCuentaBancaria = new JTextField();
-		textFieldCuentaBancaria.setBounds(223, 161, 130, 26);
+		textFieldCuentaBancaria.setBounds(203, 291, 130, 26);
 		panelCentro.add(textFieldCuentaBancaria);
 		textFieldCuentaBancaria.setColumns(10);
 	}

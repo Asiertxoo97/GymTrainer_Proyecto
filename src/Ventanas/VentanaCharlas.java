@@ -36,8 +36,9 @@ public class VentanaCharlas extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaCharlas() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650,450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -68,20 +69,20 @@ public class VentanaCharlas extends JFrame {
 		panelCentro.setLayout(null);
 		
 		JTextArea textAreaAsistir = new JTextArea();
-		textAreaAsistir.setBounds(264, 6, 159, 191);
+		textAreaAsistir.setBounds(408, 6, 211, 341);
 		panelCentro.add(textAreaAsistir);
 		
 		JTextArea textAreaCharlas = new JTextArea();
-		textAreaCharlas.setBounds(18, 6, 159, 191);
+		textAreaCharlas.setBounds(18, 6, 211, 341);
 		panelCentro.add(textAreaCharlas);
 		
-		JButton buttonDcha = new JButton(">");
-		buttonDcha.setBounds(200, 47, 40, 34);
-		panelCentro.add(buttonDcha);
+		JButton buttonInscrip = new JButton("INSCRIBIR");
+		buttonInscrip.setBounds(262, 89, 105, 34);
+		panelCentro.add(buttonInscrip);
 		
-		JButton buttonIzq = new JButton("<");
-		buttonIzq.setBounds(200, 112, 40, 34);
-		panelCentro.add(buttonIzq);
+		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÓN");
+		buttonBorrarInscrip.setBounds(241, 179, 158, 52);
+		panelCentro.add(buttonBorrarInscrip);
 		
 		this.setVisible(true);
 	}
