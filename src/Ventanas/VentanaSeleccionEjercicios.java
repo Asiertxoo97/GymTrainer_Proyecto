@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 
-public class VentanaEjercicios extends JFrame {
+public class VentanaSeleccionEjercicios extends JFrame {
 
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class VentanaEjercicios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaEjercicios frame = new VentanaEjercicios();
+					VentanaSeleccionEjercicios frame = new VentanaSeleccionEjercicios();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class VentanaEjercicios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaEjercicios() {
+	public VentanaSeleccionEjercicios() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
