@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
 
 public class VentanaRealizacionEjercicios extends JFrame {
 
@@ -46,6 +47,9 @@ public class VentanaRealizacionEjercicios extends JFrame {
 		
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		
 	}
 
 }
