@@ -3,6 +3,8 @@ package Ventanas;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,24 +56,18 @@ public class VentanaMenu extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnSalir = new JButton("SALIR");
+		JButton btnSalir = new JButton("ATRÁS");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaDecision();
+				VentanaMenu.this.dispose();
+			}
+		});
 		panelSur.add(btnSalir);
 		
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(null);
-		
-		JLabel lblRutina = new JLabel("New label");
-		lblRutina.setBounds(16, 6, 173, 83);
-		panelCentro.add(lblRutina);
-		
-		JLabel lblEjercicios = new JLabel("New label");
-		lblEjercicios.setBounds(247, 6, 173, 83);
-		panelCentro.add(lblEjercicios);
-		
-		JLabel lblClases = new JLabel("New label");
-		lblClases.setBounds(115, 101, 173, 83);
-		panelCentro.add(lblClases);
 		
 		this.setVisible(true);
 	}

@@ -20,6 +20,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 
 	ImageIcon Imagen;
 	private JPanel contentPane;
+	
 
 	/**
 	 * Launch the application.
@@ -62,7 +63,8 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(null);
 		
-		JButton btnGimnasio = new JButton("");
+		///////////////////////////////////////////////////////////////////////////////////
+		JButton btnGimnasio = new JButton(new ImageIcon("Imagenes/Gimnasio.jpg"));
 		btnGimnasio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaMenu();
@@ -73,7 +75,8 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		panelCentro.add(btnGimnasio);
 		
 		
-		JButton btnCharlas = new JButton("");
+		
+		JButton btnCharlas = new JButton(new ImageIcon("Imagenes/Charlas.jpg"));
 		btnCharlas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaCharlas();
@@ -82,6 +85,11 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		});
 		btnCharlas.setBounds(259, 203, 375, 185);
 		panelCentro.add(btnCharlas);
+		
+		///////////////////////////////////////////////////////////////////////////////////
+
+
+		
 		
 		JTextPane txtpnGimnasio = new JTextPane();
 		txtpnGimnasio.setBackground(Color.LIGHT_GRAY);
