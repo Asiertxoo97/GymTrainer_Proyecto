@@ -89,8 +89,6 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		///////////////////////////////////////////////////////////////////////////////////
 
 
-		
-		
 		JTextPane txtpnGimnasio = new JTextPane();
 		txtpnGimnasio.setBackground(Color.LIGHT_GRAY);
 		txtpnGimnasio.setText("   Pulsa en el botón \"Gimnasio\" para poder acceder a nuestro gimnasio \"GymTrainerUD\" en el que podrás realizar muchos tipos de ejercicios, como ejercicios de pecho, abdominales, tren inferior... hasta poder realizar tus propias rutinas. Todo eso solo registrandote de una forma sencilla y así uniéndote a nosotros.");
