@@ -62,7 +62,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(null);
 		
-		JButton btnGimnasio = new JButton(new ImageIcon());
+		JButton btnGimnasio = new JButton("");
 		btnGimnasio.setBounds(6, 6, 375, 185);
 		panelCentro.add(btnGimnasio);
 		
