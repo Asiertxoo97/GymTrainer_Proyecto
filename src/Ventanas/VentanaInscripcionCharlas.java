@@ -103,5 +103,7 @@ public class VentanaInscripcionCharlas extends JFrame {
 		textFieldCuentaBancaria.setBounds(203, 291, 130, 26);
 		panelCentro.add(textFieldCuentaBancaria);
 		textFieldCuentaBancaria.setColumns(10);
+		
+		this.setVisible(true);
 	}
 }

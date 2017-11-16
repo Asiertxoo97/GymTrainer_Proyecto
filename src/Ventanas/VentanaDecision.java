@@ -63,11 +63,23 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		panelCentro.setLayout(null);
 		
 		JButton btnGimnasio = new JButton("");
+		btnGimnasio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaMenu();
+				VentanaDecision.this.dispose();
+			}
+		});
 		btnGimnasio.setBounds(6, 6, 375, 185);
 		panelCentro.add(btnGimnasio);
 		
 		
 		JButton btnCharlas = new JButton("");
+		btnCharlas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaCharlas();
+				VentanaDecision.this.dispose();
+			}
+		});
 		btnCharlas.setBounds(259, 203, 375, 185);
 		panelCentro.add(btnCharlas);
 		

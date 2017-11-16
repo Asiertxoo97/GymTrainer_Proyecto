@@ -72,5 +72,7 @@ public class VentanaMenu extends JFrame {
 		JLabel lblClases = new JLabel("New label");
 		lblClases.setBounds(115, 101, 173, 83);
 		panelCentro.add(lblClases);
+		
+		this.setVisible(true);
 	}
 }

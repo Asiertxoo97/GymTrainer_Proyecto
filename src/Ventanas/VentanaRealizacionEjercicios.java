@@ -49,7 +49,7 @@ public class VentanaRealizacionEjercicios extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		
+		this.setVisible(true);
 	}
 
 }

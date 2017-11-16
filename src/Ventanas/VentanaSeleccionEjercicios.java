@@ -57,6 +57,8 @@ public class VentanaSeleccionEjercicios extends JFrame {
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		this.setVisible(true);
 	}
 
 }
