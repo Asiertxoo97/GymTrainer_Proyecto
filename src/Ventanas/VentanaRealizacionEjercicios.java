@@ -5,9 +5,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
+import javax.swing.JButton;
 
 public class VentanaRealizacionEjercicios extends JFrame {
 
@@ -49,9 +55,20 @@ public class VentanaRealizacionEjercicios extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
+		JButton btnAtrs = new JButton("ATRÁS");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaSeleccionEjercicios();
+				VentanaRealizacionEjercicios.this.dispose();
+			}
+		});
+		panelSur.add(btnAtrs);
+		
 		JPanel panelCentro = new JPanel();
-		contentPane.add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(0, 1, 0, 0));
+		JScrollPane scroll = new JScrollPane(panelCentro);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contentPane.add(scroll, BorderLayout.CENTER);
+		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 	
 		
 		this.setVisible(true);

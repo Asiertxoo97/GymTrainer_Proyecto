@@ -53,13 +53,14 @@ public class VentanaCharlas extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnInscribirse = new JButton("INSCRIBIRSE");
+		JButton btnInscribirse = new JButton("INSCRIBIRSE A LAS CHARLAS SELECCIONADAS");
 		panelSur.add(btnInscribirse);
 		
 		JButton btnAtrs = new JButton("ATRÁS");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDecision();
+				VentanaCharlas.this.dispose();
 			}
 		});
 		panelSur.add(btnAtrs);
@@ -68,20 +69,20 @@ public class VentanaCharlas extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(null);
 		
-		JTextArea textAreaAsistir = new JTextArea();
-		textAreaAsistir.setBounds(408, 6, 211, 341);
-		panelCentro.add(textAreaAsistir);
+		JTextArea textAreaCharlasAAsistir = new JTextArea();
+		textAreaCharlasAAsistir.setBounds(408, 6, 211, 341);
+		panelCentro.add(textAreaCharlasAAsistir);
 		
 		JTextArea textAreaCharlas = new JTextArea();
 		textAreaCharlas.setBounds(18, 6, 211, 341);
 		panelCentro.add(textAreaCharlas);
 		
 		JButton buttonInscrip = new JButton("INSCRIBIR");
-		buttonInscrip.setBounds(241, 85, 155, 52);
+		buttonInscrip.setBounds(241, 85, 158, 52);
 		panelCentro.add(buttonInscrip);
 		
 		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÓN");
-		buttonBorrarInscrip.setBounds(238, 149, 158, 52);
+		buttonBorrarInscrip.setBounds(241, 149, 158, 52);
 		panelCentro.add(buttonBorrarInscrip);
 		
 		JButton btnBorrarTodasLas = new JButton("BORRAR TODAS");
