@@ -67,7 +67,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		JButton btnGimnasio = new JButton(new ImageIcon("Imagenes/Gimnasio.jpg"));
 		btnGimnasio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaMenu();
+				new VentanaInicio();
 				VentanaDecision.this.dispose();
 			}
 		});

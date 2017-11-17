@@ -70,6 +70,15 @@ public class VentanaInicio extends JFrame {
 		});
 		panelSur.add(btnRegistrar);
 		
+		JButton btnAtrs = new JButton("ATRÁS");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaDecision();
+				VentanaInicio.this.dispose();
+			}
+		});
+		panelSur.add(btnAtrs);
+		
 
 		
 		JPanel panelCentro = new JPanel();

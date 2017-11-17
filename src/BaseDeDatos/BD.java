@@ -31,7 +31,7 @@ public class BD {
 	}
 
 	/**
-	 * Método para conectarse a la base de datos
+	 * Mï¿½todo para conectarse a la base de datos
 	 */
 
 	public void conectar()
@@ -48,7 +48,7 @@ public class BD {
 	}
 	
 	/**
-	 * Método que cierra una sentencia 
+	 * Mï¿½todo que cierra una sentencia 
 	 */
 	public void cerrarSentencia()
 	{
@@ -61,7 +61,7 @@ public class BD {
 	}
 
 	/**
-	 * Método para desconectarse de la base de datos
+	 * Mï¿½todo para desconectarse de la base de datos
 	 */
 	public void desconectar()
 	{
@@ -74,7 +74,7 @@ public class BD {
 		}
 	}
 	/**
-	 * Método para conectarse de la base de datos
+	 * Mï¿½todo para conectarse de la base de datos
 	 */
 	public BD(){
 		conectar();
@@ -83,19 +83,19 @@ public class BD {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
-	 * 						MÉTODOS PARA USUARIO
+	 * 						Mï¿½TODOS PARA USUARIO
 	 * 
 	 */
 	
 	/** 
-	 * Método para comprobar la existencia del Usuario.
+	 * Mï¿½todo para comprobar la existencia del Usuario.
 	 * 
 	 * @param nom: Nombre introducido por el usuario
-	 * @param con: Contraseña introducida por el usuario
+	 * @param con: Contraseï¿½a introducida por el usuario
 	 * @return : 
 	 * 			0 - Si no existe el usuario
-	 * 			1 - Si sí existe el usuario pero la contraseña no es correcta
-	 * 			2 - Si el nombre de usuario es correcto y la contraseña también
+	 * 			1 - Si sï¿½ existe el usuario pero la contraseï¿½a no es correcta
+	 * 			2 - Si el nombre de usuario es correcto y la contraseï¿½a tambiï¿½n
 	 */
 	public int existeUsuario(String nic, String con){
 		
@@ -105,7 +105,7 @@ public class BD {
 		try {
 			rs = stmt.executeQuery(query);
 			if(rs.next()){ 
-				String n = rs.getString("nombre");
+				String n = rs.getString("nick");
 				String c = rs.getString("contrasenia");
 				if(!n.equals(nic))
 					resul=0;
@@ -128,12 +128,12 @@ public class BD {
 	}
 	
 	/**
-	 * Método para Registrar Usuario.
+	 * Mï¿½todo para Registrar Usuario.
 	 *
 	 * @param dNI
 	 * @param nom : Nombre del usuario
-	 * @param nic : Nick del usuario. Se usará para acceder al perfil.
-	 * @param con : Contraseña del usuario.
+	 * @param nic : Nick del usuario. Se usarï¿½ para acceder al perfil.
+	 * @param con : Contraseï¿½a del usuario.
 	 * @param ape1: Primer apellido del usuario.
 	 * @param ape2: Segundo apellido del usuario.
 	 * @param cuen: Cuenta bancaria del usuario.
@@ -153,15 +153,15 @@ public class BD {
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 						MÉTODOS PARA PARTICIPANTE
+	 * 						Mï¿½TODOS PARA PARTICIPANTE
 	 * 
 	 */
 	
 	
 
 	/** 
-	 * Método para comprobar si un Participante está alistado a un charla.
-	 * Si un Participante está alistado a un charla no puede volver a alistarse.
+	 * Mï¿½todo para comprobar si un Participante estï¿½ alistado a un charla.
+	 * Si un Participante estï¿½ alistado a un charla no puede volver a alistarse.
 	 * 
 	 * @param dni: Nombre introducido por el usuario
 	 * @return : 
@@ -178,9 +178,9 @@ public class BD {
 			if(rs.next()){ 
 				String c = rs.getString("codigo");
 				if(!c.equals(codigoAleatorio))
-					resul=false;	//No hay ningun Particiapante Alistado con ese Código.
+					resul=false;	//No hay ningun Particiapante Alistado con ese Cï¿½digo.
 				else
-					resul=true;		//Ya hay un Perticipante Alistado con ese Código
+					resul=true;		//Ya hay un Perticipante Alistado con ese Cï¿½digo
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -196,22 +196,22 @@ public class BD {
 	}
 	
 	/**
-	 * Método para Registrar Participante.
+	 * Mï¿½todo para Registrar Participante.
 	 *
 	 * @param dNI
 	 * @param nom : Nombre del usuario
-	 * @param nic : Nick del usuario. Se usará para acceder al perfil.
-	 * @param con : Contraseña del usuario.
+	 * @param nic : Nick del usuario. Se usarï¿½ para acceder al perfil.
+	 * @param con : Contraseï¿½a del usuario.
 	 * @param ape1: Primer apellido del usuario.
 	 * @param ape2: Segundo apellido del usuario.
 	 * @param cuen: Cuenta bancaria del usuario.
-	 * @param cod : Código aleatoriamente creado para cada Participante con el fin de identificar a cada Participante.
+	 * @param cod : Cï¿½digo aleatoriamente creado para cada Participante con el fin de identificar a cada Participante.
 	 */
 	public void registrarParticipante(String dNI, String nom, String ape1, 
 			String ape2,String cuen,String cod){
 		/**
-		 * Crear el código personal para cada Participante. 
-		 * Seguidamente, comprobar que el código no existe, y en caso de existir crear uno nuevo.
+		 * Crear el cï¿½digo personal para cada Participante. 
+		 * Seguidamente, comprobar que el cï¿½digo no existe, y en caso de existir crear uno nuevo.
 		 */
 		RandomString codigoAleatorio=null;
 		do{
@@ -230,19 +230,19 @@ public class BD {
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 						MÉTODOS PARA CLASE
+	 * 						Mï¿½TODOS PARA CLASE
 	 * 
 	 */
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 						MÉTODOS PARA CHARLAS
+	 * 						Mï¿½TODOS PARA CHARLAS
 	 * 
 	 */
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	/**
-	 * 						MÉTODOS PARA EJERCICIO
+	 * 						Mï¿½TODOS PARA EJERCICIO
 	 * 
 	 */
 	
