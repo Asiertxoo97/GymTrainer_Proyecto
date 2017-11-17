@@ -77,12 +77,16 @@ public class VentanaCharlas extends JFrame {
 		panelCentro.add(textAreaCharlas);
 		
 		JButton buttonInscrip = new JButton("INSCRIBIR");
-		buttonInscrip.setBounds(262, 89, 105, 34);
+		buttonInscrip.setBounds(241, 85, 155, 52);
 		panelCentro.add(buttonInscrip);
 		
 		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÓN");
-		buttonBorrarInscrip.setBounds(241, 179, 158, 52);
+		buttonBorrarInscrip.setBounds(238, 149, 158, 52);
 		panelCentro.add(buttonBorrarInscrip);
+		
+		JButton btnBorrarTodasLas = new JButton("BORRAR TODAS");
+		btnBorrarTodasLas.setBounds(241, 214, 155, 52);
+		panelCentro.add(btnBorrarTodasLas);
 		
 		this.setVisible(true);
 	}
