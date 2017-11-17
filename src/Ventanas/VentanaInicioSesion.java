@@ -14,7 +14,7 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaInicio extends JFrame {
+public class VentanaInicioSesion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldNick;
@@ -27,7 +27,7 @@ public class VentanaInicio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicio frame = new VentanaInicio();
+					VentanaInicioSesion frame = new VentanaInicioSesion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class VentanaInicio extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInicio() {
+	public VentanaInicioSesion() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -65,7 +65,7 @@ public class VentanaInicio extends JFrame {
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaRegistrar();
-				VentanaInicio.this.dispose();
+				VentanaInicioSesion.this.dispose();
 			}
 		});
 		panelSur.add(btnRegistrar);
@@ -74,7 +74,7 @@ public class VentanaInicio extends JFrame {
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDecision();
-				VentanaInicio.this.dispose();
+				VentanaInicioSesion.this.dispose();
 			}
 		});
 		panelSur.add(btnAtrs);

@@ -66,7 +66,7 @@ public class VentanaRegistrar extends JFrame {
 		JButton btnAtrs = new JButton("ATRÁS");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaInicio();
+				new VentanaInicioSesion();
 				VentanaRegistrar.this.dispose();
 			}
 		});
