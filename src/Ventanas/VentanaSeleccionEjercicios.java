@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VentanaSeleccionEjercicios extends JFrame {
 
@@ -54,6 +56,12 @@ public class VentanaSeleccionEjercicios extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnAtrs = new JButton("ATRÁS");
+		btnAtrs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaMenu();
+				VentanaSeleccionEjercicios.this.dispose();
+			}
+		});
 		panelSur.add(btnAtrs);
 		
 		JPanel panelCentro = new JPanel();
