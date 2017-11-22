@@ -5,18 +5,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class VentanaSeleccionEjercicios extends JFrame {
+public class VentanaCalendarioCharlas extends JFrame {
 
 	private JPanel contentPane;
+	
 
 	/**
 	 * Launch the application.
@@ -25,7 +20,7 @@ public class VentanaSeleccionEjercicios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaSeleccionEjercicios frame = new VentanaSeleccionEjercicios();
+					VentanaCalendarioCharlas frame = new VentanaCalendarioCharlas();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,20 +32,25 @@ public class VentanaSeleccionEjercicios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaSeleccionEjercicios() {
-		setResizable(false);
+	public VentanaCalendarioCharlas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 450);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		JPanel panelNorte = new JPanel();
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
+		JLabel lblCalendarioDeCharlas = new JLabel("CALENDARIO DE CHARLAS");
+		panelNorte.add(lblCalendarioDeCharlas);
 		
+		JPanel panelSur = new JPanel();
+		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		
-		
-		this.setVisible(true);
+		JPanel panelCentro = new JPanel();
+		contentPane.add(panelCentro, BorderLayout.CENTER);
 	}
+
 }
