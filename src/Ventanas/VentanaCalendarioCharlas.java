@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import com.toedter.calendar.JCalendar;
 
 public class VentanaCalendarioCharlas extends JFrame {
 
@@ -34,7 +36,7 @@ public class VentanaCalendarioCharlas extends JFrame {
 	 */
 	public VentanaCalendarioCharlas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -49,8 +51,15 @@ public class VentanaCalendarioCharlas extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
+		JButton btnAtrs = new JButton("ATRÁS");
+		panelSur.add(btnAtrs);
+		
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(null);
+		
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(6, 6, 628, 241);
+		panelCentro.add(calendar);
 	}
-
 }
