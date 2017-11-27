@@ -87,6 +87,30 @@ public class BD {
 	 * 
 	 */
 	
+	
+	/**
+	 * Método para crear Tabla Usuario
+	 */
+public Statement createTable(Connection con){
+		
+	
+	try {
+		
+		stmt.setQueryTimeout(100);
+		try{
+		String query = "CREATE TABLE Usuario (DNI string,nombre string, nick string,constrasenia string"
+				+ ",apellido string,cuenta_bancaria string)";
+		stmt.executeUpdate(query);
+		}catch(SQLException e){}
+			//Tabla ya existe.Nada más que hacer.
+	} catch (SQLException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+		return null;
+}
+	
+	
 	/** 
 	 * Método para comprobar la existencia del Usuario.
 	 * 
@@ -138,10 +162,9 @@ public class BD {
 	 * @param ape2: Segundo apellido del usuario.
 	 * @param cuen: Cuenta bancaria del usuario.
 	 */
-	public void registrarUsuario(String dNI, String nom, String nic, String con, String ape1, 
-			String ape2,String cuen){
-		String query= "INSERT INTO Usuario(DNI,nombre, nick,constrasenia,apellido1,apellido2,cuenta_bancaria) "
-				+ "VALUES('"+dNI+"','"+nom+"','"+nic+"','"+con+"','"+ape1+"','"+ape2+"','"+cuen+"')";
+	public void registrarUsuario(String dNI, String nom, String nic, String con, String ape,String cuen){
+		String query= "INSERT INTO Usuario(DNI,nombre, nick,constrasenia,apellido,cuenta_bancaria) "
+				+ "VALUES('"+dNI+"','"+nom+"','"+nic+"','"+con+"','"+ape+"','"+cuen+"')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
@@ -225,7 +248,7 @@ public class BD {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		};
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,6 +256,23 @@ public class BD {
 	 * 						MÉTODOS PARA CLASE
 	 * 
 	 */
+
+	//TODO
+	public void mostrarClases(){
+		
+		String query = "SELECT * FROM Clase" ;
+		ResultSet rs = null;
+		boolean resul=false;
+		
+			//rs = stmt.executeQuery(query);
+			//	if(rs.next()){ 
+			//	String c = rs.getString("nombre");
+			//	}
+	}
+	
+}
+
+	
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
@@ -246,11 +286,17 @@ public class BD {
 	 * 
 	 */
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	* 						MÉTODOS PARA RUTINA
+	* 
+	*/
 	
 	
 	
 	
 	
 	
+		
 
-}
+

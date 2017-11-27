@@ -6,11 +6,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 
 public class VentanaRegistrar extends JFrame {
@@ -22,7 +32,9 @@ public class VentanaRegistrar extends JFrame {
 	private JPasswordField passwordFieldContrasenia;
 	private JTextField textFieldCuentaBancaria;
 	private JTextField textFieldDNI;
-
+	private static BD bd;
+	private static Connection con;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -31,6 +43,7 @@ public class VentanaRegistrar extends JFrame {
 			public void run() {
 				try {
 					VentanaRegistrar frame = new VentanaRegistrar();
+					bd.createTable(con);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,6 +56,25 @@ public class VentanaRegistrar extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaRegistrar() {
+		//Creamos la Base de Datos
+				bd = new BD();
+		//Creamos las tablas
+				
+
+				/*Creamos un manejador de fichero para indicar a qué fichero se mandarán los logs*/
+				Handler fileHandler = null;
+				try {
+					fileHandler = new FileHandler("./Registro.log", true);
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				/*Creamos el log y le asociamos el manejador de ficheros*/
+				Logger logger = Logger.getLogger("myLogger");
+				logger.addHandler(fileHandler);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 350);
@@ -61,9 +93,48 @@ public class VentanaRegistrar extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnRegistrar = new JButton("REGISTRAR");
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String dNI = textFieldDNI.getText();
+				String nom = textFieldNombre.getText();
+				String ape = textFieldApellido.getText();
+				String nic = textFieldNick.getText();
+				String con = passwordFieldContrasenia.getText();
+				String cuenta = textFieldCuentaBancaria.getText();
+			
+				if(nom.equals("")){
+					JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vacío");
+					logger.log(Level.INFO, "Ha dejado el campo nombre vacío");
+				}
+				else if(con.equals("")){
+					JOptionPane.showMessageDialog(null, "El campo contraseña no puede estar vacío", "ERROR!!",JOptionPane.ERROR_MESSAGE);
+					logger.log(Level.INFO, "Ha dejado el campo contraseña vacío");
+				}
+				else{
+					int resul = bd.existeUsuario(nom, con);
+					if(resul == 0){
+						String resp = JOptionPane.showInputDialog("No estás registrado. ¿Quieres registrarte (S/N)?");
+						if(resp.equalsIgnoreCase("S")){
+							bd.registrarUsuario(dNI,nom, nic,con,ape,cuenta);
+							JOptionPane.showMessageDialog(null, "Usuario registrado con éxito","OK",JOptionPane.INFORMATION_MESSAGE);
+						//HACER UN MÉTODO PARA VACIAR CAMPO DESPUÉS DE REGISTRARSE 
+							}else{
+							JOptionPane.showMessageDialog(null, "Hasta otra!!");
+						}
+					}else if(resul == 1){
+						JOptionPane.showMessageDialog(null, "La contraseña no es correcta!!");
+						logger.log(Level.SEVERE, "Se ha equivocado en la contraseña");
+					}else{
+						JOptionPane.showMessageDialog(null, "BIENVENIDO");
+						//HACER UN MÉTODO PARA VACIAR CAMPO DESPUÉS DE REGISTRARSE
+					}
+				}
+			
+			}
+		});
 		panelSur.add(btnRegistrar);
 		
-		JButton btnAtrs = new JButton("ATRÁS");
+		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaInicio();
@@ -87,7 +158,7 @@ public class VentanaRegistrar extends JFrame {
 		lblNick.setBounds(52, 140, 61, 16);
 		panelCentro.add(lblNick);
 		
-		JLabel lblContrasenia = new JLabel("Contraseña");
+		JLabel lblContrasenia = new JLabel("ContraseÃ±a");
 		lblContrasenia.setBounds(52, 179, 71, 16);
 		panelCentro.add(lblContrasenia);
 		
