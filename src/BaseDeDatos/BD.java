@@ -94,19 +94,63 @@ public class BD {
 public Statement createTable(Connection con){
 		
 	
+	//CREAR TABLA USUARIO
 	try {
-		
-		stmt.setQueryTimeout(100);
-		try{
-		String query = "CREATE TABLE Usuario (DNI string,nombre string, nick string,constrasenia string"
+		stmt.setQueryTimeout(30);
+		String Usuario = "CREATE TABLE Usuario (DNI string,nombre string, nick string,constrasenia string"
 				+ ",apellido string,cuenta_bancaria string)";
-		stmt.executeUpdate(query);
-		}catch(SQLException e){}
-			//Tabla ya existe.Nada más que hacer.
-	} catch (SQLException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
+		stmt.executeUpdate(Usuario);
+	} catch (SQLException e) {} // Tabla ya existe. Nada que hacer.
+	
+	//CREAR TABLA EJERCICIO
+	try {
+		stmt.setQueryTimeout(30);
+		String Ejercicio = "CREATE TABLE Ejercicio (cod_ejercicio string,nombre string,descripción string,"
+			+ "tiempo_estimado double,GIF string)";
+			stmt.executeUpdate(Ejercicio);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+
+	//CREAR TABLA TIPO
+	try {
+		stmt.setQueryTimeout(30);
+		String Tipo = "CREATE TABLE Tipo (cod_tipo string,nombre string)";
+			stmt.executeUpdate(Tipo);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+	
+	//CREAR TABLA CLASE
+	try {
+		stmt.setQueryTimeout(30);
+		String Clase = "CREATE TABLE Clase (cod_clase string,nombre string,dni_profesor string,"
+			+ "fecha string,tiempo double)";
+			stmt.executeUpdate(Clase);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+	
+	//CREAR TABLA CHARLA
+	try {
+		stmt.setQueryTimeout(30);
+		String Charla = "CREATE TABLE Charla (cod_charla string,nombre string,dni_impartidor string,"
+			+ "fecha date,tiempo double)";
+			stmt.executeUpdate(Charla);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+	
+	//CREAR TABLA IMPARTIDOR
+	try {
+		stmt.setQueryTimeout(30);
+		String Impartidor = "CREATE TABLE Impartidor (dni_impartidor string,nombre string,"
+			+ "apellidos string,salario int)";
+			stmt.executeUpdate(Impartidor);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+	
+	//CREAR TABLA PROFESOR
+	try {
+		stmt.setQueryTimeout(30);
+		String Profesor = "CREATE TABLE Profesor (dni_profesor string,nombre string,"
+			+ "apellidos string,salario int)";
+			stmt.executeUpdate(Profesor);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+		
+		
+		
 		return null;
 }
 	

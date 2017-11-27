@@ -32,9 +32,8 @@ public class VentanaRegistrar extends JFrame {
 	private JPasswordField passwordFieldContrasenia;
 	private JTextField textFieldCuentaBancaria;
 	private JTextField textFieldDNI;
-	private static BD bd;
-	private static Connection con;
-	
+	private BD bd;
+	private Connection con;
 	/**
 	 * Launch the application.
 	 */
@@ -43,7 +42,6 @@ public class VentanaRegistrar extends JFrame {
 			public void run() {
 				try {
 					VentanaRegistrar frame = new VentanaRegistrar();
-					bd.createTable(con);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +57,7 @@ public class VentanaRegistrar extends JFrame {
 		//Creamos la Base de Datos
 				bd = new BD();
 		//Creamos las tablas
-				
+				bd.createTable(con);
 
 				/*Creamos un manejador de fichero para indicar a qué fichero se mandarán los logs*/
 				Handler fileHandler = null;
