@@ -6,8 +6,7 @@ public class Usuario {
 	private String nombre;
 	private String nick;
 	private String constrasenia;
-	private String apellido1;
-	private String apellido2;
+	private String apellido;
 	private String cuenta_bancaria;
 	
 	/**
@@ -23,19 +22,17 @@ public class Usuario {
 	 * @param nombre : Nombre del usuario
 	 * @param nick : Nick del usuario. Se usará para acceder al perfil.
 	 * @param constrasenia : Contraseña del usuario.
-	 * @param apellido1 : Primer apellido del usuario.
-	 * @param apellido2 : Segundo apellido del usuario.
+	 * @param apellido :Apellido del usuario.
 	 * @param cuenta_bancaria : Cuenta bancaria del usuario.
 	 */
-	public Usuario(String dNI, String nombre, String nick, String constrasenia, String apellido1, String apellido2,
+	public Usuario(String dNI, String nombre, String nick, String constrasenia, String apellido,
 			String cuenta_bancaria) {
 		super();
 		DNI = dNI;
 		this.nombre = nombre;
 		this.nick = nick;
 		this.constrasenia = constrasenia;
-		this.apellido1 = apellido1;
-		this.apellido2 = apellido2;
+		this.apellido = apellido;
 		this.cuenta_bancaria = cuenta_bancaria;
 	}
 	/**
@@ -66,18 +63,14 @@ public class Usuario {
 	public void setConstrasenia(String constrasenia) {
 		this.constrasenia = constrasenia;
 	}
-	public String getApellido1() {
-		return apellido1;
+	public String getApellido() {
+		return apellido;
 	}
-	public void setApellido1(String apellido1) {
-		this.apellido1 = apellido1;
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
-	public String getApellido2() {
-		return apellido2;
-	}
-	public void setApellido2(String apellido2) {
-		this.apellido2 = apellido2;
-	}
+	
+	
 	public String getCuenta_bancaria() {
 		return cuenta_bancaria;
 	}
@@ -92,7 +85,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [DNI=" + DNI + ", nombre=" + nombre + ", nick=" + nick + ", constrasenia=" + constrasenia
-				+ ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", cuenta_bancaria=" + cuenta_bancaria
+				+ ", apellido=" + apellido + ", cuenta_bancaria=" + cuenta_bancaria
 				+ "]";
 	}
 

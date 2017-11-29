@@ -7,11 +7,15 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+
 import javax.swing.JLabel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import java.awt.Color;
@@ -20,12 +24,21 @@ public class VentanaDecision extends JFrame implements ActionListener {
 
 	ImageIcon Imagen;
 	private JPanel contentPane;
+<<<<<<< HEAD
 	
+=======
+	private static BD bd;
+	private static Connection con;
+>>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		//Creamos la Base de Datos
+		bd = new BD();
+		//Creamos las tablas
+		bd.createTable(con);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -42,6 +55,13 @@ public class VentanaDecision extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public VentanaDecision() {
+<<<<<<< HEAD
+=======
+			//Creamos la Base de Datos
+				bd = new BD();
+				//Creamos las tablas
+				bd.createTable(con);
+>>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +87,11 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		JButton btnGimnasio = new JButton(new ImageIcon("Imagenes/Gimnasio.jpg"));
 		btnGimnasio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				new VentanaInicioSesion();
+=======
+				new VentanaInicio(bd);
+>>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 				VentanaDecision.this.dispose();
 			}
 		});
