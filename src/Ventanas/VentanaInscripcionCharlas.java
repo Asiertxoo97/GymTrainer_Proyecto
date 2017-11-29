@@ -122,13 +122,9 @@ public class VentanaInscripcionCharlas extends JFrame {
 		panelCentro.add(textFieldCuentaBancaria);
 		textFieldCuentaBancaria.setColumns(10);
 		
-<<<<<<< HEAD
-		this.setVisible(true);
-=======
 		textFieldDNI = new JTextField();
 		textFieldDNI.setColumns(10);
 		textFieldDNI.setBounds(161, 154, 130, 26);
 		panelCentro.add(textFieldDNI);
->>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 	}
 }

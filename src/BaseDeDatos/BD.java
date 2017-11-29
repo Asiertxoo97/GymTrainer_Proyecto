@@ -32,7 +32,7 @@ public class BD {
 	}
 
 	/**
-	 * Mï¿½todo para conectarse a la base de datos
+	 * Método para conectarse a la base de datos
 	 */
 
 	public void conectar()
@@ -49,7 +49,7 @@ public class BD {
 	}
 	
 	/**
-	 * Mï¿½todo que cierra una sentencia 
+	 * Método que cierra una sentencia 
 	 */
 	public void cerrarSentencia()
 	{
@@ -62,7 +62,7 @@ public class BD {
 	}
 
 	/**
-	 * Mï¿½todo para desconectarse de la base de datos
+	 * Método para desconectarse de la base de datos
 	 */
 	public void desconectar()
 	{
@@ -75,7 +75,7 @@ public class BD {
 		}
 	}
 	/**
-	 * Mï¿½todo para conectarse de la base de datos
+	 * Método para conectarse de la base de datos
 	 */
 	public BD(){
 		conectar();
@@ -85,12 +85,7 @@ public class BD {
 	
 	
 	/**
-<<<<<<< HEAD
-	 * 						Mï¿½TODOS PARA USUARIO
-	 * 
-=======
 	 * Método para crear Tabla Usuario
->>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 	 */
 public Statement createTable(Connection con){
 		
@@ -172,14 +167,14 @@ public Statement createTable(Connection con){
 	
 	
 	/** 
-	 * Mï¿½todo para comprobar la existencia del Usuario.
+	 * Método para comprobar la existencia del Usuario.
 	 * 
 	 * @param nom: Nombre introducido por el usuario
-	 * @param con: Contraseï¿½a introducida por el usuario
+	 * @param con: Contraseña introducida por el usuario
 	 * @return : 
 	 * 			0 - Si no existe el usuario
-	 * 			1 - Si sï¿½ existe el usuario pero la contraseï¿½a no es correcta
-	 * 			2 - Si el nombre de usuario es correcto y la contraseï¿½a tambiï¿½n
+	 * 			1 - Si sí existe el usuario pero la contraseña no es correcta
+	 * 			2 - Si el nombre de usuario es correcto y la contraseña también
 	 */
 	public int existeUsuario(String nic, String con){
 		
@@ -212,12 +207,12 @@ public Statement createTable(Connection con){
 	}
 	
 	/**
-	 * Mï¿½todo para Registrar Usuario.
+	 * Método para Registrar Usuario.
 	 *
 	 * @param dNI
 	 * @param nom : Nombre del usuario
-	 * @param nic : Nick del usuario. Se usarï¿½ para acceder al perfil.
-	 * @param con : Contraseï¿½a del usuario.
+	 * @param nic : Nick del usuario. Se usará para acceder al perfil.
+	 * @param con : Contraseña del usuario.
 	 * @param ape1: Primer apellido del usuario.
 	 * @param ape2: Segundo apellido del usuario.
 	 * @param cuen: Cuenta bancaria del usuario.
@@ -236,15 +231,15 @@ public Statement createTable(Connection con){
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 						Mï¿½TODOS PARA PARTICIPANTE
+	 * 						MÉTODOS PARA PARTICIPANTE
 	 * 
 	 */
 	
 	
 
 	/** 
-	 * Mï¿½todo para comprobar si un Participante estï¿½ alistado a un charla.
-	 * Si un Participante estï¿½ alistado a un charla no puede volver a alistarse.
+	 * Método para comprobar si un Participante está alistado a un charla.
+	 * Si un Participante está alistado a un charla no puede volver a alistarse.
 	 * 
 	 * @param dni: Nombre introducido por el usuario
 	 * @return : 
@@ -261,9 +256,9 @@ public Statement createTable(Connection con){
 			if(rs.next()){ 
 				String c = rs.getString("codigo");
 				if(!c.equals(codigoAleatorio))
-					resul=false;	//No hay ningun Particiapante Alistado con ese Cï¿½digo.
+					resul=false;	//No hay ningun Particiapante Alistado con ese Código.
 				else
-					resul=true;		//Ya hay un Perticipante Alistado con ese Cï¿½digo
+					resul=true;		//Ya hay un Perticipante Alistado con ese Código
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -279,27 +274,20 @@ public Statement createTable(Connection con){
 	}
 	
 	/**
-	 * Mï¿½todo para Registrar Participante.
+	 * Método para Registrar Participante.
 	 *
 	 * @param dNI
 	 * @param nom : Nombre del usuario
-<<<<<<< HEAD
-	 * @param nic : Nick del usuario. Se usarï¿½ para acceder al perfil.
-	 * @param con : Contraseï¿½a del usuario.
-	 * @param ape1: Primer apellido del usuario.
-	 * @param ape2: Segundo apellido del usuario.
-=======
 	 * @param nic : Nick del usuario. Se usará para acceder al perfil.
 	 * @param con : Contraseña del usuario.
 	 * @param ape : Apellido del usuario.
->>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 	 * @param cuen: Cuenta bancaria del usuario.
-	 * @param cod : Cï¿½digo aleatoriamente creado para cada Participante con el fin de identificar a cada Participante.
+	 * @param cod : Código aleatoriamente creado para cada Participante con el fin de identificar a cada Participante.
 	 */
 	public void registrarParticipante(String dNI, String nom, String ape,String cuen){
 		/**
-		 * Crear el cï¿½digo personal para cada Participante. 
-		 * Seguidamente, comprobar que el cï¿½digo no existe, y en caso de existir crear uno nuevo.
+		 * Crear el código personal para cada Participante. 
+		 * Seguidamente, comprobar que el código no existe, y en caso de existir crear uno nuevo.
 		 */
 		RandomString codigoAleatorio=null;
 		do{
@@ -358,19 +346,11 @@ public Statement createTable(Connection con){
 		};
 	}
 	
-<<<<<<< HEAD
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * 						Mï¿½TODOS PARA CLASE
-	 * 
-	 */
-=======
 	
->>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * 						Mï¿½TODOS PARA CHARLAS
+	 * 						MÉTODOS PARA CHARLAS
 	 * 
 	 */
 
@@ -425,7 +405,7 @@ public void introducirCharla(String cod_charla ,String nombre ,String dni_impart
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	/**
-	 * 						Mï¿½TODOS PARA EJERCICIO
+	 * 						MÉTODOS PARA EJERCICIO
 	 * 
 	 */
 	

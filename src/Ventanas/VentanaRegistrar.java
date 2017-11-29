@@ -135,12 +135,7 @@ public class VentanaRegistrar extends JFrame {
 		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-				new VentanaInicioSesion();
-				VentanaRegistrar.this.dispose();
-=======
 				new VentanaInicio(bd);
->>>>>>> branch 'master' of https://github.com/Asiertxoo97/GymTrainer_Proyecto.git
 			}
 		});
 		panelSur.add(btnAtrs);
