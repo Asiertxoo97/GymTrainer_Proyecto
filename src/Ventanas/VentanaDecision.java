@@ -6,19 +6,29 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.awt.event.ActionEvent;
 
 public class VentanaDecision extends JFrame {
 
 	private JPanel contentPane;
+	private static BD bd;
+	private static Connection con;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		//Creamos la Base de Datos
+		bd = new BD();
+		//Creamos las tablas
+		bd.createTable(con);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -35,6 +45,11 @@ public class VentanaDecision extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaDecision() {
+			//Creamos la Base de Datos
+				bd = new BD();
+				//Creamos las tablas
+				bd.createTable(con);
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
@@ -56,7 +71,7 @@ public class VentanaDecision extends JFrame {
 		JButton btnGimnasio = new JButton("GIMNASIO");
 		btnGimnasio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaInicio();
+				new VentanaInicio(bd);
 				VentanaDecision.this.dispose();
 			}
 		});

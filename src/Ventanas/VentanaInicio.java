@@ -25,7 +25,7 @@ public class VentanaInicio extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNick;
 	private JPasswordField passwordFieldContrasenia;
-	private BD bd;
+	private static BD bd;
 
 
 	/**
@@ -35,7 +35,7 @@ public class VentanaInicio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicio frame = new VentanaInicio();
+					VentanaInicio frame = new VentanaInicio(bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class VentanaInicio extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInicio() {
+	public VentanaInicio(BD bd) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -72,7 +72,7 @@ public class VentanaInicio extends JFrame {
 		JButton btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaRegistrar();
+				new VentanaRegistrar(bd);
 			}
 		});
 		panelSur.add(btnRegistrar);
@@ -107,31 +107,34 @@ public class VentanaInicio extends JFrame {
 		panelCentro.add(passwordFieldContrasenia);
 		
 		JButton btnIniciarSesion = new JButton("INICIAR SESIÃ“N");
+		btnIniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==0){
+					//NICK MAL INTRODUCIDO. 
+					JOptionPane.showMessageDialog(null, "El Nick introducido no es correcto. Vuelva a introducirlo o registrese.");
+					textFieldNick.setText("");
+					passwordFieldContrasenia.setText("");
+					
+				}else if (bd.existeUsuario(lblNick.getText(), lblContrasenia.getText())==1){
+					//CONSTRASEÑA MAL INTRODUCIDA.
+					JOptionPane.showMessageDialog(null, "La contraseña introducida no es correcta. Vuelva a introducirlo.");
+					textFieldNick.setText("");
+					passwordFieldContrasenia.setText("");
+					
+				}else{
+					//NICK Y CONTRASEÑA BIEN INTRODUCIDOS; USUARIO EXISTE.
+					JOptionPane.showMessageDialog(null, "BIENVENIDO");
+					VentanaMenu frame2 = new VentanaMenu(bd);
+					frame2.setVisible(true);
+					VentanaInicio.this.dispose();
+				}
+			}
+		});
 		btnIniciarSesion.setBounds(209, 148, 130, 29);
 		panelCentro.add(btnIniciarSesion);
-		/**
-		 * 
-		 * if(bd.existeUsuario(lblNick.getText(), lblContrasenia.getText())==0){
-			//NICK MAL INTRODUCIDO. 
-			JOptionPane.showMessageDialog(null, "El Nick introducido no es correcto. Vuelva a introducirlo.");
-			textFieldNick.setText("");
-			
-			
-		}else if (bd.existeUsuario(lblNick.getText(), lblContrasenia.getText())==1){
-			//CONSTRASEÑA MAL INTRODUCIDA.
-			JOptionPane.showMessageDialog(null, "La contraseña introducida no es correcta. Vuelva a introducirlo.");
-			textFieldNick.setText("");
-			passwordFieldContrasenia.setEnabled(false);
-			
-		}else{
-			//NICK Y CONTRASEÑA BIEN INTRODUCIDOS; USUARIO EXISTE.
-			//VentanaMenu frame2 = new VentanaMenu();
-			//frame2.setVisible(true);
-		}
-		 * 
-		 * 
-		 * 
-		 */
+		
+		
+		 
 		
 		
 		

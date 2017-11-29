@@ -32,8 +32,7 @@ public class VentanaRegistrar extends JFrame {
 	private JPasswordField passwordFieldContrasenia;
 	private JTextField textFieldCuentaBancaria;
 	private JTextField textFieldDNI;
-	private BD bd;
-	private Connection con;
+	private static BD bd;
 	/**
 	 * Launch the application.
 	 */
@@ -41,7 +40,7 @@ public class VentanaRegistrar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRegistrar frame = new VentanaRegistrar();
+					VentanaRegistrar frame = new VentanaRegistrar(bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,11 +52,8 @@ public class VentanaRegistrar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRegistrar() {
-		//Creamos la Base de Datos
-				bd = new BD();
-		//Creamos las tablas
-				bd.createTable(con);
+	public VentanaRegistrar(BD bd) {
+		
 
 				/*Creamos un manejador de fichero para indicar a qué fichero se mandarán los logs*/
 				Handler fileHandler = null;
@@ -109,8 +105,8 @@ public class VentanaRegistrar extends JFrame {
 					logger.log(Level.INFO, "Ha dejado el campo contraseña vacío");
 				}
 				else{
-					int resul = bd.existeUsuario(nom, con);
-					if(resul == 0){
+					
+					if(bd.existeUsuario(nic, con) == 0){
 						String resp = JOptionPane.showInputDialog("No estás registrado. ¿Quieres registrarte (S/N)?");
 						if(resp.equalsIgnoreCase("S")){
 							bd.registrarUsuario(dNI,nom, nic,con,ape,cuenta);
@@ -119,11 +115,15 @@ public class VentanaRegistrar extends JFrame {
 							}else{
 							JOptionPane.showMessageDialog(null, "Hasta otra!!");
 						}
-					}else if(resul == 1){
+					}else if(bd.existeUsuario(nic, con) == 1){
 						JOptionPane.showMessageDialog(null, "La contraseña no es correcta!!");
 						logger.log(Level.SEVERE, "Se ha equivocado en la contraseña");
 					}else{
 						JOptionPane.showMessageDialog(null, "BIENVENIDO");
+						//Ya existe el Usuario
+						VentanaMenu frame2 = new VentanaMenu(bd);
+						frame2.setVisible(true);
+						VentanaRegistrar.this.dispose();
 						//HACER UN MÉTODO PARA VACIAR CAMPO DESPUÉS DE REGISTRARSE
 					}
 				}
@@ -135,7 +135,7 @@ public class VentanaRegistrar extends JFrame {
 		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaInicio();
+				new VentanaInicio(bd);
 			}
 		});
 		panelSur.add(btnAtrs);

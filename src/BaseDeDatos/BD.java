@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Datos.RandomString;
@@ -80,12 +81,7 @@ public class BD {
 		conectar();
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	/**
-	 * 						MÉTODOS PARA USUARIO
-	 * 
-	 */
 	
 	
 	/**
@@ -97,10 +93,18 @@ public Statement createTable(Connection con){
 	//CREAR TABLA USUARIO
 	try {
 		stmt.setQueryTimeout(30);
-		String Usuario = "CREATE TABLE Usuario (DNI string,nombre string, nick string,constrasenia string"
+		String Usuario = "CREATE TABLE Usuario (DNI string,nombre string, nick string,contrasenia string"
 				+ ",apellido string,cuenta_bancaria string)";
 		stmt.executeUpdate(Usuario);
 	} catch (SQLException e) {} // Tabla ya existe. Nada que hacer.
+	
+	//CREAR TABLA PARTICIPANTE
+		try {
+			stmt.setQueryTimeout(30);
+			String Participante = "CREATE TABLE Participante (DNI string,nombre string,apellido string,"
+					+ "cuenta_bancaria string,codigo string)";
+			stmt.executeUpdate(Participante);
+		} catch (SQLException e) {} // Tabla ya existe. Nada que hacer.
 	
 	//CREAR TABLA EJERCICIO
 	try {
@@ -153,6 +157,13 @@ public Statement createTable(Connection con){
 		
 		return null;
 }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	* 						MÉTODOS PARA USUARIO
+	* 
+	*/
 	
 	
 	/** 
@@ -167,20 +178,20 @@ public Statement createTable(Connection con){
 	 */
 	public int existeUsuario(String nic, String con){
 		
-		String query = "SELECT * FROM Usuario WHERE nick='"+nic+"'";
+		String query = "SELECT * FROM Usuario WHERE nick = '"+nic+"'";
 		ResultSet rs = null;
 		int resul=0;
 		try {
 			rs = stmt.executeQuery(query);
 			if(rs.next()){ 
-				String n = rs.getString("nombre");
+				String n = rs.getString("nick");
 				String c = rs.getString("contrasenia");
 				if(!n.equals(nic))
-					resul=0;
+					resul=0;	//El Nick es ERRÓNEO
 				else if(!c.equals(con))
-					resul=1;
+					resul=1;	//La Contraseña es ERRÓNEA
 				else
-					resul=2;
+					resul=2; //Nick Y Contraseña BIEN INTRODUCIDAS.
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -207,7 +218,7 @@ public Statement createTable(Connection con){
 	 * @param cuen: Cuenta bancaria del usuario.
 	 */
 	public void registrarUsuario(String dNI, String nom, String nic, String con, String ape,String cuen){
-		String query= "INSERT INTO Usuario(DNI,nombre, nick,constrasenia,apellido,cuenta_bancaria) "
+		String query= "INSERT INTO Usuario(DNI,nombre, nick,contrasenia,apellido,cuenta_bancaria) "
 				+ "VALUES('"+dNI+"','"+nom+"','"+nic+"','"+con+"','"+ape+"','"+cuen+"')";
 		try {
 			stmt.executeUpdate(query);
@@ -269,13 +280,11 @@ public Statement createTable(Connection con){
 	 * @param nom : Nombre del usuario
 	 * @param nic : Nick del usuario. Se usará para acceder al perfil.
 	 * @param con : Contraseña del usuario.
-	 * @param ape1: Primer apellido del usuario.
-	 * @param ape2: Segundo apellido del usuario.
+	 * @param ape : Apellido del usuario.
 	 * @param cuen: Cuenta bancaria del usuario.
 	 * @param cod : Código aleatoriamente creado para cada Participante con el fin de identificar a cada Participante.
 	 */
-	public void registrarParticipante(String dNI, String nom, String ape1, 
-			String ape2,String cuen,String cod){
+	public void registrarParticipante(String dNI, String nom, String ape,String cuen){
 		/**
 		 * Crear el código personal para cada Participante. 
 		 * Seguidamente, comprobar que el código no existe, y en caso de existir crear uno nuevo.
@@ -285,8 +294,8 @@ public Statement createTable(Connection con){
 			 codigoAleatorio = new RandomString(8, ThreadLocalRandom.current());
 		}while(participanteAlistado(codigoAleatorio));
 		
-		String query= "INSERT INTO Usuario(DNI,nombre, nick,constrasenia,apellido1,apellido2,cuenta_bancaria) "
-				+ "VALUES('"+dNI+"','"+nom+"','"+ape1+"','"+ape2+"','"+cuen+"','"+codigoAleatorio+"')";
+		String query= "INSERT INTO Usuario(DNI,nombre, nick,constrasenia,apellido,cuenta_bancaria,codigo) "
+				+ "VALUES('"+dNI+"','"+nom+"','"+ape+"','"+cuen+"','"+codigoAleatorio+"')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
@@ -302,20 +311,41 @@ public Statement createTable(Connection con){
 	 */
 
 	//TODO
-	public void mostrarClases(){
+	public int existeClases(String cod_clase){
 		
-		String query = "SELECT * FROM Clase" ;
+		String query = "SELECT * FROM Clase WHERE cod_clase = '"+cod_clase+"'";
 		ResultSet rs = null;
 		boolean resul=false;
+		int resp = 0;
 		
-			//rs = stmt.executeQuery(query);
-			//	if(rs.next()){ 
-			//	String c = rs.getString("nombre");
-			//	}
+			try {
+				rs = stmt.executeQuery(query);
+				if(rs.next()){ 
+				String c = rs.getString("cod_clase");
+				if(!c.equals(cod_clase))
+					resp=0;	//La Clase existe 
+				else 
+					resp=1; //La clase NO existe.
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return resp;
 	}
 	
-}
-
+	public void introducirClase(String cod_clase ,String nombre ,String dni_profesor ,String fecha ,double tiempo ){
+		
+		String query= "INSERT INTO Clase(cod_clase ,nombre ,dni_profesor ,fecha ,tiempo ) "
+				+ "VALUES('"+cod_clase+"','"+nombre+"','"+dni_profesor+"','"+fecha+"','"+tiempo+"')";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+	}
+	
 	
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,6 +353,55 @@ public Statement createTable(Connection con){
 	 * 						MÉTODOS PARA CHARLAS
 	 * 
 	 */
+
+/**
+ * Método para verificiar que una charla no existe para poder crearla. 
+ * Una charla se puede impartir N veces con la única condición de no poder impartir la MISMA CHARLA el MISMO DÍA.
+ * @param cod_charla: Código de la charla que deseamos verificar.
+ * @param fecha: Fecha en la que se impartirá la charla.
+ * @return
+ */
+public int existeCharla(String cod_charla,Date fecha){
+	
+	String query = "SELECT * FROM Charla WHERE cod_charla = '"+cod_charla+"'";
+	ResultSet rs = null;
+	boolean resul=false;
+	int resp = 0;
+	
+		try {
+			rs = stmt.executeQuery(query);
+			if(rs.next()){ 
+			String c = rs.getString("cod_charla");
+			Date f =rs.getDate("fecha");
+			if(!c.equals(cod_charla))
+				resp=0;	//La Charla existe 
+			else if(!f.equals(fecha))
+				resp=1; //La Charla existe, porque no puede haber la misma charla el mismo día. 
+						//Aunque una charla se puede impartir en varios dias.
+						//La única condición es que una CHARLA NO se imparta el MISMO DÍA.
+			else
+				resp=2;			//La charla no existe->puede crearse.
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resp;
+}
+
+public void introducirCharla(String cod_charla ,String nombre ,String dni_impartidor ,Date fecha ,double tiempo ){
+	
+	String query= "INSERT INTO Charla(cod_charla ,nombre ,dni_impartidor ,fecha ,tiempo ) "
+			+ "VALUES('"+cod_charla+"','"+nombre+"','"+dni_impartidor+"','"+fecha+"','"+tiempo+"')";
+	try {
+		stmt.executeUpdate(query);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	};
+}
+
+}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	/**

@@ -7,6 +7,9 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,6 +17,7 @@ import javax.swing.JButton;
 public class VentanaMenu extends JFrame {
 
 	private JPanel contentPane;
+	private static BD bd;
 
 	/**
 	 * Launch the application.
@@ -25,7 +29,7 @@ public class VentanaMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaMenu frame = new VentanaMenu();
+					VentanaMenu frame = new VentanaMenu(bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +41,7 @@ public class VentanaMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMenu() {
+	public VentanaMenu(BD bd) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();

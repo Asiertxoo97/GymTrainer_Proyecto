@@ -6,10 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaInscripcionCharlas extends JFrame {
 
@@ -18,6 +23,9 @@ public class VentanaInscripcionCharlas extends JFrame {
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
 	private JTextField textFieldCuentaBancaria;
+	private JTextField textFieldDNI;
+	private static BD bd;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -26,7 +34,7 @@ public class VentanaInscripcionCharlas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInscripcionCharlas frame = new VentanaInscripcionCharlas();
+					VentanaInscripcionCharlas frame = new VentanaInscripcionCharlas(bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +46,7 @@ public class VentanaInscripcionCharlas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInscripcionCharlas() {
+	public VentanaInscripcionCharlas(BD bd) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
@@ -50,19 +58,25 @@ public class VentanaInscripcionCharlas extends JFrame {
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
-		JLabel lblInscripcinALas = new JLabel("INSCRIPCIÓN A LAS CHARLAS");
+		JLabel lblInscripcinALas = new JLabel("INSCRIPCIÃ“N A LAS CHARLAS");
 		panelNorte.add(lblInscripcinALas);
 		
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAtrs = new JButton("ATRÁS");
+		JButton btnAtrs = new JButton("ATRÃ�S");
 		panelSur.add(btnAtrs);
 		
 		JButton btnInscribirse = new JButton("INSCRIBIRSE");
+		btnInscribirse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText()
+						, textFieldApellido.getText(), textFieldCuentaBancaria.getText());
+			}
+		});
 		panelSur.add(btnInscribirse);
 		
-		JLabel lblCodigo = new JLabel("Código:");
+		JLabel lblCodigo = new JLabel("CÃ³digo:");
 		panelSur.add(lblCodigo);
 		
 		textFieldCodigo = new JTextField();
@@ -74,8 +88,12 @@ public class VentanaInscripcionCharlas extends JFrame {
 		panelCentro.setLayout(null);
 		
 		JTextArea textAreaCharlasInscritas = new JTextArea();
-		textAreaCharlasInscritas.setBounds(17, 6, 606, 165);
+		textAreaCharlasInscritas.setBounds(20, 6, 603, 122);
 		panelCentro.add(textAreaCharlasInscritas);
+		
+		JLabel lblDNI = new JLabel("DNI");
+		lblDNI.setBounds(56, 156, 61, 16);
+		panelCentro.add(lblDNI);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(56, 194, 61, 16);
@@ -90,7 +108,7 @@ public class VentanaInscripcionCharlas extends JFrame {
 		panelCentro.add(lblCuentaBancaria);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.setBounds(161, 189, 130, 26);
+		textFieldNombre.setBounds(161, 194, 130, 26);
 		panelCentro.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -103,5 +121,10 @@ public class VentanaInscripcionCharlas extends JFrame {
 		textFieldCuentaBancaria.setBounds(203, 291, 130, 26);
 		panelCentro.add(textFieldCuentaBancaria);
 		textFieldCuentaBancaria.setColumns(10);
+		
+		textFieldDNI = new JTextField();
+		textFieldDNI.setColumns(10);
+		textFieldDNI.setBounds(161, 154, 130, 26);
+		panelCentro.add(textFieldDNI);
 	}
 }
