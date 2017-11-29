@@ -153,6 +153,14 @@ public Statement createTable(Connection con){
 			stmt.executeUpdate(Profesor);
 		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
 		
+
+	//CREAR TABLA RUTINA
+	try {
+		stmt.setQueryTimeout(30);
+		String Profesor = "CREATE TABLE Rutina (dni_usuario string,cod_ejercicio string";
+			stmt.executeUpdate(Profesor);
+		} catch (SQLException e) {}// Tabla ya existe. Nada que hacer.
+		
 		
 		
 		return null;
@@ -401,21 +409,93 @@ public void introducirCharla(String cod_charla ,String nombre ,String dni_impart
 	};
 }
 
-}
+
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	/**
 	 * 						MÉTODOS PARA EJERCICIO
 	 * 
 	 */
+public int existeEjercicio(String cod_ejercicio){
 	
+	String query = "SELECT * FROM Ejercicio WHERE cod_ejercicio = '"+cod_ejercicio+"'";
+	ResultSet rs = null;
+	boolean resul=false;
+	int resp = 0;
+	
+		try {
+			rs = stmt.executeQuery(query);
+			if(rs.next()){ 
+			String c = rs.getString("cod_ejercicio");
+			if(!c.equals(cod_ejercicio))
+				resp=0;	//El ejercicio existe.
+			else
+				resp=2;	//El ejercicio NO existe.
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resp;
+}
+
+	public void insertarEjercicio(String cod_ejercicio ,String nombre ,String descripción ,
+		double tiempo_estimado , String GIF  ){
+	
+	String query= "INSERT INTO Ejercicio(cod_ejercicio ,nombre ,descripción ,"
+			+ "tiempo_estimado ,GIF  ) VALUES('"+cod_ejercicio+"','"+nombre+"','"+nombre+"','"+descripción+"','"
+			+descripción+"','"+GIF+"')";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+	}
+
+
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	* 						MÉTODOS PARA RUTINA
 	* 
 	*/
 	
+	public int existeRutina(String cod_rutina){
 	
+		String query = "SELECT * FROM Rutina WHERE cod_ejercicio = '"+cod_rutina+"'";
+		ResultSet rs = null;
+		boolean resul=false;
+		int resp = 0;
+	
+		try {
+			rs = stmt.executeQuery(query);
+			if(rs.next()){ 
+			String c = rs.getString("cod_rutina");
+				if(!c.equals(cod_rutina))
+					resp=0;	//La rutina existe.
+				else
+					resp=2;	//La rutina NO existe.
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return resp;
+	}	
+
+	public void insertarEjercicioEnRutina(String cod_ejercicio ,String cod_rutina ){
+		
+		String query= "INSERT INTO Rutina(cod_ejercicio ,cod_rutina) "
+				+ "VALUES('"+cod_ejercicio+"','"+cod_rutina+"')";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+	}
+}
 	
 	
 	
