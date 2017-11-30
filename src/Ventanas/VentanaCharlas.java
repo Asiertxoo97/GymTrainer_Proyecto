@@ -6,15 +6,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+import Datos.Charla;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaCharlas extends JFrame {
 
 	private JPanel contentPane;
+	private static BD bd;
+	
 
 	/**
 	 * Launch the application.
@@ -23,7 +30,7 @@ public class VentanaCharlas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCharlas frame = new VentanaCharlas();
+					VentanaCharlas frame = new VentanaCharlas(bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +42,7 @@ public class VentanaCharlas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCharlas() {
+	public VentanaCharlas(BD bd) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650,450);
@@ -56,7 +63,7 @@ public class VentanaCharlas extends JFrame {
 		JButton btnInscribirse = new JButton("INSCRIBIRSE");
 		panelSur.add(btnInscribirse);
 		
-		JButton btnAtrs = new JButton("ATRÁS");
+		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDecision();
@@ -80,10 +87,24 @@ public class VentanaCharlas extends JFrame {
 		buttonInscrip.setBounds(262, 89, 105, 34);
 		panelCentro.add(buttonInscrip);
 		
-		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÓN");
+		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÃ“N");
 		buttonBorrarInscrip.setBounds(241, 179, 158, 52);
 		panelCentro.add(buttonBorrarInscrip);
 		
+		mostrarCharlas(bd,textAreaCharlas);
+		
 		this.setVisible(true);
+	}
+	
+	public void mostrarCharlas(BD bd,JTextArea charla){
+		//TODO
+	
+		ArrayList<Charla> charlas = bd.mostrarCharlas();
+		
+		for(int i=0;i<charlas.size();i++){
+			
+			String Charla=charlas.toArray().toString();
+			charla.setText(Charla);
+		}
 	}
 }

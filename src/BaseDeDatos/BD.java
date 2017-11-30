@@ -6,9 +6,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Datos.Charla;
 import Datos.RandomString;
 
 
@@ -397,6 +399,31 @@ public int existeCharla(String cod_charla,Date fecha){
 		return resp;
 }
 
+public ArrayList<Charla> mostrarCharlas(){
+	
+	ArrayList<Charla> charlas = new ArrayList<Charla>();
+	String query = "SELECT COUNT(*) FROM Charla";
+	ResultSet rs;
+	try {
+		rs = stmt.executeQuery(query);
+		int numCharlas = 0;
+		while(rs.next()){
+			String c = rs.getString("cod_charla");
+			String n = rs.getString("nombre");
+			String d = rs.getString("dni_impartidor");
+			Date f = rs.getDate("fecha");
+			double t = rs.getDouble("tiempo");
+			Charla charla = new Charla(c,n,d,f,t);
+			charlas.add(charla);
+			numCharlas++;
+		}	
+	}catch (SQLException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	return charlas;
+}
+
 public void introducirCharla(String cod_charla ,String nombre ,String dni_impartidor ,Date fecha ,double tiempo ){
 	
 	String query= "INSERT INTO Charla(cod_charla ,nombre ,dni_impartidor ,fecha ,tiempo ) "
@@ -420,7 +447,6 @@ public int existeEjercicio(String cod_ejercicio){
 	
 	String query = "SELECT * FROM Ejercicio WHERE cod_ejercicio = '"+cod_ejercicio+"'";
 	ResultSet rs = null;
-	boolean resul=false;
 	int resp = 0;
 	
 		try {
@@ -465,7 +491,6 @@ public int existeEjercicio(String cod_ejercicio){
 	
 		String query = "SELECT * FROM Rutina WHERE cod_ejercicio = '"+cod_rutina+"'";
 		ResultSet rs = null;
-		boolean resul=false;
 		int resp = 0;
 	
 		try {
