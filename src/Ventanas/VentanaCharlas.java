@@ -6,22 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import BaseDeDatos.BD;
-import Datos.Charla;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VentanaCharlas extends JFrame {
 
 	private JPanel contentPane;
-	private static BD bd;
-	
 
 	/**
 	 * Launch the application.
@@ -30,7 +23,7 @@ public class VentanaCharlas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCharlas frame = new VentanaCharlas(bd);
+					VentanaCharlas frame = new VentanaCharlas();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +35,7 @@ public class VentanaCharlas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCharlas(BD bd) {
+	public VentanaCharlas() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650,450);
@@ -60,13 +53,14 @@ public class VentanaCharlas extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnInscribirse = new JButton("INSCRIBIRSE");
+		JButton btnInscribirse = new JButton("INSCRIBIRSE A LAS CHARLAS SELECCIONADAS");
 		panelSur.add(btnInscribirse);
 		
-		JButton btnAtrs = new JButton("ATRÃ�S");
+		JButton btnAtrs = new JButton("ATRÁS");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDecision();
+				VentanaCharlas.this.dispose();
 			}
 		});
 		panelSur.add(btnAtrs);
@@ -75,36 +69,26 @@ public class VentanaCharlas extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(null);
 		
-		JTextArea textAreaAsistir = new JTextArea();
-		textAreaAsistir.setBounds(408, 6, 211, 341);
-		panelCentro.add(textAreaAsistir);
+		JTextArea textAreaCharlasAAsistir = new JTextArea();
+		textAreaCharlasAAsistir.setBounds(408, 6, 211, 341);
+		panelCentro.add(textAreaCharlasAAsistir);
 		
 		JTextArea textAreaCharlas = new JTextArea();
 		textAreaCharlas.setBounds(18, 6, 211, 341);
 		panelCentro.add(textAreaCharlas);
 		
 		JButton buttonInscrip = new JButton("INSCRIBIR");
-		buttonInscrip.setBounds(262, 89, 105, 34);
+		buttonInscrip.setBounds(241, 85, 158, 52);
 		panelCentro.add(buttonInscrip);
 		
-		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÃ“N");
-		buttonBorrarInscrip.setBounds(241, 179, 158, 52);
+		JButton buttonBorrarInscrip = new JButton("BORRAR INSCRIPCIÓN");
+		buttonBorrarInscrip.setBounds(241, 149, 158, 52);
 		panelCentro.add(buttonBorrarInscrip);
 		
-		mostrarCharlas(bd,textAreaCharlas);
+		JButton btnBorrarTodasLas = new JButton("BORRAR TODAS");
+		btnBorrarTodasLas.setBounds(241, 214, 155, 52);
+		panelCentro.add(btnBorrarTodasLas);
 		
 		this.setVisible(true);
-	}
-	
-	public void mostrarCharlas(BD bd,JTextArea charla){
-		//TODO
-	
-		ArrayList<Charla> charlas = bd.mostrarCharlas();
-		
-		for(int i=0;i<charlas.size();i++){
-			
-			String Charla=charlas.toArray().toString();
-			charla.setText(Charla);
-		}
 	}
 }

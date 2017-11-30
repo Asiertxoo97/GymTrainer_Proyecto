@@ -48,6 +48,8 @@ public class VentanaInicio extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaInicio(BD bd) {
+		
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -65,7 +67,7 @@ public class VentanaInicio extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JLabel lblaunNoEsts = new JLabel("Â¿AÃºn no estÃ¡s registrado?");
+		JLabel lblaunNoEsts = new JLabel("¿Aún no estás registrado?");
 		lblaunNoEsts.setForeground(Color.RED);
 		panelSur.add(lblaunNoEsts);
 		
@@ -77,7 +79,7 @@ public class VentanaInicio extends JFrame {
 		});
 		panelSur.add(btnRegistrar);
 		
-		JButton btnAtrs = new JButton("ATRÃ�S");
+		JButton btnAtrs = new JButton("ATRÃS");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDecision();
@@ -93,7 +95,7 @@ public class VentanaInicio extends JFrame {
 		lblNick.setBounds(67, 54, 61, 16);
 		panelCentro.add(lblNick);
 		
-		JLabel lblContrasenia = new JLabel("ContraseÃ±a");
+		JLabel lblContrasenia = new JLabel("Contraseña");
 		lblContrasenia.setBounds(67, 96, 71, 16);
 		panelCentro.add(lblContrasenia);
 		
@@ -106,7 +108,7 @@ public class VentanaInicio extends JFrame {
 		passwordFieldContrasenia.setBounds(209, 91, 130, 26);
 		panelCentro.add(passwordFieldContrasenia);
 		
-		JButton btnIniciarSesion = new JButton("INICIAR SESIÃ“N");
+		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==0){

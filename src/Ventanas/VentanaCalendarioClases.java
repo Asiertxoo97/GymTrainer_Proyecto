@@ -1,6 +1,7 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import com.toedter.calendar.JCalendar;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaCalendarioClases extends JFrame {
 
@@ -58,6 +61,12 @@ public class VentanaCalendarioClases extends JFrame {
 		panelCentro.setLayout(null);
 		
 		JCalendar calendar = new JCalendar();
+		calendar.getDayChooser().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(calendar.getDayChooser().getDay());
+			}
+		});
 		calendar.setBounds(6, 6, 628, 241);
 		panelCentro.add(calendar);
 	}

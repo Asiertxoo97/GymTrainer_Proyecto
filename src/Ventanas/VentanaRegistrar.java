@@ -21,6 +21,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.awt.event.ActionEvent;
 
 public class VentanaRegistrar extends JFrame {
@@ -67,6 +68,8 @@ public class VentanaRegistrar extends JFrame {
 					e.printStackTrace();
 				}
 				/*Creamos el log y le asociamos el manejador de ficheros*/
+				SimpleFormatter simpleFormatter = new SimpleFormatter(); 
+				fileHandler.setFormatter(simpleFormatter);
 				Logger logger = Logger.getLogger("myLogger");
 				logger.addHandler(fileHandler);
 		setResizable(false);
@@ -135,7 +138,13 @@ public class VentanaRegistrar extends JFrame {
 		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				//new VentanaInicioSesion();
+				
+
 				new VentanaInicio(bd);
+				VentanaRegistrar.this.dispose();
+//github.com/Asiertxoo97/GymTrainer_Proyecto.git
 			}
 		});
 		panelSur.add(btnAtrs);
@@ -156,7 +165,7 @@ public class VentanaRegistrar extends JFrame {
 		lblNick.setBounds(52, 140, 61, 16);
 		panelCentro.add(lblNick);
 		
-		JLabel lblContrasenia = new JLabel("ContraseÃ±a");
+		JLabel lblContrasenia = new JLabel("Contraseña");
 		lblContrasenia.setBounds(52, 179, 71, 16);
 		panelCentro.add(lblContrasenia);
 		

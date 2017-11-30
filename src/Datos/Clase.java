@@ -2,61 +2,71 @@ package Datos;
 
 public class Clase {
 
+	private String codClase;
+	private Profesor profesor;
 	private String nombre;
-	private String horario;
-	private float tiempo;
+	private String fecha;
+	private double tiempo;
+	private int numPlazas;
 	
-	/**
-	 * Constructor Vacío de Clase Clase
-	 */
-	public Clase() {
-		super();
-	}
-	/**
-	 * Constructor con parámetros de Clase Clase
-	 * @param nombre: Nombre de la clase.
-	 * @param horario: Horario en el que se impartirá la clase. Teniendo en cuenta que el horario será el mismo durante el año.
-	 * @param tiempo: Tiempo total de duración de la clase.
-	 */
-	public Clase(String nombre, String horario, float tiempo) {
-		super();
+	public Clase(String codClase, Profesor profesor, String nombre, String fecha, double tiempo, int numPlazas) {
+		
+		this.codClase = codClase;
+		this.profesor = profesor;
 		this.nombre = nombre;
-		this.horario = horario;
+		this.fecha = fecha;
 		this.tiempo = tiempo;
+		this.numPlazas= numPlazas;
 	}
-	
-	/**
-	 * Métodos Get y Set de Clase Clase
-	 * @return
-	 */
+	public String getCodClase() {
+		return codClase;
+	}
+	public void setCodClase(String codClase) {
+		this.codClase = codClase;
+	}
+	public Profesor getProfesor() {
+		return profesor;
+	}
+	public void setProfesor(Profesor profesor) {
+		this.profesor = profesor;
+	}
 	public String getNombre() {
 		return nombre;
 	}
-	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getHorario() {
-		return horario;
+	public String getFecha() {
+		return fecha;
 	}
-	public void setHorario(String horario) {
-		this.horario = horario;
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
-	public float getTiempo() {
+	public double getTiempo() {
 		return tiempo;
 	}
-	public void setTiempo(float tiempo) {
+	public void setTiempo(double tiempo) {
 		this.tiempo = tiempo;
 	}
 	
-	/**
-	 * Método toString de Clase Clase
-	 */
-
+	public int getNumPlazas() {
+		return numPlazas;
+	}
+	
+	public void setNumPlazas(int numPlazas) {
+		this.numPlazas=numPlazas;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
-		return "Clase [nombre=" + nombre + ", horario=" + horario + ", tiempo=" + tiempo + "]";
+		return "Clase [codClase=" + codClase + ", profesor=" + profesor.toString() + ", nombre=" + nombre + ", fecha=" + fecha
+				+ ", tiempo=" + tiempo + "]";
 	}
+	
+	
+	
 	
 	
 }

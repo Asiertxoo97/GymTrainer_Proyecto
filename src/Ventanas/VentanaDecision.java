@@ -15,6 +15,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.sql.Connection;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
@@ -27,6 +28,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 
 	private static BD bd;
 	private static Connection con;
+//github.com/Asiertxoo97/GymTrainer_Proyecto.git
 
 	/**
 	 * Launch the application.
@@ -57,7 +59,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 				bd = new BD();
 				//Creamos las tablas
 				bd.createTable(con);
-
+//github.com/Asiertxoo97/GymTrainer_Proyecto.git
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,12 +81,15 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(null);
 		
-		///////////////////////////////////////////////////////////////////////////////////
-		JButton btnGimnasio = new JButton(new ImageIcon("Imagenes/Gimnasio.jpg"));
+		
+		JButton btnGimnasio = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/Gimnasio.jpg"), 375, 185));
 		btnGimnasio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				new VentanaInicio(bd);	
+				
+
+				new VentanaInicio(bd);
+
 				VentanaDecision.this.dispose();
 			}
 		});
@@ -93,10 +98,10 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		
 		
 		
-		JButton btnCharlas = new JButton(new ImageIcon("Imagenes/Charlas.jpg"));
+		JButton btnCharlas = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/Charlas.jpg"), 375, 185));
 		btnCharlas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaCharlas(bd);
+				new VentanaCharlas();
 				VentanaDecision.this.dispose();
 			}
 		});
@@ -126,5 +131,13 @@ public class VentanaDecision extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private ImageIcon redimensionarImagen(URL location, int anchura, int altura) {
+		ImageIcon icon = new ImageIcon(location);
+		Image img = icon.getImage(); //convertimos icon en una imagen
+		Image otraimg = img.getScaledInstance(anchura,altura,java.awt.Image.SCALE_SMOOTH);
+		ImageIcon otroicon = new ImageIcon(otraimg);
+		return otroicon;
 	}
 }
