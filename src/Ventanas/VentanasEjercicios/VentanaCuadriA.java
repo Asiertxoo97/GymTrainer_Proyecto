@@ -1,30 +1,27 @@
-package Ventanas;
-
-import java.awt.BorderLayout;
+package Ventanas.VentanasEjercicios;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelTriceps;
+import Paneles.PanelCuadriceps;
+import Ventanas.VentanaElegirEjercicios;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.awt.BorderLayout;
 import java.awt.Color;
 
-public class VentanaTriceps extends JFrame {
-
+public class VentanaCuadriA extends JFrame {
 
 	private JPanel contentPane;
 
@@ -35,7 +32,7 @@ public class VentanaTriceps extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaTriceps frame = new VentanaTriceps();
+					VentanaCuadriA frame = new VentanaCuadriA();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,8 +44,8 @@ public class VentanaTriceps extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaTriceps() {
-		
+	public VentanaCuadriA() {
+	
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -74,7 +71,7 @@ public class VentanaTriceps extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaTriceps.this.dispose();
+					VentanaCuadriA.this.dispose();
 				}
 			}
 		});
@@ -100,7 +97,7 @@ public class VentanaTriceps extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosTriceps();
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosCuadricepsDelante();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
@@ -115,5 +112,4 @@ public class VentanaTriceps extends JFrame {
 		this.setResizable(false);
 	
 	}
-	
 }

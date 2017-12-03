@@ -11,6 +11,17 @@ import javax.swing.border.EmptyBorder;
 
 import BaseDeDatos.BD;
 import Paneles.PanelEjercicios;
+import Ventanas.VentanasEjercicios.VentanaAbdominales;
+import Ventanas.VentanasEjercicios.VentanaBiceps;
+import Ventanas.VentanasEjercicios.VentanaCuadriA;
+import Ventanas.VentanasEjercicios.VentanaCuadriceps;
+import Ventanas.VentanasEjercicios.VentanaEspalda;
+import Ventanas.VentanasEjercicios.VentanaGemelo;
+import Ventanas.VentanasEjercicios.VentanaGluteos;
+import Ventanas.VentanasEjercicios.VentanaHombros;
+import Ventanas.VentanasEjercicios.VentanaLumbares;
+import Ventanas.VentanasEjercicios.VentanaPecho;
+import Ventanas.VentanasEjercicios.VentanaTriceps;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -57,13 +68,15 @@ public class VentanaElegirEjercicios extends JFrame {
 		
 		
 		//Funciona
-		JButton btnSalir = new JButton("SALIR");
+		JButton btnSalir = new JButton("ATRÁS");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				VentanaElegirEjercicios.this.dispose();
+				VentanaMenu frame = new VentanaMenu(bd);
+				frame.setVisible(true);
 			}
 		});
-		btnSalir.setBounds(565, 393, 79, 29);
+		btnSalir.setBounds(565, 392, 79, 29);
 		e.add(btnSalir);
 		
 		//Funciona

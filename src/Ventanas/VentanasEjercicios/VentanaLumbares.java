@@ -1,4 +1,4 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,10 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelAbdominales;
-import Paneles.PanelEspalda;
+import Paneles.PanelBiceps;
+import Paneles.PanelLumbares;
+import Ventanas.VentanaElegirEjercicios;
 
-public class VentanaEspalda extends JFrame {
+public class VentanaLumbares extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnContinuar;
@@ -33,7 +34,7 @@ public class VentanaEspalda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaEspalda frame = new VentanaEspalda();
+					VentanaLumbares frame = new VentanaLumbares();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,12 +42,13 @@ public class VentanaEspalda extends JFrame {
 			}
 		});
 	}
+	
+
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaEspalda() {
-		
+	public VentanaLumbares() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -72,7 +74,7 @@ public class VentanaEspalda extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaEspalda.this.dispose();
+					VentanaLumbares.this.dispose();
 				}
 			}
 		});
@@ -98,7 +100,7 @@ public class VentanaEspalda extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosEspalda();
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosLumbares();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
@@ -114,4 +116,3 @@ public class VentanaEspalda extends JFrame {
 	
 	}
 }
-

@@ -1,4 +1,7 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,14 +18,14 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelCuadriceps;
+import Paneles.PanelAbdominales;
+import Paneles.PanelEspalda;
+import Ventanas.VentanaElegirEjercicios;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-public class VentanaCuadriA extends JFrame {
+public class VentanaEspalda extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnContinuar;
 
 	/**
 	 * Launch the application.
@@ -31,7 +34,7 @@ public class VentanaCuadriA extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaCuadriA frame = new VentanaCuadriA();
+					VentanaEspalda frame = new VentanaEspalda();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,8 +46,8 @@ public class VentanaCuadriA extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCuadriA() {
-	
+	public VentanaEspalda() {
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -70,7 +73,7 @@ public class VentanaCuadriA extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaCuadriA.this.dispose();
+					VentanaEspalda.this.dispose();
 				}
 			}
 		});
@@ -96,7 +99,7 @@ public class VentanaCuadriA extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosCuadricepsDelante();
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosEspalda();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
@@ -112,3 +115,4 @@ public class VentanaCuadriA extends JFrame {
 	
 	}
 }
+

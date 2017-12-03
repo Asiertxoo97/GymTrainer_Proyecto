@@ -1,30 +1,33 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelAbdominales;
-import Paneles.PanelHombros;
+import Paneles.PanelTriceps;
+import Ventanas.VentanaElegirEjercicios;
 
-public class VentanaHombros extends JFrame {
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+
+public class VentanaTriceps extends JFrame {
+
 
 	private JPanel contentPane;
-	private JButton btnContinuar;
 
 	/**
 	 * Launch the application.
@@ -33,7 +36,7 @@ public class VentanaHombros extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaHombros frame = new VentanaHombros();
+					VentanaTriceps frame = new VentanaTriceps();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +48,7 @@ public class VentanaHombros extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaHombros() {
+	public VentanaTriceps() {
 		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,7 +75,7 @@ public class VentanaHombros extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaHombros.this.dispose();
+					VentanaTriceps.this.dispose();
 				}
 			}
 		});
@@ -98,7 +101,7 @@ public class VentanaHombros extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosHombros();
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosTriceps();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
@@ -113,4 +116,5 @@ public class VentanaHombros extends JFrame {
 		this.setResizable(false);
 	
 	}
+	
 }

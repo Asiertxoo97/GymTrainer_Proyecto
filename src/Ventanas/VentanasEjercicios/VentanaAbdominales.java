@@ -1,5 +1,4 @@
-package Ventanas;
-
+package Ventanas.VentanasEjercicios;
 
 import java.awt.BorderLayout;
 
@@ -10,7 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelBiceps;
+import Paneles.PanelAbdominales;
+import Ventanas.VentanaElegirEjercicios;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,14 +21,16 @@ import javax.swing.ScrollPaneConstants;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class VentanaBiceps extends JFrame {
+public class VentanaAbdominales extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnContinuar;
@@ -40,7 +42,7 @@ public class VentanaBiceps extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaBiceps frame = new VentanaBiceps();
+					VentanaAbdominales frame = new VentanaAbdominales();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,13 +50,11 @@ public class VentanaBiceps extends JFrame {
 			}
 		});
 	}
-	
-
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaBiceps() {
+	public VentanaAbdominales() {
 		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +67,7 @@ public class VentanaBiceps extends JFrame {
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
-		JLabel lblEjerciciosDeAbdominales = new JLabel("Ejercicios de biceps");
+		JLabel lblEjerciciosDeAbdominales = new JLabel("Ejercicios de abdominales");
 		panelNorte.add(lblEjerciciosDeAbdominales);
 		
 		JPanel panelSur = new JPanel();
@@ -81,7 +81,7 @@ public class VentanaBiceps extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaBiceps.this.dispose();
+					VentanaAbdominales.this.dispose();
 				}
 			}
 		});
@@ -106,8 +106,8 @@ public class VentanaBiceps extends JFrame {
 		JScrollPane scroll = new JScrollPane(panelCentro);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
-		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotos();
+		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosAbdominales();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
@@ -122,5 +122,6 @@ public class VentanaBiceps extends JFrame {
 		this.setResizable(false);
 	
 	}
+		
+	
 }
-

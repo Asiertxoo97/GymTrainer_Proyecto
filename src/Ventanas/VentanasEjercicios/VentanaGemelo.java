@@ -1,4 +1,4 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -12,6 +12,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import Paneles.PanelDegradado;
+import Ventanas.VentanaElegirEjercicios;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

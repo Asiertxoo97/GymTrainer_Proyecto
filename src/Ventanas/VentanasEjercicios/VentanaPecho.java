@@ -1,4 +1,4 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
 
 
 import java.awt.BorderLayout;
@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import Paneles.PanelPecho;
+import Ventanas.VentanaElegirEjercicios;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

@@ -1,38 +1,32 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
 
 import java.awt.BorderLayout;
-
 import java.awt.EventQueue;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelAbdominales;
+import Paneles.PanelCuadriceps;
+import Ventanas.VentanaElegirEjercicios;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class VentanaAbdominales extends JFrame {
+public class VentanaCuadriceps extends JFrame {
 
 	private JPanel contentPane;
-	private JButton btnContinuar;
 
 	/**
 	 * Launch the application.
@@ -41,7 +35,7 @@ public class VentanaAbdominales extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaAbdominales frame = new VentanaAbdominales();
+					VentanaCuadriceps frame = new VentanaCuadriceps();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,8 +47,8 @@ public class VentanaAbdominales extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaAbdominales() {
-		
+	public VentanaCuadriceps() {
+	
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -66,7 +60,7 @@ public class VentanaAbdominales extends JFrame {
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
-		JLabel lblEjerciciosDeAbdominales = new JLabel("Ejercicios de abdominales");
+		JLabel lblEjerciciosDeAbdominales = new JLabel("Ejercicios de Cuadriceps");
 		panelNorte.add(lblEjerciciosDeAbdominales);
 		
 		JPanel panelSur = new JPanel();
@@ -80,7 +74,7 @@ public class VentanaAbdominales extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaAbdominales.this.dispose();
+					VentanaCuadriceps.this.dispose();
 				}
 			}
 		});
@@ -106,7 +100,7 @@ public class VentanaAbdominales extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosAbdominales();
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosCuadricepsDetras();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
@@ -121,6 +115,5 @@ public class VentanaAbdominales extends JFrame {
 		this.setResizable(false);
 	
 	}
-		
-	
+
 }

@@ -1,4 +1,4 @@
-package Ventanas;
+package Ventanas.VentanasEjercicios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,10 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import Paneles.PanelBiceps;
-import Paneles.PanelLumbares;
+import Paneles.PanelAbdominales;
+import Paneles.PanelHombros;
+import Ventanas.VentanaElegirEjercicios;
 
-public class VentanaLumbares extends JFrame {
+public class VentanaHombros extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnContinuar;
@@ -33,7 +34,7 @@ public class VentanaLumbares extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaLumbares frame = new VentanaLumbares();
+					VentanaHombros frame = new VentanaHombros();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,13 +42,12 @@ public class VentanaLumbares extends JFrame {
 			}
 		});
 	}
-	
-
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaLumbares() {
+	public VentanaHombros() {
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -73,7 +73,7 @@ public class VentanaLumbares extends JFrame {
 					JOptionPane.showMessageDialog(null, "Esperemos que vuelvas");
 					VentanaElegirEjercicios nuevaVentana = new VentanaElegirEjercicios();
 					nuevaVentana.setVisible(true);
-					VentanaLumbares.this.dispose();
+					VentanaHombros.this.dispose();
 				}
 			}
 		});
@@ -99,7 +99,7 @@ public class VentanaLumbares extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scroll, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
-		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosLumbares();
+		ArrayList<String> aRutas = VentanaElegirEjercicios.bd.obtenerRutasFotosHombros();
 		for(int j=0;j<aRutas.size();j++){
 			String ruta = aRutas.get(j);
 			System.out.println(ruta);
