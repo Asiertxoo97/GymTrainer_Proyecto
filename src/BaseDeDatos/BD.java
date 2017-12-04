@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Datos.Charla;
 import Datos.Clase;
+import Datos.Impartidor;
 import Datos.Profesor;
 import Datos.RandomString;
 
@@ -156,11 +158,20 @@ public class BD {
 			stmt.executeUpdate(Profesor);
 		} catch (SQLException e) {
 		} // Tabla ya existe. Nada que hacer.
+		
+		// CREAR TABLA RUTINA
+				try {
+					stmt.setQueryTimeout(30);
+					String Profesor = "CREATE TABLE Rutina (dni_usuario string,numero int,"
+							+ "cod_ejercicio string)";
+					stmt.executeUpdate(Profesor);
+				} catch (SQLException e) {
+				} // Tabla ya existe. Nada que hacer.
 
 		return null;
 	}
 	
-//	Métodos para introducir Imagenes en Base de Datos
+
 	
 	
 
@@ -375,6 +386,88 @@ public class BD {
 			e.printStackTrace();
 		}
 		return listaProfesores;
+	}
+
+	 public List<Charla> obtenerCharlas() {
+		List<Charla> listaCharlas= new ArrayList<Charla>();
+		List<Impartidor> listaImpartidores = obtenerImpartidores();
+		String query = "SELECT * FROM Charla";
+		String cod_charla;
+		String nombre;
+		String dni_impartidor;
+		String fecha;
+		double tiempo;
+		int numPlazas;
+
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			cod_charla = rs.getString("cod_charla");
+			nombre = rs.getString("nombre");
+			dni_impartidor = rs.getString("dni_impartidor");
+			fecha = rs.getString("fecha");
+			tiempo = rs.getDouble("tiempo");
+			numPlazas = rs.getInt("numPlazas");
+
+			for (int i = 0; i < listaImpartidores.size(); i++) {
+				if (listaImpartidores.get(i).getDni_impar().equals(dni_impartidor)) {
+					listaCharlas.add(new Charla(cod_charla, listaImpartidores.get(i), nombre, fecha, tiempo, numPlazas));
+				}
+			}
+			System.out.println(listaCharlas.get(0).toString());
+			if (!rs.next())
+				System.out.println("No se han obtenido resultados de la select");
+			while (rs.next()) { // Mientras el ResultSet tenga datos
+				cod_charla = rs.getString("cod_charla");
+				nombre = rs.getString("nombre");
+				dni_impartidor = rs.getString("dni_impartidor");
+				fecha = rs.getString("fecha");
+				tiempo = rs.getDouble("tiempo");
+
+				for (int i = 0; i < listaImpartidores.size(); i++) {
+					if (listaImpartidores.get(i).getDni_impar().equals(dni_impartidor)) {
+						listaCharlas.add(new Charla(cod_charla, listaImpartidores.get(i), nombre, fecha, tiempo, numPlazas));
+					}
+				}
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaCharlas;
+	}
+
+	public List<Impartidor> obtenerImpartidores() {
+		List<Impartidor> listaImpartidores = new ArrayList<Impartidor>();
+		String query = "SELECT * FROM Impartidor";
+		String nombre;
+		String dni;
+		String apellidos;
+		int salario;
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			dni = rs.getString("dni_impartidor");
+			nombre = rs.getString("nombre");
+			apellidos = rs.getString("apellidos");
+			salario = rs.getInt("salario");
+			listaImpartidores.add(new Impartidor(dni, nombre, apellidos, salario));
+			System.out.println(listaImpartidores.get(0).toString());
+			if (!rs.next())
+				System.out.println("No se han obtenido resultados de la select");
+			while (rs.next()) { // Mientras el ResultSet tenga datos
+				dni = rs.getString("dni_impartidor");
+				nombre = rs.getString("nombre");
+				apellidos = rs.getString("apellidos");
+				salario = rs.getInt("salario");
+				listaImpartidores.add(new Impartidor(dni, nombre, apellidos, salario));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaImpartidores;
 	}
 
 	public void registrarParticipante(String dNI, String nom, String ape, String cuen) {

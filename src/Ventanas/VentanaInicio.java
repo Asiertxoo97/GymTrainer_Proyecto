@@ -126,9 +126,18 @@ public class VentanaInicio extends JFrame {
 				}else{
 					//NICK Y CONTRASEÑA BIEN INTRODUCIDOS; USUARIO EXISTE.
 					JOptionPane.showMessageDialog(null, "BIENVENIDO");
+					if(textFieldNick.getText().equals("admin")&&passwordFieldContrasenia.getText().equals("admin")){
+						//EL USUARIO ES ADMINISTRADOR; ACCEDE A VENTANA ADMINISTRADOR Y TIENE VENTAJAS DE ADMINISTRADOR
+		//TODO			//VentanaAdministrador frame = new VentanaAdministrador();
+						VentanaDecision frame2 = new VentanaDecision();
+						frame2.setVisible(true);
+						VentanaInicio.this.dispose();
+						
+					}else{
 					VentanaMenu frame2 = new VentanaMenu(bd);
 					frame2.setVisible(true);
 					VentanaInicio.this.dispose();
+					}
 				}
 			}
 		});
