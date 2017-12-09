@@ -12,9 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import Datos.Charla;
 import Datos.Clase;
+import Datos.Ejercicio;
 import Datos.Impartidor;
 import Datos.Profesor;
 import Datos.RandomString;
+import Datos.Rutina;
+import Datos.Usuario;
 
 public class BD {
 
@@ -128,7 +131,7 @@ public class BD {
 		try {
 			stmt.setQueryTimeout(30);
 			String Charla = "CREATE TABLE Charla (cod_charla string,nombre string,dni_impartidor string,"
-					+ "fecha date,tiempo double,numPlazas int)";
+					+ "fecha string,tiempo double,numPlazas int)";
 			stmt.executeUpdate(Charla);
 		} catch (SQLException e) {
 		} // Tabla ya existe. Nada que hacer.
@@ -310,6 +313,7 @@ public class BD {
 		List<Clase> listaClases = new ArrayList<Clase>();
 		List<Profesor> listaProfesores = obtenerProfesores();
 		String query = "SELECT * FROM Clase";
+		String queryNum = "SELECT count * FROM Clase";
 		String cod_clase;
 		String nombre;
 		String dni_profesor;
@@ -319,6 +323,7 @@ public class BD {
 
 		try {
 			ResultSet rs = stmt.executeQuery(query);
+			ResultSet rsNum = stmt.executeQuery(queryNum);
 			cod_clase = rs.getString("cod_clase");
 			nombre = rs.getString("nombre");
 			dni_profesor = rs.getString("dni_profesor");
@@ -326,12 +331,13 @@ public class BD {
 			tiempo = rs.getDouble("tiempo");
 			numPlazas = rs.getInt("numPlazas");
 
-			for (int i = 0; i < listaProfesores.size(); i++) {
+			for (int i = 0; i < rsNum.getFetchSize(); i++) {
 				if (listaProfesores.get(i).getDni_prof().equals(dni_profesor)) {
 					listaClases.add(new Clase(cod_clase, listaProfesores.get(i), nombre, fecha, tiempo, numPlazas));
 				}
 			}
 			System.out.println(listaClases.get(0).toString());
+			
 			if (!rs.next())
 				System.out.println("No se han obtenido resultados de la select");
 			while (rs.next()) { // Mientras el ResultSet tenga datos
@@ -341,11 +347,11 @@ public class BD {
 				fecha = rs.getString("fecha");
 				tiempo = rs.getDouble("tiempo");
 
-				for (int i = 0; i < listaProfesores.size(); i++) {
+				for (int i = 0; i < rsNum.getFetchSize(); i++) {
 					if (listaProfesores.get(i).getDni_prof().equals(dni_profesor)) {
 						listaClases.add(new Clase(cod_clase, listaProfesores.get(i), nombre, fecha, tiempo, numPlazas));
 					}
-				}
+				}	
 			}
 
 			rs.close();
@@ -356,6 +362,30 @@ public class BD {
 		return listaClases;
 	}
 
+	public void eliminarClase(String cod_clase){
+
+		String query = "DELETE FROM Clase WHERE cod_clase ='" +cod_clase+ "'";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+		
+	}
+	public void eliminarCharla(String cod_charla){
+
+		String query = "DELETE FROM Charla WHERE cod_charla ='" +cod_charla+ "'";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+		
+	}
 	public List<Profesor> obtenerProfesores() {
 		List<Profesor> listaProfesores = new ArrayList<Profesor>();
 		String query = "SELECT * FROM Profesor";
@@ -513,10 +543,10 @@ public class BD {
 		return resp;
 	}
 
-	public void introducirClase(String cod_clase, String nombre, String dni_profesor, String fecha, double tiempo) {
+	public void introducirClase(String cod_clase, String nombre, String dni_profesor, String fecha, double tiempo,int numPlazas) {
 
-		String query = "INSERT INTO Clase(cod_clase ,nombre ,dni_profesor ,fecha ,tiempo ) " + "VALUES('" + cod_clase
-				+ "','" + nombre + "','" + dni_profesor + "','" + fecha + "','" + tiempo + "')";
+		String query = "INSERT INTO Clase(cod_clase ,nombre ,dni_profesor ,fecha ,tiempo,numPlazas ) " + "VALUES('" + cod_clase
+				+ "','" + nombre + "','" + dni_profesor + "','" + fecha + "','" + tiempo +"','"+numPlazas+ "')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
@@ -554,10 +584,10 @@ public class BD {
 		return resp;
 	}
 
-	public void introducirCharla(String cod_charla, String nombre, String dni_impartidor, Date fecha, double tiempo) {
+	public void introducirCharla(String cod_charla, String nombre, String dni_impartidor, String fecha, double tiempo,int numPlazas) {
 
-		String query = "INSERT INTO Charla(cod_charla ,nombre ,dni_impartidor ,fecha ,tiempo ) " + "VALUES('"
-				+ cod_charla + "','" + nombre + "','" + dni_impartidor + "','" + fecha + "','" + tiempo + "')";
+		String query = "INSERT INTO Charla(cod_charla ,nombre ,dni_impartidor ,fecha ,tiempo,numPlazas ) " + "VALUES('"
+				+ cod_charla + "','" + nombre + "','" + dni_impartidor + "','" + fecha + "','" + tiempo +"','"+numPlazas+ "')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
@@ -688,4 +718,102 @@ public class BD {
 	  rs.close(); } catch (SQLException e) { // TODO Auto-generated catch block
 	  e.printStackTrace(); } return aRutas; }
 	
+	  public List<Usuario> obtenerUsuarios(){
+		  List<Usuario> listaUsuarios= new ArrayList<Usuario>();
+		  String query = "SELECT * FROM Usuario";
+			String nombre;
+			String dni;
+			String apellidos;
+			String nic;
+			String con;
+			String cuent;
+			
+			try {
+				ResultSet rs = stmt.executeQuery(query);
+				dni = rs.getString("DNI");
+				nombre = rs.getString("nombre");
+				apellidos = rs.getString("apellidos");
+				nic = rs.getString("nick");
+				cuent = rs.getString("cuenta_bancaria");
+				con = rs.getString("contrasenia");
+				listaUsuarios.add(new Usuario(dni, nombre,nic,con, apellidos, cuent));
+				System.out.println(listaUsuarios.get(0).toString());
+				if (!rs.next())
+					System.out.println("No se han obtenido resultados de la select");
+				while (rs.next()) { // Mientras el ResultSet tenga datos
+					dni = rs.getString("DNI");
+					nombre = rs.getString("nombre");
+					apellidos = rs.getString("apellidos");
+					nic = rs.getString("nick");
+					cuent = rs.getString("cuenta_bancaria");
+					con = rs.getString("contrasenia");
+					listaUsuarios.add(new Usuario(dni, nombre,nic,con, apellidos, cuent));
+				}
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  return listaUsuarios;
+	  }
+	  
+	  
+	  public List<Rutina> obtenerRutina(){
+		  
+	  List<Rutina> Rutina= new ArrayList<Rutina>();
+	  List<Usuario> Usuarios = obtenerUsuarios();
+		String query = "SELECT * FROM Rutina";
+		
+		ArrayList<Ejercicio> listaEjercicio = null;
+		String DNI;
+		String cod_ejercicio;
+		int numero;
+		
+
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			cod_ejercicio = rs.getString("cod_ejercicio");
+			DNI = rs.getString("DNI");
+			numero = rs.getInt("numero");
+			
+			for (int i = 0; i < Usuarios.size(); i++) {
+				if (Usuarios.get(i).getDNI().equals(DNI)) {
+					for(int j = 0;j < listaEjercicio.size();j++){
+						if(listaEjercicio.get(i).getId_eje().equals(cod_ejercicio)){
+							Rutina.add(new Rutina(listaEjercicio, Usuarios.get(i), numero));
+						}
+						
+					}
+					
+				}
+			}
+			System.out.println(Usuarios.get(0).toString());
+			if (!rs.next())
+				System.out.println("No se han obtenido resultados de la select");
+			while (rs.next()) { // Mientras el ResultSet tenga datos
+				cod_ejercicio = rs.getString("cod_ejercicio");
+				DNI = rs.getString("DNI");
+				numero = rs.getInt("numero");
+
+				for (int i = 0; i < Usuarios.size(); i++) {
+					if (Usuarios.get(i).getDNI().equals(DNI)) {
+						for(int j = 0;j < listaEjercicio.size();j++){
+							if(listaEjercicio.get(i).getId_eje().equals(cod_ejercicio)){
+								Rutina.add(new Rutina(listaEjercicio, Usuarios.get(i), numero));
+							}
+							
+						}
+						
+					}
+				}
+			}
+
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Rutina;
+	}
+
 }

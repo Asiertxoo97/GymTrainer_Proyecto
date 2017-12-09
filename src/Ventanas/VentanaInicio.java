@@ -129,7 +129,7 @@ public class VentanaInicio extends JFrame {
 					if(textFieldNick.getText().equals("admin")&&passwordFieldContrasenia.getText().equals("admin")){
 						//EL USUARIO ES ADMINISTRADOR; ACCEDE A VENTANA ADMINISTRADOR Y TIENE VENTAJAS DE ADMINISTRADOR
 		//TODO			//VentanaAdministrador frame = new VentanaAdministrador();
-						VentanaDecision frame2 = new VentanaDecision();
+						VentanaAdministrador frame2 = new VentanaAdministrador(bd);
 						frame2.setVisible(true);
 						VentanaInicio.this.dispose();
 						
