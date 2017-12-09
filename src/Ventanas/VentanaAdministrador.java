@@ -168,6 +168,17 @@ public class VentanaAdministrador extends JFrame {
 		menuBar.add(mnModificarCharla);
 		
 		JMenuItem mntmEliminarCharla = new JMenuItem("ELIMINAR CHARLA");
+		mntmEliminarCharla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el código de la charla que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Está seguro de querer eliminar la charla con código "+cod);
+				if(opc==0){
+					bd.eliminarCharla(cod);
+					System.out.println("Charla con código "+cod+" eliminada.");
+				}
+				
+			}
+		});
 		mnModificarCharla.add(mntmEliminarCharla);
 		
 		mntmAadirCharla = new JMenuItem("A\u00D1ADIR CHARLA");
@@ -208,6 +219,17 @@ public class VentanaAdministrador extends JFrame {
 		menuBar_1.add(mnModificarClase);
 		
 		mntmEliminarClase = new JMenuItem("ELIMINAR CLASE");
+		mntmEliminarClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el código de la clase que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Está seguro de querer eliminar la clase con código "+cod);
+				if(opc==0){
+					bd.eliminarClase(cod);
+					System.out.println("Clase con código "+cod+" eliminada.");
+				}
+				
+			}
+		});
 		mnModificarClase.add(mntmEliminarClase);
 		
 		mntmAadirClase = new JMenuItem("A\u00D1ADIR CLASE");
