@@ -104,7 +104,7 @@ public class BD {
 		// CREAR TABLA EJERCICIO
 		try {
 			stmt.setQueryTimeout(30);
-			String Ejercicio = "CREATE TABLE Ejercicio (cod_ejercicio string,nombre string,descripci�n string,"
+			String Ejercicio = "CREATE TABLE Ejercicio (cod_ejercicio string,nombre string,descripcion string,"
 					+ "tiempo_estimado double,GIF string)";
 			stmt.executeUpdate(Ejercicio);
 		} catch (SQLException e) {
@@ -815,5 +815,32 @@ public class BD {
 		}
 		return Rutina;
 	}
+	  
+	  public void introducirEjercicio(String Codigo,String Nombre, String Descripcion,double Duracion,String Gif){
+		  
+		 
+		String query = "INSERT INTO Ejercicio(cod_ejercicio ,nombre ,descripcion ,tiempo_estimado, GIF ) " + "VALUES('" 
+						 + Codigo + "','" + Nombre + "','" + Descripcion + "','" + Duracion +"','"+Gif+ "')";
+		try {
+				stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+			
+	  }
+	  
+	  public void eliminarEjercicio(String cod_ejercicio){
+		 
+		  String query = "DELETE FROM Ejercicio WHERE cod_ejercicio ='" +cod_ejercicio+ "'";
+			try {
+				stmt.executeUpdate(query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			;
+	  }
 
 }

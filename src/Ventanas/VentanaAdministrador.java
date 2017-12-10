@@ -37,6 +37,7 @@ import javax.swing.JComboBox;
 import com.toedter.calendar.JDayChooser;
 import com.toedter.calendar.JDateChooser;
 import java.awt.FlowLayout;
+import javax.swing.JEditorPane;
 
 public class VentanaAdministrador extends JFrame {
 
@@ -68,6 +69,14 @@ public class VentanaAdministrador extends JFrame {
 	private static JLabel lblFecha= new JLabel(); 
 	private static JButton btnCrear;
 	private static JComboBox<String> comboBoxImpartidores;
+	private JPanel panel_6;
+	private JMenuBar menuBar_3;
+	private JMenu mnMo;
+	private JMenuItem mntmElim;
+	private JMenuItem mntmAadirEjercicio;
+	private JMenuItem mntmAlterarEjercicio;
+	private static  JEditorPane editorPaneDescripcion = new JEditorPane();
+	private static JTextField textGif;
 	
 	/**
 	 * Launch the application.
@@ -92,6 +101,8 @@ public class VentanaAdministrador extends JFrame {
 					lblPlazas.setVisible(false);
 					lblFecha.setVisible(false);
 					btnCrear.setVisible(false);
+					editorPaneDescripcion.setVisible(false);
+					textGif.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -138,11 +149,15 @@ public class VentanaAdministrador extends JFrame {
 					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth())+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
 					bd.introducirClase(textCodigo.getText(), textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
 					System.out.println("Clase introducida correctamente. Enhorabuena eres el puto amo!");
-				}else{
+				}else if(lblProfesor.getText()=="IMPARTIDOR"){
 					String ImpartidorDNI = ((String)comboBoxImpartidores.getSelectedItem()).substring(3, 14);
 					String fecha =  String.valueOf(Fecha.getDate().getDay())+"/"+String.valueOf(Fecha.getDate().getMonth())+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
 					bd.introducirCharla(textCodigo.getText(), textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
 					System.out.println("Charla introducida correctamente. Enhorabuena eres el puto amo!");
+				}else{
+					
+					bd.introducirEjercicio(textCodigo.getText(),textNombre.getText(),editorPaneDescripcion.getText(),Double.parseDouble(textDuracion.getText()),textGif.getText());
+					System.out.println("Ejercicio introducido correctamente. Enhorabuena eres el puto amo!");
 				}
 				
 			}
@@ -199,6 +214,8 @@ public class VentanaAdministrador extends JFrame {
 				lblPlazas.setVisible(true);
 				lblFecha.setVisible(true);
 				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(false);
+				textGif.setVisible(false);
 				
 				
 			}
@@ -250,6 +267,8 @@ public class VentanaAdministrador extends JFrame {
 				lblPlazas.setVisible(true);
 				lblFecha.setVisible(true);
 				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(false);
+				textGif.setVisible(false);
 				
 				
 			}
@@ -260,6 +279,60 @@ public class VentanaAdministrador extends JFrame {
 		
 		mntmAlterarClase = new JMenuItem("ALTERAR CLASE");
 		mnModificarClase.add(mntmAlterarClase);
+		
+		panel_6 = new JPanel();
+		panel_4.add(panel_6, BorderLayout.WEST);
+		panel_6.setLayout(new BorderLayout(0, 0));
+		
+		menuBar_3 = new JMenuBar();
+		menuBar_3.setToolTipText("MODIFICAR EJERCICIO");
+		panel_6.add(menuBar_3, BorderLayout.EAST);
+		
+		mnMo = new JMenu("MODIFICAR EJERCICIO");
+		menuBar_3.add(mnMo);
+		
+		mntmElim = new JMenuItem("ELIMINAR EJERCICIO");
+		mntmElim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el código del ejercicio que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Está seguro de querer eliminar el ejercicio con código "+cod);
+				if(opc==0){
+					bd.eliminarEjercicio(cod);
+					System.out.println("Ejercicio con código "+cod+" eliminado.");
+				}
+				
+			}
+		});
+		mnMo.add(mntmElim);
+		
+		mntmAadirEjercicio = new JMenuItem("A\u00D1ADIR EJERCICIO");
+		mntmAadirEjercicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_8.setVisible(true);
+				textCodigo.setVisible(true);
+				textDuracion.setVisible(true);
+				textNombre.setVisible(true);
+				textPlazas.setVisible(false);
+				lblDuracion.setText("DURACION EJERCICIO");
+				lblProfesor.setText("DESCRIPCION");
+				lblPlazas.setText("GIF");
+				comboBoxProfesores.setVisible(false);
+				comboBoxImpartidores.setVisible(false);
+				Fecha.setVisible(false);
+				lblNombre.setVisible(true);
+				lblProfesor.setVisible(true);
+				lblDuracion.setVisible(true);
+				lblPlazas.setVisible(true);
+				lblFecha.setVisible(false);
+				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(true);
+				textGif.setVisible(true);			
+			}
+		});
+		mnMo.add(mntmAadirEjercicio);
+		
+		mntmAlterarEjercicio = new JMenuItem("ALTERAR EJERCICIO");
+		mnMo.add(mntmAlterarEjercicio);
 		
 		panel_5 = new JPanel();
 		panel_4.add(panel_5, BorderLayout.SOUTH);
@@ -350,11 +423,14 @@ public class VentanaAdministrador extends JFrame {
 		panel_8.add(Fecha);
 		
 		
-	}
-	
-	
+		editorPaneDescripcion.setBounds(120, 130, 241, 97);
+		panel_8.add(editorPaneDescripcion);
 		
-			
-			
-	
+		textGif = new JTextField();
+		textGif.setBounds(263, 99, 152, 20);
+		panel_8.add(textGif);
+		textGif.setColumns(10);
+		
+		
+	}
 }
