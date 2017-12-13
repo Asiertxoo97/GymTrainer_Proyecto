@@ -24,12 +24,12 @@ public class VentanaInscripcionCharla extends JFrame {
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellidos;
 	private static BD bd;
-	private static JTextField textFieldUsuarioPaypal;
-	private static JTextField textFieldContraseniaPaypal;
-	private static JLabel lblContraseaPaypal;
-	private static JLabel lblUsuarioPaypal;
-	private static JRadioButton rdbtnPaypal;
-	private static JRadioButton rdbtnTarjetaCrdito;
+	private  JTextField textFieldUsuarioPaypal;
+	private  JTextField textFieldContraseniaPaypal;
+	private  JLabel lblContraseaPaypal;
+	private  JLabel lblUsuarioPaypal;
+	private  JRadioButton rdbtnPaypal;
+	private  JRadioButton rdbtnTarjetaCrdito;
 	/**
 	 * Launch the application.
 	 */
@@ -80,8 +80,7 @@ public class VentanaInscripcionCharla extends JFrame {
 				else if(rdbtnTarjetaCrdito.isSelected()){
 					
 					cuentaBancaria= textFieldUsuarioPaypal.getText()+"//"+textFieldContraseniaPaypal.getText();;
-					bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText()
-							, textFieldApellidos.getText(), cuentaBancaria);
+					bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText(),textFieldApellidos.getText(), cuentaBancaria);
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Debes introducir una cuenta bancaria.");
