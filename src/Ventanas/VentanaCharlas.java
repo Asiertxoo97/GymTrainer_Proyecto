@@ -72,6 +72,13 @@ public class VentanaCharlas extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 
 		JButton btnAaa = new JButton("INSCRIBIRSE A LAS CLASES SELECCIONADAS");
+		btnAaa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaInscripcionCharla frame = new VentanaInscripcionCharla();
+				frame.setVisible(true);
+				VentanaCharlas.this.dispose();
+			}
+		});
 		panelSur.add(btnAaa);
 
 		JButton btnAtrs = new JButton("ATRÃ�S");

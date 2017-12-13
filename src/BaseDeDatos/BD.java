@@ -505,13 +505,10 @@ public class BD {
 		 * Crear el c�digo personal para cada Participante. Seguidamente, comprobar que
 		 * el c�digo no existe, y en caso de existir crear uno nuevo.
 		 */
-		RandomString codigoAleatorio = null;
-		do {
-			codigoAleatorio = new RandomString(8, ThreadLocalRandom.current());
-		} while (participanteAlistado(codigoAleatorio));
+		
 
-		String query = "INSERT INTO Usuario(DNI,nombre, nick,constrasenia,apellido,cuenta_bancaria,codigo) "
-				+ "VALUES('" + dNI + "','" + nom + "','" + ape + "','" + cuen + "','" + codigoAleatorio + "')";
+		String query = "INSERT INTO Participante(DNI,nombre,apellido,cuenta_bancaria,codigo) "
+				+ "VALUES('" + dNI + "','" + nom + "','" + ape + "','" + cuen + "','" + "CODIGO" + "')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
