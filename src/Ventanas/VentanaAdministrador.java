@@ -44,39 +44,44 @@ public class VentanaAdministrador extends JFrame {
 	private JPanel contentPane;
 	private static BD bd;
 	private JPanel panel_4;
-	private JMenuBar menuBar_1;
 	private JMenu mnModificarClase;
 	private JMenuItem mntmEliminarClase;
 	private JMenuItem mntmAadirClase;
 	private JMenuItem mntmAlterarClase;
 	private JMenuItem mntmAadirCharla;
 	private JMenuItem mntmAlterarCharla;
-	private JPanel panel_5;
-	private JMenuBar menuBar_2;
 	private JMenu mnModificarRutina;
 	private JMenuItem mntmEliminarRutina;
-	private static JComboBox<String> comboBoxProfesores;
-	private static 	JPanel panel_8 = new JPanel();
-	private static JTextField textCodigo = new JTextField();
-	private static JTextField textNombre = new JTextField();
-	private static JTextField textDuracion = new JTextField();
-	private static JTextField textPlazas = new JTextField(); 
-	private static JLabel lblNombre = new JLabel(); 
-	private static JLabel lblDuracion= new JLabel(); 
-	private static JLabel lblPlazas= new JLabel();  
-	private static JLabel lblProfesor= new JLabel(); 
-	private static JDateChooser Fecha= new JDateChooser(); 
-	private static JLabel lblFecha= new JLabel(); 
-	private static JButton btnCrear;
-	private static JComboBox<String> comboBoxImpartidores;
+	private  JComboBox<String> comboBoxProfesores;
+	private  JPanel panel_8 = new JPanel();
+	private  JTextField textCodigo = new JTextField();
+	private  JTextField textNombre = new JTextField();
+	private  JTextField textDuracion = new JTextField();
+	private  JTextField textPlazas = new JTextField(); 
+	private  JLabel lblCodigo = new JLabel("CODIGO :");
+	private  JLabel lblNombre = new JLabel(); 
+	private  JLabel lblDuracion= new JLabel(); 
+	private  JLabel lblPlazas= new JLabel();  
+	private  JLabel lblProfesor= new JLabel(); 
+	private  JDateChooser Fecha= new JDateChooser(); 
+	private  JLabel lblFecha= new JLabel(); 
+	private  JButton btnCrear;
+	private  JComboBox<String> comboBoxImpartidores;
 	private JPanel panel_6;
 	private JMenuBar menuBar_3;
 	private JMenu mnMo;
 	private JMenuItem mntmElim;
 	private JMenuItem mntmAadirEjercicio;
 	private JMenuItem mntmAlterarEjercicio;
-	private static  JEditorPane editorPaneDescripcion = new JEditorPane();
-	private static JTextField textGif;
+	private JEditorPane editorPaneDescripcion = new JEditorPane();
+	private JTextField textGif;
+	private JComboBox<String> comboBox_EJERCICIO_1 = new JComboBox<String>();
+	private JComboBox <String>comboBox_EJERCICIO_2 = new JComboBox<String>();
+	private JComboBox <String>comboBox_EJERCICIO_3 = new JComboBox<String>();
+	private JComboBox <String>comboBox_EJERCICIO_4 = new JComboBox<String>();
+	private JComboBox <String>comboBox_EJERCICIO_5 = new JComboBox<String>();
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -87,22 +92,7 @@ public class VentanaAdministrador extends JFrame {
 				try {
 					VentanaAdministrador frame = new VentanaAdministrador(bd);
 					frame.setVisible(true);
-					panel_8.setVisible(true);
-					textCodigo.setVisible(false);
-					textDuracion.setVisible(false);
-					textNombre.setVisible(false);
-					textPlazas.setVisible(false);
-					comboBoxProfesores.setVisible(false);
-					comboBoxImpartidores.setVisible(false);
-					Fecha.setVisible(false);
-					lblNombre.setVisible(false);
-					lblProfesor.setVisible(false);
-					lblDuracion.setVisible(false);
-					lblPlazas.setVisible(false);
-					lblFecha.setVisible(false);
-					btnCrear.setVisible(false);
-					editorPaneDescripcion.setVisible(false);
-					textGif.setVisible(false);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -120,6 +110,23 @@ public class VentanaAdministrador extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		panel_8.setVisible(false);
+		textCodigo.setVisible(false);
+		textDuracion.setVisible(false);
+		textNombre.setVisible(false);
+		textPlazas.setVisible(false);
+		comboBoxProfesores.setVisible(false);
+		comboBoxImpartidores.setVisible(false);
+		Fecha.setVisible(false);
+		lblNombre.setVisible(false);
+		lblProfesor.setVisible(false);
+		lblDuracion.setVisible(false);
+		lblPlazas.setVisible(false);
+		lblFecha.setVisible(false);
+		btnCrear.setVisible(false);
+		editorPaneDescripcion.setVisible(false);
+		textGif.setVisible(false);
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -172,116 +179,12 @@ public class VentanaAdministrador extends JFrame {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_7 = new JPanel();
-		panel_3.add(panel_7, BorderLayout.EAST);
-		panel_7.setLayout(new BorderLayout(0, 0));
-		
-		JMenuBar menuBar = new JMenuBar();
-		panel_7.add(menuBar, BorderLayout.NORTH);
-		
-		JMenu mnModificarCharla = new JMenu("MODIFICAR CHARLA");
-		menuBar.add(mnModificarCharla);
-		
-		JMenuItem mntmEliminarCharla = new JMenuItem("ELIMINAR CHARLA");
-		mntmEliminarCharla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la charla que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la charla con cï¿½digo "+cod);
-				if(opc==0){
-					bd.eliminarCharla(cod);
-					System.out.println("Charla con cï¿½digo "+cod+" eliminada.");
-				}
-				
-			}
-		});
-		mnModificarCharla.add(mntmEliminarCharla);
-		
-		mntmAadirCharla = new JMenuItem("A\u00D1ADIR CHARLA");
-		mntmAadirCharla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_8.setVisible(true);
-				textCodigo.setVisible(true);
-				textDuracion.setVisible(true);
-				textNombre.setVisible(true);
-				textPlazas.setVisible(true);
-				lblProfesor.setText("IMPARTIDOR");
-				comboBoxProfesores.setVisible(false);
-				comboBoxImpartidores.setVisible(true);
-				Fecha.setVisible(true);
-				lblNombre.setVisible(true);
-				lblProfesor.setVisible(true);
-				lblDuracion.setVisible(true);
-				lblPlazas.setVisible(true);
-				lblFecha.setVisible(true);
-				btnCrear.setVisible(true);
-				editorPaneDescripcion.setVisible(false);
-				textGif.setVisible(false);
-				
-				
-			}
-		});
-		mnModificarCharla.add(mntmAadirCharla);
-		
-		mntmAlterarCharla = new JMenuItem("ALTERAR CHARLA");
-		mnModificarCharla.add(mntmAlterarCharla);
-		
 		panel_4 = new JPanel();
 		panel_3.add(panel_4, BorderLayout.NORTH);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		menuBar_1 = new JMenuBar();
-		panel_4.add(menuBar_1, BorderLayout.NORTH);
-		
-		mnModificarClase = new JMenu("MODIFICAR CLASE");
-		menuBar_1.add(mnModificarClase);
-		
-		mntmEliminarClase = new JMenuItem("ELIMINAR CLASE");
-		mntmEliminarClase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la clase que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la clase con cï¿½digo "+cod);
-				if(opc==0){
-					bd.eliminarClase(cod);
-					System.out.println("Clase con cï¿½digo "+cod+" eliminada.");
-				}
-				
-			}
-		});
-		mnModificarClase.add(mntmEliminarClase);
-		
-		mntmAadirClase = new JMenuItem("A\u00D1ADIR CLASE");
-		mntmAadirClase.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_8.setVisible(true);
-				textCodigo.setVisible(true);
-				textDuracion.setVisible(true);
-				textNombre.setVisible(true);
-				textPlazas.setVisible(true);
-				lblProfesor.setText("PROFESOR");
-				comboBoxProfesores.setVisible(true);
-				comboBoxImpartidores.setVisible(false);
-				Fecha.setVisible(true);
-				lblNombre.setVisible(true);
-				lblProfesor.setVisible(true);
-				lblDuracion.setVisible(true);
-				lblPlazas.setVisible(true);
-				lblFecha.setVisible(true);
-				btnCrear.setVisible(true);
-				editorPaneDescripcion.setVisible(false);
-				textGif.setVisible(false);
-				
-				
-			}
-		});
-		
-		
-		mnModificarClase.add(mntmAadirClase);
-		
-		mntmAlterarClase = new JMenuItem("ALTERAR CLASE");
-		mnModificarClase.add(mntmAlterarClase);
-		
 		panel_6 = new JPanel();
-		panel_4.add(panel_6, BorderLayout.WEST);
+		panel_4.add(panel_6, BorderLayout.CENTER);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
 		menuBar_3 = new JMenuBar();
@@ -334,25 +237,141 @@ public class VentanaAdministrador extends JFrame {
 		mntmAlterarEjercicio = new JMenuItem("ALTERAR EJERCICIO");
 		mnMo.add(mntmAlterarEjercicio);
 		
-		panel_5 = new JPanel();
-		panel_4.add(panel_5, BorderLayout.SOUTH);
-		
-		menuBar_2 = new JMenuBar();
-		panel_5.add(menuBar_2);
-		
 		mnModificarRutina = new JMenu("MODIFICAR RUTINA");
-		menuBar_2.add(mnModificarRutina);
+		menuBar_3.add(mnModificarRutina);
 		
 		mntmEliminarRutina = new JMenuItem("ELIMINAR RUTINA");
 		mnModificarRutina.add(mntmEliminarRutina);
 		
+		JMenuItem mntmAadirRutina = new JMenuItem("A\u00D1ADIR RUTINA");
+		mntmAadirRutina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_8.setVisible(true);
+				textCodigo.setVisible(true);
+				textDuracion.setVisible(true);
+				textNombre.setVisible(true);
+				textPlazas.setVisible(true);
+				lblProfesor.setText("IMPARTIDOR");
+				comboBoxProfesores.setVisible(false);
+				comboBoxImpartidores.setVisible(true);
+				Fecha.setVisible(true);
+				lblCodigo.setText("EJERCICIO Nº 1:");
+				lblNombre.setVisible(true);
+				lblNombre.setText("EJERCICIO Nº 2:");
+				lblProfesor.setVisible(true);
+				lblProfesor.setText("EJERCICIO Nº 4:");
+				lblDuracion.setVisible(true);
+				lblDuracion.setText("EJERCICIO Nº 3:");
+				lblPlazas.setVisible(false);
+				lblFecha.setText("EJERCICIO Nº 5:");
+				lblFecha.setVisible(true);
+				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(false);
+				textGif.setVisible(false);
+				
+				
+			}
+		});
+		mnModificarRutina.add(mntmAadirRutina);
+		
+		JMenu mnModificarCharla = new JMenu("MODIFICAR CHARLA");
+		menuBar_3.add(mnModificarCharla);
+		
+		JMenuItem mntmEliminarCharla = new JMenuItem("ELIMINAR CHARLA");
+		mntmEliminarCharla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la charla que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la charla con cï¿½digo "+cod);
+				if(opc==0){
+					bd.eliminarCharla(cod);
+					System.out.println("Charla con cï¿½digo "+cod+" eliminada.");
+				}
+				
+			}
+		});
+		mnModificarCharla.add(mntmEliminarCharla);
+		
+		mntmAadirCharla = new JMenuItem("A\u00D1ADIR CHARLA");
+		mntmAadirCharla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_8.setVisible(true);
+				textCodigo.setVisible(true);
+				textDuracion.setVisible(true);
+				textNombre.setVisible(true);
+				textPlazas.setVisible(true);
+				lblProfesor.setText("IMPARTIDOR");
+				comboBoxProfesores.setVisible(false);
+				comboBoxImpartidores.setVisible(true);
+				Fecha.setVisible(true);
+				lblNombre.setVisible(true);
+				lblProfesor.setVisible(true);
+				lblDuracion.setVisible(true);
+				lblPlazas.setVisible(true);
+				lblFecha.setVisible(true);
+				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(false);
+				textGif.setVisible(false);
+				
+				
+			}
+		});
+		mnModificarCharla.add(mntmAadirCharla);
+		
+		mntmAlterarCharla = new JMenuItem("ALTERAR CHARLA");
+		mnModificarCharla.add(mntmAlterarCharla);
+		
+		mnModificarClase = new JMenu("MODIFICAR CLASE");
+		menuBar_3.add(mnModificarClase);
+		
+		mntmEliminarClase = new JMenuItem("ELIMINAR CLASE");
+		mntmEliminarClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la clase que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la clase con cï¿½digo "+cod);
+				if(opc==0){
+					bd.eliminarClase(cod);
+					System.out.println("Clase con cï¿½digo "+cod+" eliminada.");
+				}
+				
+			}
+		});
+		mnModificarClase.add(mntmEliminarClase);
+		
+		mntmAadirClase = new JMenuItem("A\u00D1ADIR CLASE");
+		mntmAadirClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_8.setVisible(true);
+				textCodigo.setVisible(true);
+				textDuracion.setVisible(true);
+				textNombre.setVisible(true);
+				textPlazas.setVisible(true);
+				lblProfesor.setText("PROFESOR");
+				comboBoxProfesores.setVisible(true);
+				comboBoxImpartidores.setVisible(false);
+				Fecha.setVisible(true);
+				lblNombre.setVisible(true);
+				lblProfesor.setVisible(true);
+				lblDuracion.setVisible(true);
+				lblPlazas.setVisible(true);
+				lblFecha.setVisible(true);
+				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(false);
+				textGif.setVisible(false);
+				
+				
+			}
+		});
 		
 		
-		contentPane.add(panel_8, BorderLayout.CENTER);
+		mnModificarClase.add(mntmAadirClase);
+		
+		mntmAlterarClase = new JMenuItem("ALTERAR CLASE");
+		mnModificarClase.add(mntmAlterarClase);
+		panel_3.add(panel_8, BorderLayout.CENTER);
 		panel_8.setLayout(null);
 		panel_8.setVisible(false);
 		
-		JLabel lblCodigo = new JLabel("CODIGO :");
+		
 		lblCodigo.setBounds(32, 11, 56, 19);
 		panel_8.add(lblCodigo);
 		
@@ -394,19 +413,9 @@ public class VentanaAdministrador extends JFrame {
 		panel_8.add(lblProfesor);
 		
 		comboBoxProfesores = new JComboBox<String>();
-		List<Profesor> listaProfesor = bd.obtenerProfesores();
-		for(Profesor p:listaProfesor){
-			String profesor= "    "+p.getDni_prof()+"    "+p.getNombre()+"    "+p.getApellidos();
-			comboBoxProfesores.addItem(profesor);
-		}
-	
-		comboBoxImpartidores = new JComboBox<String>();
-		List<Impartidor> listaImpartidor = bd.obtenerImpartidores();
-		for(Impartidor p:listaImpartidor){
-			String impartidor= "    "+p.getDni_impar()+"    "+p.getNombre()+"    "+p.getApellidos();
-			comboBoxImpartidores.addItem(impartidor);
-		}
-				
+		
+			comboBoxImpartidores = new JComboBox<String>();
+			
 		
 		comboBoxImpartidores.setBounds(120, 142, 231, 21);
 		panel_8.add(comboBoxImpartidores);	
@@ -430,6 +439,37 @@ public class VentanaAdministrador extends JFrame {
 		textGif.setBounds(263, 99, 152, 20);
 		panel_8.add(textGif);
 		textGif.setColumns(10);
+		
+	
+		
+		comboBox_EJERCICIO_1.setBounds(120, 10, 306, 20);
+		panel_8.add(comboBox_EJERCICIO_1);
+		
+	
+		comboBox_EJERCICIO_2.setBounds(120, 57, 306, 20);
+		panel_8.add(comboBox_EJERCICIO_2);
+		
+		
+		comboBox_EJERCICIO_3.setBounds(120, 99, 306, 20);
+		panel_8.add(comboBox_EJERCICIO_3);
+		
+		
+		comboBox_EJERCICIO_4.setBounds(120, 142, 306, 20);
+		panel_8.add(comboBox_EJERCICIO_4);
+		
+		
+		comboBox_EJERCICIO_5.setBounds(120, 182, 306, 20);
+		panel_8.add(comboBox_EJERCICIO_5);
+		List<Profesor> listaProfesor = bd.obtenerProfesores();
+		for(Profesor p:listaProfesor){
+			String profesor= "    "+p.getDni_prof()+"    "+p.getNombre()+"    "+p.getApellidos();
+			comboBoxProfesores.addItem(profesor);
+		}
+		List<Impartidor> listaImpartidor = bd.obtenerImpartidores();
+		for(Impartidor p:listaImpartidor){
+			String impartidor= "    "+p.getDni_impar()+"    "+p.getNombre()+"    "+p.getApellidos();
+			comboBoxImpartidores.addItem(impartidor);
+		}
 		
 		
 	}
