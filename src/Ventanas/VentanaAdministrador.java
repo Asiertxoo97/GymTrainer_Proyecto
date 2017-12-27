@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.jvnet.substance.SubstanceComboBoxUI.ComboBoxPropertyChangeHandler;
+//import org.jvnet.substance.SubstanceComboBoxUI.ComboBoxPropertyChangeHandler;
 
 import BaseDeDatos.BD;
 import Datos.Impartidor;
@@ -185,11 +185,11 @@ public class VentanaAdministrador extends JFrame {
 		JMenuItem mntmEliminarCharla = new JMenuItem("ELIMINAR CHARLA");
 		mntmEliminarCharla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el código de la charla que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Está seguro de querer eliminar la charla con código "+cod);
+				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la charla que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la charla con cï¿½digo "+cod);
 				if(opc==0){
 					bd.eliminarCharla(cod);
-					System.out.println("Charla con código "+cod+" eliminada.");
+					System.out.println("Charla con cï¿½digo "+cod+" eliminada.");
 				}
 				
 			}
@@ -238,11 +238,11 @@ public class VentanaAdministrador extends JFrame {
 		mntmEliminarClase = new JMenuItem("ELIMINAR CLASE");
 		mntmEliminarClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el código de la clase que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Está seguro de querer eliminar la clase con código "+cod);
+				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la clase que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la clase con cï¿½digo "+cod);
 				if(opc==0){
 					bd.eliminarClase(cod);
-					System.out.println("Clase con código "+cod+" eliminada.");
+					System.out.println("Clase con cï¿½digo "+cod+" eliminada.");
 				}
 				
 			}
@@ -294,11 +294,11 @@ public class VentanaAdministrador extends JFrame {
 		mntmElim = new JMenuItem("ELIMINAR EJERCICIO");
 		mntmElim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el código del ejercicio que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Está seguro de querer eliminar el ejercicio con código "+cod);
+				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo del ejercicio que deseas eliminar:");
+				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar el ejercicio con cï¿½digo "+cod);
 				if(opc==0){
 					bd.eliminarEjercicio(cod);
-					System.out.println("Ejercicio con código "+cod+" eliminado.");
+					System.out.println("Ejercicio con cï¿½digo "+cod+" eliminado.");
 				}
 				
 			}

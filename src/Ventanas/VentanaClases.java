@@ -18,11 +18,11 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
+//import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
 
 import BaseDeDatos.BD;
 import Datos.Clase;
-import Utiles.Temas;
+//import Utiles.Temas;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -118,7 +118,7 @@ public class VentanaClases extends JFrame {
 		table_2 = new JTable();
 		scrollPane_1.setViewportView(table_2);
 		
-		JButton btnCambiartema = new JButton("CambiarTema");
+		/*JButton btnCambiartema = new JButton("CambiarTema");
 		btnCambiartema.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -133,9 +133,9 @@ public class VentanaClases extends JFrame {
 					e1.printStackTrace();
 				}
 			}
-		});
-		btnCambiartema.setBounds(517, 163, 117, 29);
-		panelCentro.add(btnCambiartema);
+		});*/
+		//btnCambiartema.setBounds(517, 163, 117, 29);
+		//panelCentro.add(btnCambiartema);
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

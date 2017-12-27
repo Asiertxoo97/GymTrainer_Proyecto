@@ -837,7 +837,73 @@ public class BD {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			;
+			
+	  }
+	  
+	  public int contarEjercicios(){
+		  String query = "SELECT COUNT(*) FROM Ejercicio";
+		  int num=0;
+		  
+		  try {
+			ResultSet rs = stmt.executeQuery(query);
+			num = rs.getInt(1);
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return num;
+	  }
+	  
+	  public Object[][] obtenerTablaEjercicios(){
+		  int num = contarEjercicios();
+		  Object tabla[][] = new Object[num][3];
+		  String query = "SELECT * FROM Ejercicio";
+		  try {
+			ResultSet rs = stmt.executeQuery(query);
+			int i=0;
+			while(rs.next()){
+				tabla[i][0] = rs.getString("nombre");
+				tabla[i][1] = rs.getString("descripcion");
+				tabla[i][2] = rs.getDouble("tiempo_estimado");
+				i++;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return tabla;
+	  }
+	  
+	  public String obtenerRuta(String nombreEjercicio){
+		  String query = "SELECT GIF FROM Ejercicio WHERE nombre='"+nombreEjercicio+"'";
+		  String gif="";
+		  try {
+			ResultSet rs = stmt.executeQuery(query);
+			gif = rs.getString("GIF");
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return gif;
+	  }
+	  
+	  public double obtenerTiempoRutina(String nombreEjercicio){
+		  String query = "SELECT tiempo_estimado FROM Ejercicio WHERE nombre='"+nombreEjercicio+"'";
+		  double tiempo=0;
+		  try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next())
+				tiempo = rs.getDouble("tiempo_estimado");
+			rs.close();
+		  } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			  e.printStackTrace();
+		  }
+		  
+		  return tiempo;
 	  }
 
 }

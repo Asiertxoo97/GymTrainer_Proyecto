@@ -98,7 +98,7 @@ public class VentanaMenu extends JFrame {
 		JButton btnRutina = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/RutinaMenu.jpg"), 370, 165));
 		btnRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaRutina();
+				new VentanaInstruccionesRutina();
 				VentanaMenu.this.dispose();
 			}
 		});
@@ -117,19 +117,19 @@ public class VentanaMenu extends JFrame {
 		
 		JTextPane txtpnEjercicios = new JTextPane();
 		txtpnEjercicios.setBackground(Color.LIGHT_GRAY);
-		txtpnEjercicios.setText("   Â¡Accede a nuestra lista variada de ejercicios y trabaja las partes del cuerpo (abdominales, tren superior, tren inferior...) que tu quieras en cualquier momento!");
+		txtpnEjercicios.setText("   ¡Accede a nuestra lista variada de ejercicios y trabaja las partes del cuerpo (abdominales, tren superior, tren inferior...) que tu quieras en cualquier momento!");
 		txtpnEjercicios.setBounds(388, 6, 190, 110);
 		panelCentro.add(txtpnEjercicios);
 		
 		JTextPane txtpnRutina = new JTextPane();
 		txtpnRutina.setBackground(Color.LIGHT_GRAY);
-		txtpnRutina.setText("   Â¡Realiza los ejercicios programados especificamente para ti dÃ­a a dÃ­a y lleva un orden de los ejercicios que realizas!");
+		txtpnRutina.setText("   ¡Realiza los ejercicios programados especificamente para ti día a dí­a y lleva un orden de los ejercicios que realizas!");
 		txtpnRutina.setBounds(62, 166, 190, 110);
 		panelCentro.add(txtpnRutina);
 		
 		JTextPane txtpnClases = new JTextPane();
 		txtpnClases.setBackground(Color.LIGHT_GRAY);
-		txtpnClases.setText("   Â¡Apuntate a las clases (aerobic, step, body combat, crossfit, zumba, spinning, body pump, body, balance) de nuestros gimnasios!");
+		txtpnClases.setText("   ¡Apuntate a las clases (aerobic, step, body combat, crossfit, zumba, spinning, body pump, body, balance) de nuestros gimnasios!");
 		txtpnClases.setBounds(388, 320, 190, 110);
 		panelCentro.add(txtpnClases);
 		

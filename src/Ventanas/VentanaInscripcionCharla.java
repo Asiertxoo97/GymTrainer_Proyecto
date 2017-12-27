@@ -23,7 +23,7 @@ public class VentanaInscripcionCharla extends JFrame {
 	private JTextField textFieldDNI;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellidos;
-	private static BD bd;
+	private  BD bd;
 	private  JTextField textFieldUsuarioPaypal;
 	private  JTextField textFieldContraseniaPaypal;
 	private  JLabel lblContraseaPaypal;
