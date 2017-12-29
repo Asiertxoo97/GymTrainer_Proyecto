@@ -49,26 +49,32 @@ public class VentanaAdministrador extends JFrame {
 	private JMenuItem mntmAlterarClase;
 	private JMenuItem mntmAadirCharla;
 	private JMenuItem mntmAlterarCharla;
-	private JMenu mnModificarRutina;
-	private JMenuItem mntmEliminarRutina;
-	private static JComboBox<String> comboBoxProfesores;
-	private static 	JPanel panel_8 = new JPanel();
-	private static JTextField textCodigo = new JTextField();
-	private static JTextField textNombre = new JTextField();
-	private static JTextField textDuracion = new JTextField();
-	private static JTextField textPlazas = new JTextField(); 
-	private static JLabel lblNombre = new JLabel(); 
-	private static JLabel lblDuracion= new JLabel(); 
-	private static JLabel lblPlazas= new JLabel();  
-	private static JLabel lblProfesor= new JLabel(); 
-	private static JDateChooser Fecha= new JDateChooser(); 
-	private static JLabel lblFecha= new JLabel(); 
-	private static JButton btnCrear;
-	private static JComboBox<String> comboBoxImpartidores;
-	private JMenu mnMo;
-	private JMenuItem mntmElim;
-	private JMenuItem mntmAadirEjercicio;
-	private JMenuItem mntmAlterarEjercicio;
+	private static  JMenu mnModificarRutina;
+	private static  JMenuItem mntmEliminarRutina;
+	private static  JComboBox<String> comboBoxProfesores;
+	private static  JPanel panel_8 = new JPanel();
+	private static  JTextField textCodigo = new JTextField();
+	private static  JTextField textNombre = new JTextField();
+	private static  JTextField textDuracion = new JTextField();
+	private static  JTextField textPlazas = new JTextField(); 
+	private static  JLabel lblCodigo = new JLabel(); 
+	private static  JLabel lblNombre = new JLabel(); 
+	private static  JLabel lblDuracion= new JLabel(); 
+	private static  JLabel lblPlazas= new JLabel();  
+	private static  JLabel lblProfesor= new JLabel(); 
+	private static  JDateChooser Fecha= new JDateChooser(); 
+	private static  JLabel lblFecha= new JLabel(); 
+	private static  JButton btnCrear;
+	private static  JComboBox<String> comboBoxImpartidores;
+	private static 	JComboBox <String> comboBox_EJERCICIO_1;
+	private static 	JComboBox <String> comboBox_EJERCICIO_2;
+	private static  JComboBox <String> comboBox_EJERCICIO_3;
+	private static  JComboBox <String> comboBox_EJERCICIO_4;
+	private static  JComboBox <String> comboBox_EJERCICIO_5;
+	private static  JMenu mnMo;
+	private static  JMenuItem mntmElim;
+	private static  JMenuItem mntmAadirEjercicio;
+	private static JMenuItem mntmAlterarEjercicio;
 	private static  JEditorPane editorPaneDescripcion = new JEditorPane();
 	private static JTextField textGif;
 	
@@ -86,8 +92,6 @@ public class VentanaAdministrador extends JFrame {
 					textDuracion.setVisible(false);
 					textNombre.setVisible(false);
 					textPlazas.setVisible(false);
-					comboBoxProfesores.setVisible(false);
-					comboBoxImpartidores.setVisible(false);
 					Fecha.setVisible(false);
 					lblNombre.setVisible(false);
 					lblProfesor.setVisible(false);
@@ -97,6 +101,14 @@ public class VentanaAdministrador extends JFrame {
 					btnCrear.setVisible(false);
 					editorPaneDescripcion.setVisible(false);
 					textGif.setVisible(false);
+					comboBox_EJERCICIO_1.setVisible(false);
+					comboBox_EJERCICIO_2.setVisible(false);
+					comboBox_EJERCICIO_3.setVisible(false);
+					comboBox_EJERCICIO_4.setVisible(false);
+					comboBox_EJERCICIO_5.setVisible(false);
+					comboBoxProfesores.setVisible(false);
+					comboBoxImpartidores.setVisible(false);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -114,6 +126,7 @@ public class VentanaAdministrador extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -199,6 +212,7 @@ public class VentanaAdministrador extends JFrame {
 				textNombre.setVisible(true);
 				textPlazas.setVisible(true);
 				lblProfesor.setText("IMPARTIDOR");
+				lblPlazas.setText("PLAZAS");
 				comboBoxProfesores.setVisible(false);
 				comboBoxImpartidores.setVisible(true);
 				Fecha.setVisible(true);
@@ -210,6 +224,11 @@ public class VentanaAdministrador extends JFrame {
 				btnCrear.setVisible(true);
 				editorPaneDescripcion.setVisible(false);
 				textGif.setVisible(false);
+				comboBox_EJERCICIO_1.setVisible(false);
+				comboBox_EJERCICIO_2.setVisible(false);
+				comboBox_EJERCICIO_3.setVisible(false);
+				comboBox_EJERCICIO_4.setVisible(false);
+				comboBox_EJERCICIO_5.setVisible(false);
 				
 				
 			}
@@ -245,6 +264,7 @@ public class VentanaAdministrador extends JFrame {
 				textNombre.setVisible(true);
 				textPlazas.setVisible(true);
 				lblProfesor.setText("PROFESOR");
+				lblPlazas.setText("PLAZAS");
 				comboBoxProfesores.setVisible(true);
 				comboBoxImpartidores.setVisible(false);
 				Fecha.setVisible(true);
@@ -256,6 +276,11 @@ public class VentanaAdministrador extends JFrame {
 				btnCrear.setVisible(true);
 				editorPaneDescripcion.setVisible(false);
 				textGif.setVisible(false);
+				comboBox_EJERCICIO_1.setVisible(false);
+				comboBox_EJERCICIO_2.setVisible(false);
+				comboBox_EJERCICIO_3.setVisible(false);
+				comboBox_EJERCICIO_4.setVisible(false);
+				comboBox_EJERCICIO_5.setVisible(false);
 				
 				
 			}
@@ -305,7 +330,12 @@ public class VentanaAdministrador extends JFrame {
 				lblFecha.setVisible(false);
 				btnCrear.setVisible(true);
 				editorPaneDescripcion.setVisible(true);
-				textGif.setVisible(true);			
+				textGif.setVisible(true);
+				comboBox_EJERCICIO_1.setVisible(false);
+				comboBox_EJERCICIO_2.setVisible(false);
+				comboBox_EJERCICIO_3.setVisible(false);
+				comboBox_EJERCICIO_4.setVisible(false);
+				comboBox_EJERCICIO_5.setVisible(false);
 			}
 		});
 		mnMo.add(mntmAadirEjercicio);
@@ -318,12 +348,47 @@ public class VentanaAdministrador extends JFrame {
 		
 		mntmEliminarRutina = new JMenuItem("ELIMINAR RUTINA");
 		mnModificarRutina.add(mntmEliminarRutina);
+		
+		JMenuItem mntmAadirRutina = new JMenuItem("A\u00D1ADIR RUTINA");
+		mntmAadirRutina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_8.setVisible(true);
+				textCodigo.setVisible(false);
+				textDuracion.setVisible(false);
+				textNombre.setVisible(false);
+				textPlazas.setVisible(false);
+				lblProfesor.setText("PROFESOR");
+				comboBoxProfesores.setVisible(false);
+				comboBoxImpartidores.setVisible(false);
+				Fecha.setVisible(false);
+				lblNombre.setVisible(true);
+				lblProfesor.setVisible(true);
+				lblDuracion.setVisible(true);
+				lblPlazas.setVisible(false);
+				lblFecha.setVisible(true);
+				lblCodigo.setText("EJERCICIO Nº1");
+				lblNombre.setText("EJERCICIO Nº2");
+				lblProfesor.setText("EJERCICIO Nº3");
+				lblDuracion.setText("EJERCICIO Nº4");
+				lblFecha.setText("EJERCICIO Nº5");
+				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(false);
+				textGif.setVisible(false);
+				comboBox_EJERCICIO_1.setVisible(true);
+				comboBox_EJERCICIO_2.setVisible(true);
+				comboBox_EJERCICIO_3.setVisible(true);
+				comboBox_EJERCICIO_4.setVisible(true);
+				comboBox_EJERCICIO_5.setVisible(true);
+				
+			}
+		});
+		mnModificarRutina.add(mntmAadirRutina);
 		panel_3.add(panel_8, BorderLayout.CENTER);
 		panel_8.setLayout(null);
 		panel_8.setVisible(false);
 		
-		JLabel lblCodigo = new JLabel("CODIGO :");
-		lblCodigo.setBounds(32, 11, 56, 19);
+		lblCodigo = new JLabel("CODIGO :");
+		lblCodigo.setBounds(10, 11, 100, 19);
 		panel_8.add(lblCodigo);
 		
 		
@@ -343,11 +408,11 @@ public class VentanaAdministrador extends JFrame {
 		panel_8.add(textDuracion);
 		
 		lblNombre = new JLabel("NOMBRE :");
-		lblNombre.setBounds(32, 59, 56, 19);
+		lblNombre.setBounds(10, 59, 100, 19);
 		panel_8.add(lblNombre);
 		
 		lblDuracion = new JLabel("DURACION:");
-		lblDuracion.setBounds(32, 100, 78, 19);
+		lblDuracion.setBounds(10, 100, 100, 19);
 		panel_8.add(lblDuracion);
 		
 		lblPlazas = new JLabel("PLAZAS :");
@@ -360,7 +425,7 @@ public class VentanaAdministrador extends JFrame {
 		panel_8.add(textPlazas);
 		
 		lblProfesor = new JLabel("PROFESOR :");
-		lblProfesor.setBounds(32, 143, 78, 19);
+		lblProfesor.setBounds(10, 143, 100, 19);
 		panel_8.add(lblProfesor);
 		
 		comboBoxProfesores = new JComboBox<String>();
@@ -375,7 +440,7 @@ public class VentanaAdministrador extends JFrame {
 		panel_8.add(comboBoxProfesores);
 		
 		lblFecha = new JLabel("FECHA :");
-		lblFecha.setBounds(32, 183, 78, 19);
+		lblFecha.setBounds(10, 183, 100, 19);
 		panel_8.add(lblFecha);
 		
 		
@@ -390,6 +455,26 @@ public class VentanaAdministrador extends JFrame {
 		textGif.setBounds(263, 99, 152, 20);
 		panel_8.add(textGif);
 		textGif.setColumns(10);
+		
+		comboBox_EJERCICIO_1 = new JComboBox<String>();
+		comboBox_EJERCICIO_1.setBounds(129, 10, 286, 20);
+		panel_8.add(comboBox_EJERCICIO_1);
+		
+		comboBox_EJERCICIO_2 = new JComboBox<String>();
+		comboBox_EJERCICIO_2.setBounds(129, 57, 286, 20);
+		panel_8.add(comboBox_EJERCICIO_2);
+		
+		comboBox_EJERCICIO_3 = new JComboBox<String>();
+		comboBox_EJERCICIO_3.setBounds(129, 99, 286, 20);
+		panel_8.add(comboBox_EJERCICIO_3);
+		
+		comboBox_EJERCICIO_4 = new JComboBox<String>();
+		comboBox_EJERCICIO_4.setBounds(129, 142, 286, 20);
+		panel_8.add(comboBox_EJERCICIO_4);
+		
+		comboBox_EJERCICIO_5 = new JComboBox<String>();
+		comboBox_EJERCICIO_5.setBounds(130, 182, 285, 20);
+		panel_8.add(comboBox_EJERCICIO_5);
 		List<Profesor> listaProfesor = bd.obtenerProfesores();
 		for(Profesor p:listaProfesor){
 			String profesor= "    "+p.getDni_prof()+"    "+p.getNombre()+"    "+p.getApellidos();
@@ -400,6 +485,7 @@ public class VentanaAdministrador extends JFrame {
 			String impartidor= "    "+p.getDni_impar()+"    "+p.getNombre()+"    "+p.getApellidos();
 			comboBoxImpartidores.addItem(impartidor);
 		}
+		
 		
 		
 	}
