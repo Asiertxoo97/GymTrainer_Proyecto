@@ -35,6 +35,11 @@ public class VentanaRutina extends JFrame {
 	private String nombre;
 	private JProgressBar progressBar;
 	private double tiempo;
+	private Thread th;
+	public static boolean reanudar;
+	public static String DNI;
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -63,6 +68,7 @@ public class VentanaRutina extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaRutina() {
+		reanudar = false;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
@@ -79,7 +85,7 @@ public class VentanaRutina extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAtrs = new JButton("ATRÁS");
+		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaMenu(bd);
@@ -91,6 +97,9 @@ public class VentanaRutina extends JFrame {
 		JButton btnComenzarRutina = new JButton("COMENZAR EJERCICIO");
 		panelSur.add(btnComenzarRutina);
 		
+		JButton btnPausa = new JButton("PAUSA");
+		panelSur.add(btnPausa);
+		
 		JPanel panelCentro = new JPanel();
 		JScrollPane scroll = new JScrollPane(panelCentro);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -99,14 +108,14 @@ public class VentanaRutina extends JFrame {
 		
 		JPanel panelIzquierda = new JPanel();
 		panelCentro.add(panelIzquierda);
-		String nombresColumnas[] = {"NOMBRE","DESCRIPCIÓN","TIEMPO ESTIMADO"};
+		String nombresColumnas[] = {"NOMBRE","DESCRIPCIÃ“N","TIEMPO ESTIMADO"};
 		BD bd = new BD();
 		bd.conectar();
 		Object datos[][] = bd.obtenerTablaEjercicios();
 		JTable tablaArriba = new JTable(datos,nombresColumnas);
 
 		panelIzquierda.setLayout(new BorderLayout());
-		panelIzquierda.add(tablaArriba.getTableHeader(), BorderLayout.PAGE_START); //PodrÌamos poner NORTH
+		panelIzquierda.add(tablaArriba.getTableHeader(), BorderLayout.PAGE_START); //PodrÃŒamos poner NORTH
 		panelIzquierda.add(tablaArriba, BorderLayout.CENTER);
 		panelCentro.add(panelIzquierda);
 		tablaArriba.addMouseListener(new MouseListener() {
@@ -145,7 +154,7 @@ public class VentanaRutina extends JFrame {
 					nombre = (String)modelo.getValueAt(filaSeleccionada, 0);
 					String gif = bd.obtenerRuta(nombre);
 					ImageIcon im = new ImageIcon(gif);
-					//lblGIF.setIcon(redimensionarImagen(VentanaRutina.class.getResource("/"+gif), 312, 283));
+					lblGIF.setIcon(redimensionarImagen(VentanaRutina.class.getResource("/"+gif), 312, 283));
 					lblGIF.setIcon(im);
 					
 					tiempo = bd.obtenerTiempoRutina(nombre);
@@ -190,12 +199,49 @@ public class VentanaRutina extends JFrame {
 						}
 					}
 				};
-				Thread th = new Thread(r);
+				th = new Thread(r);
 				th.start();
 				
 			}
 		});
 		
+		Runnable r2 = new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true)
+				{
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if(reanudar){
+						reanudar=false;
+						
+						th.resume();
+						
+					}
+				}
+			}
+		};
+		Thread th2 = new Thread(r2);
+		th2.start();
+		
+		btnPausa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				th.suspend();
+				
+				VentanaPausa frame= new VentanaPausa();
+				frame.setVisible(true);
+			}
+		});
+		
 		this.setVisible(true);
+		
+	
 	}
 }

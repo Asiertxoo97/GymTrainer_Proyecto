@@ -386,6 +386,18 @@ public class BD {
 		;
 		
 	}
+	public void eliminarRutina(String dni){
+
+		String query = "DELETE FROM Rutina WHERE dni_usuario ='" +dni+ "'";
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+		
+	}
 	public List<Profesor> obtenerProfesores() {
 		List<Profesor> listaProfesores = new ArrayList<Profesor>();
 		String query = "SELECT * FROM Profesor";
@@ -840,6 +852,21 @@ public class BD {
 			
 	  }
 	  
+	  public void introducirRutina(int orden,String dni,String cod_ejercicio){
+		  
+			String query = "INSERT INTO Rutina(dni_usuario,numero,cod_ejercicio ) " 
+			+ "VALUES('" + dni + "','" + orden + "','" + cod_ejercicio +  "')";
+			try {
+					stmt.executeUpdate(query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			;
+		  
+	  }
+	  
+	  
 	  public int contarEjercicios(){
 		  String query = "SELECT COUNT(*) FROM Ejercicio";
 		  int num=0;
@@ -874,6 +901,42 @@ public class BD {
 			e.printStackTrace();
 		}
 		  return tabla;
+	  }
+	  
+	  public List<Ejercicio> obtenerEjercicios(){
+		  List<Ejercicio> listaEjercicios = new ArrayList<Ejercicio>();
+			String query = "SELECT * FROM Ejercicio";
+			String cod_ejercicio;
+			String nombre;
+			String descripcion;
+			double tiempo_estimado;
+			String GIF;
+			
+			try {
+				ResultSet rs = stmt.executeQuery(query);
+				cod_ejercicio = rs.getString("cod_ejercicio");
+				nombre = rs.getString("nombre");
+				descripcion = rs.getString("descripcion");
+				tiempo_estimado = rs.getDouble("tiempo_estimado");
+				GIF = rs.getString("GIF");
+				listaEjercicios.add(new Ejercicio(cod_ejercicio, nombre, descripcion, tiempo_estimado,GIF));
+				System.out.println(listaEjercicios.get(0).toString());
+				if (!rs.next())
+					System.out.println("No se han obtenido resultados de la select");
+				while (rs.next()) { // Mientras el ResultSet tenga datos
+					cod_ejercicio = rs.getString("cod_ejercicio");
+					nombre = rs.getString("nombre");
+					descripcion = rs.getString("descripcion");
+					tiempo_estimado = rs.getDouble("tiempo_estimado");
+					GIF = rs.getString("GIF");
+					listaEjercicios.add(new Ejercicio(cod_ejercicio, nombre, descripcion, tiempo_estimado,GIF));
+				}
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return listaEjercicios;
 	  }
 	  
 	  public String obtenerRuta(String nombreEjercicio){

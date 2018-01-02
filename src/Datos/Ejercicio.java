@@ -8,7 +8,7 @@ public class Ejercicio {
 	private String nombre;
 	private String descripcion;
 	private double tiempo_estimado;
-	private Image GIF;
+	private String gif;
 	
 	/**
 	 * Constructor vacío de Clase Ejercicio
@@ -23,15 +23,15 @@ public class Ejercicio {
 	 * @param nombre : Nombre de Ejercicio.
 	 * @param descripcion : Descripcion de ejercicio:
 	 * @param tiempo_estimado : Tiempo estimado para ejecutar correctamente el Ejercicio.
-	 * @param gIF : Un GIF que muestra como se hace el Ejercicio  mediante ayuda visual.
+	 * @param gif : Un GIF que muestra como se hace el Ejercicio  mediante ayuda visual.
 	 */
-	public Ejercicio(String cod_ejercicio, String nombre, String descripcion, double tiempo_estimado, Image gIF) {
+	public Ejercicio(String cod_ejercicio, String nombre, String descripcion, double tiempo_estimado, String gif) {
 		super();
 		this.cod_ejercicio = cod_ejercicio;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.tiempo_estimado = tiempo_estimado;
-		GIF = gIF;
+		gif = gif;
 	}
 	
 	
@@ -64,11 +64,11 @@ public class Ejercicio {
 	public void setTiempo_estimado(double tiempo_estimado) {
 		this.tiempo_estimado = tiempo_estimado;
 	}
-	public Image getGIF() {
-		return GIF;
+	public String getGIF() {
+		return gif;
 	}
-	public void setGIF(Image gIF) {
-		GIF = gIF;
+	public void setGIF(String GIF) {
+		gif = GIF;
 	}
 	
 	
@@ -79,7 +79,7 @@ public class Ejercicio {
 	@Override
 	public String toString() {
 		return "Ejercicio [cod_ejercicio=" + cod_ejercicio + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", tiempo_estimado=" + tiempo_estimado + ", GIF=" + GIF + "]";
+				+ ", tiempo_estimado=" + tiempo_estimado + ", GIF=" + gif + "]";
 	}
 	
 	

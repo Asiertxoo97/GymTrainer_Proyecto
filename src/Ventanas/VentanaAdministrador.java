@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 //import org.jvnet.substance.SubstanceComboBoxUI.ComboBoxPropertyChangeHandler;
 
 import BaseDeDatos.BD;
+import Datos.Ejercicio;
 import Datos.Impartidor;
 import Datos.Profesor;
 
@@ -22,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JMenuBar;
@@ -161,6 +163,32 @@ public class VentanaAdministrador extends JFrame {
 					String fecha =  String.valueOf(Fecha.getDate().getDay())+"/"+String.valueOf(Fecha.getDate().getMonth())+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
 					bd.introducirCharla(textCodigo.getText(), textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
 					System.out.println("Charla introducida correctamente. Enhorabuena eres el puto amo!");
+				}else if(lblCodigo.getText()=="EJERCICIO Nº1"){
+					
+					//Crear una lista con los ejercicios seleccionados
+					List<String> ejercicios = new ArrayList<String>(5);
+					
+					
+					ejercicios.add(comboBox_EJERCICIO_1.getSelectedItem().toString().substring(0,2));
+					ejercicios.add(comboBox_EJERCICIO_2.getSelectedItem().toString().substring(0,2));
+					ejercicios.add(comboBox_EJERCICIO_3.getSelectedItem().toString().substring(0,2));
+					ejercicios.add(comboBox_EJERCICIO_4.getSelectedItem().toString().substring(0,2));
+					ejercicios.add(comboBox_EJERCICIO_5.getSelectedItem().toString().substring(0,2));
+					
+					
+					String opc= JOptionPane.showInputDialog(null, "Introduzca el DNI del usuario al que desea crear una rutina:");
+					
+					if(opc!=null){
+						int conf = JOptionPane.showConfirmDialog(null, "Recuerde que al crear una nueva rutina se eliminará automáticamente la anterior rutina que correspondía a este usuario."
+								+ "\n ¿Desea de todo modos continuar y crear una nueva rutina?");
+						if(conf==0){
+							bd.eliminarRutina(opc);
+							introducirRutina(bd,opc,ejercicios);
+							System.out.println("Rutina introducida correctamente.");
+						}
+					}
+					
+					
 				}else{
 					
 					bd.introducirEjercicio(textCodigo.getText(),textNombre.getText(),editorPaneDescripcion.getText(),Double.parseDouble(textDuracion.getText()),textGif.getText());
@@ -380,6 +408,7 @@ public class VentanaAdministrador extends JFrame {
 				comboBox_EJERCICIO_4.setVisible(true);
 				comboBox_EJERCICIO_5.setVisible(true);
 				
+				
 			}
 		});
 		mnModificarRutina.add(mntmAadirRutina);
@@ -475,17 +504,37 @@ public class VentanaAdministrador extends JFrame {
 		comboBox_EJERCICIO_5 = new JComboBox<String>();
 		comboBox_EJERCICIO_5.setBounds(130, 182, 285, 20);
 		panel_8.add(comboBox_EJERCICIO_5);
+		
+		List<Ejercicio> listaEjercicios = bd.obtenerEjercicios();
+		for(Ejercicio e:listaEjercicios){
+			String ejercicio= e.getId_eje()+"    "+e.getNombre()+"    "+e.getDescripcion()+"    "+e.getTiempo_estimado();
+			comboBox_EJERCICIO_1.addItem(ejercicio);
+			comboBox_EJERCICIO_2.addItem(ejercicio);
+			comboBox_EJERCICIO_3.addItem(ejercicio);
+			comboBox_EJERCICIO_4.addItem(ejercicio);
+			comboBox_EJERCICIO_5.addItem(ejercicio);
+		}
+		
 		List<Profesor> listaProfesor = bd.obtenerProfesores();
 		for(Profesor p:listaProfesor){
 			String profesor= "    "+p.getDni_prof()+"    "+p.getNombre()+"    "+p.getApellidos();
 			comboBoxProfesores.addItem(profesor);
 		}
+		
 		List<Impartidor> listaImpartidor = bd.obtenerImpartidores();
 		for(Impartidor p:listaImpartidor){
 			String impartidor= "    "+p.getDni_impar()+"    "+p.getNombre()+"    "+p.getApellidos();
 			comboBoxImpartidores.addItem(impartidor);
 		}
 		
+		
+		
+	}
+	public void introducirRutina(BD bd,String dni,List<String>ej){
+		
+		for(int i=0; i <ej.size();i++){
+			bd.introducirRutina(i, "a",ej.get(i).toString());		
+		}
 		
 		
 	}
