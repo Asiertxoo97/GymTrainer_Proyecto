@@ -948,42 +948,39 @@ public class BD {
 		  ResultSet rs1,rs2;
 		  String cod_ejercicio,nombre,descripcion;
 		  double tiempo_estimado;
-		  String query1 ="SELECT cod_ejercicio FROM Rutina WHERE dni_usuario='"+dni+"'";
-		  try {
-			rs1 = stmt.executeQuery(query1);
-			System.out.println("DENTRO DE algo");
+		  
+		  for(int i = 0;i<num;i++){
+		  
+			  String query1 ="SELECT cod_ejercicio FROM Rutina WHERE dni_usuario='"+dni+"' AND numero= "+i;
+			  try {
+				  rs1 = stmt.executeQuery(query1);
+				  System.out.println("DENTRO DE algo");
 			
-				while(rs1.next()){
-				System.out.println("DENTRO DE RUTINA");
+				  while(rs1.next()){
+					  System.out.println("DENTRO DE RUTINA");
 						
-				cod_ejercicio = rs1.getString("cod_ejercicio");
+					  cod_ejercicio = rs1.getString("cod_ejercicio");
 				
-					String query2 = "SELECT * FROM Ejercicio  WHERE cod_ejercicio= '"+cod_ejercicio+"'";
-				rs2=stmt.executeQuery(query2);
+					  String query2 = "SELECT * FROM Ejercicio  WHERE cod_ejercicio= '"+cod_ejercicio+"'";
+					  rs2=stmt.executeQuery(query2);
 				
-				System.out.println("DENTRO DE WWWWWWWWWWW");
-				
-				for(int i = 0;i<num;i++){
-					while(rs2.next()){
-					System.out.println("COD_EJERCICIO DENTRO");
-					nombre=rs2.getString("nombre");
-					descripcion=rs2.getString("descripcion");
-					tiempo_estimado=rs2.getDouble("tiempo_estimado");
-					tabla[i][0] =nombre;
-		  			tabla[i][1] = descripcion;
-		  			tabla[i][2] = tiempo_estimado;
-					i++;
-					}
-				
-				}rs2.close();
-						
-
-			}rs1.close();
+					  System.out.println("DENTRO DE WWWWWWWWWWW");
+						  nombre=rs2.getString("nombre");
+						  descripcion=rs2.getString("descripcion");
+						  tiempo_estimado=rs2.getDouble("tiempo_estimado");
+						  tabla[i][0] =nombre;
+						  tabla[i][1] = descripcion;
+						  tabla[i][2] = tiempo_estimado;
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					  rs2.close();
+				  }
+				 rs1.close();
+			  } catch (SQLException e) {
+				  // TODO Auto-generated catch block
+				  e.printStackTrace();
+			  } 
 		}
+			 
 		  
 		  return tabla;
 	  }
