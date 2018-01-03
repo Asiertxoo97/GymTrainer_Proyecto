@@ -72,7 +72,7 @@ public class VentanaElegirEjercicios extends JFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaElegirEjercicios.this.dispose();
-				VentanaMenu frame = new VentanaMenu(bd);
+				VentanaMenu frame = new VentanaMenu(bd, null);
 				frame.setVisible(true);
 			}
 		});

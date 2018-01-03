@@ -37,7 +37,8 @@ public class VentanaRutina extends JFrame {
 	private double tiempo;
 	private Thread th;
 	public static boolean reanudar;
-	public static String DNI;
+	public static  String DNI;
+
 
 	
 	/**
@@ -47,7 +48,8 @@ public class VentanaRutina extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRutina frame = new VentanaRutina();
+					DNI=VentanaInicio.dni;
+					VentanaRutina frame = new VentanaRutina(DNI,bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,7 +69,7 @@ public class VentanaRutina extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRutina() {
+	public VentanaRutina(String DNI,BD bd) {
 		reanudar = false;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
@@ -88,7 +90,7 @@ public class VentanaRutina extends JFrame {
 		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaMenu(bd);
+				new VentanaMenu(bd, DNI);
 				VentanaRutina.this.dispose();
 			}
 		});
@@ -109,9 +111,7 @@ public class VentanaRutina extends JFrame {
 		JPanel panelIzquierda = new JPanel();
 		panelCentro.add(panelIzquierda);
 		String nombresColumnas[] = {"NOMBRE","DESCRIPCIÃ“N","TIEMPO ESTIMADO"};
-		BD bd = new BD();
-		bd.conectar();
-		Object datos[][] = bd.obtenerTablaEjercicios();
+		Object datos[][] = bd.obtenerTablaRutina(VentanaInicio.dni);
 		JTable tablaArriba = new JTable(datos,nombresColumnas);
 
 		panelIzquierda.setLayout(new BorderLayout());
@@ -154,7 +154,7 @@ public class VentanaRutina extends JFrame {
 					nombre = (String)modelo.getValueAt(filaSeleccionada, 0);
 					String gif = bd.obtenerRuta(nombre);
 					ImageIcon im = new ImageIcon(gif);
-					lblGIF.setIcon(redimensionarImagen(VentanaRutina.class.getResource("/"+gif), 312, 283));
+					//lblGIF.setIcon(redimensionarImagen(VentanaRutina.class.getResource("/"+gif), 312, 283));
 					lblGIF.setIcon(im);
 					
 					tiempo = bd.obtenerTiempoRutina(nombre);
@@ -241,7 +241,8 @@ public class VentanaRutina extends JFrame {
 		});
 		
 		this.setVisible(true);
-		
+		this.setExtendedState(MAXIMIZED_BOTH);
+		this.setResizable(false);
 	
 	}
 }

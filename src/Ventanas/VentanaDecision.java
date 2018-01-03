@@ -59,7 +59,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 				bd = new BD();
 				//Creamos las tablas
 				bd.createTable(con);
-//github.com/Asiertxoo97/GymTrainer_Proyecto.git
+
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,14 +101,14 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		JButton btnCharlas = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/Charlas.jpg"), 375, 185));
 		btnCharlas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaCharlas();
+				new VentanaCharlas(bd);
 				VentanaDecision.this.dispose();
 			}
 		});
 		btnCharlas.setBounds(259, 203, 375, 185);
 		panelCentro.add(btnCharlas);
 		
-		///////////////////////////////////////////////////////////////////////////////////
+
 
 
 		JTextPane txtpnGimnasio = new JTextPane();

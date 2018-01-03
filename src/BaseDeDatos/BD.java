@@ -220,6 +220,34 @@ public class BD {
 		return resul;
 	}
 
+	
+	public int existeUsuario(String DNI) {
+
+		String query = "SELECT * FROM Usuario WHERE DNI = '" + DNI + "'";
+		ResultSet rs = null;
+		int resul = 0;
+		try {
+			rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				String dni = rs.getString("DNI");
+				if (!DNI.equals(dni))
+					resul = 0; // El DNI es ERR�NEO
+			
+				else
+					resul = 1; // DNI NO EXISTE.
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resul;
+	}
 	/**
 	 * M�todo para Registrar Usuario.
 	 *
@@ -313,7 +341,7 @@ public class BD {
 		List<Clase> listaClases = new ArrayList<Clase>();
 		List<Profesor> listaProfesores = obtenerProfesores();
 		String query = "SELECT * FROM Clase";
-		String queryNum = "SELECT count * FROM Clase";
+		String queryNum = "SELECT COUNT(*) FROM Clase";
 		String cod_clase;
 		String nombre;
 		String dni_profesor;
@@ -605,7 +633,34 @@ public class BD {
 		}
 		;
 	}
+	
+	public void alterarCharla(String cod,String nombre, String dni_impartidor, String fecha, double tiempo,int numPlazas){
+		String query = "UPDATE Charla SET nombre = '"+ nombre +"' ,dni_impartidor= '"+ dni_impartidor +"' ,fecha = '"+ fecha +"'"
+				+ ",tiempo= '"+ tiempo +"',numPlazas= '"+ numPlazas +"' WHERE cod_charla ='"+cod+"'";
+				 
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+	}
 
+	public void alterarClase(String cod,String nombre, String dni_profesor, String fecha, double tiempo,int numPlazas){
+		String query = "UPDATE Clase SET nombre = '"+ nombre +"' ,dni_profesor= '"+ dni_profesor +"' ,fecha = '"+ fecha +"'"
+				+ ",tiempo= '"+ tiempo +"',numPlazas= '"+ numPlazas +"' WHERE cod_clase ='"+cod+"'";
+				 
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+		
+		
+	}
 	
 	  public ArrayList<String> obtenerRutasFotosAbdominales(){
 	  System.out.println("Vamos a obtener las rutas de las fotos");
@@ -867,42 +922,100 @@ public class BD {
 	  }
 	  
 	  
-	  public int contarEjercicios(){
-		  String query = "SELECT COUNT(*) FROM Ejercicio";
+	  public int contarEjercicios(String dni){
+		  String query = "SELECT * FROM Rutina WHERE dni_usuario= '"+dni+"'";
 		  int num=0;
 		  
 		  try {
+			  System.out.println("ENTRA EN CONTAR EJERCICIOS");
 			ResultSet rs = stmt.executeQuery(query);
-			num = rs.getInt(1);
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		  return num;
-	  }
-	  
-	  public Object[][] obtenerTablaEjercicios(){
-		  int num = contarEjercicios();
-		  Object tabla[][] = new Object[num][3];
-		  String query = "SELECT * FROM Ejercicio";
-		  try {
-			ResultSet rs = stmt.executeQuery(query);
-			int i=0;
 			while(rs.next()){
-				tabla[i][0] = rs.getString("nombre");
-				tabla[i][1] = rs.getString("descripcion");
-				tabla[i][2] = rs.getDouble("tiempo_estimado");
-				i++;
+				num++;
 			}
 			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
-		  return tabla;
+		  return num;
 	  }
 	  
+	  public Object[][]obtenerTablaRutina(String dni){
+		  System.out.println("DENTRO DE PRIMERO");
+		  int num = contarEjercicios(dni);
+		  Object tabla[][]= new Object [num][3];
+		  ResultSet rs1,rs2;
+		  String cod_ejercicio,nombre,descripcion;
+		  double tiempo_estimado;
+		  String query1 ="SELECT * FROM Rutina WHERE dni_usuario='"+dni+"'";
+		  try {
+			rs1 = stmt.executeQuery(query1);
+			System.out.println("DENTRO DE algo");
+			while(rs1.next()){
+				System.out.println("DENTRO DE RUTINA");
+				cod_ejercicio = rs1.getString("cod_ejercicio");
+				String query2 = "SELECT * FROM Ejercicio  WHERE cod_ejercicio= '"+cod_ejercicio+"'";
+				rs2=stmt.executeQuery(query2);
+				int i = 0;
+				System.out.println("DENTRO DE WWWWWWWWWWW");
+				while(rs2.next()){
+					System.out.println("COD_EJERCICIO DENTRO");
+					nombre=rs2.getString("nombre");
+					descripcion=rs2.getString("descripcion");
+					tiempo_estimado=rs2.getDouble("tiempo_estimado");
+					tabla[i][0] =nombre;
+		  			tabla[i][1] = descripcion;
+		  			tabla[i][2] = tiempo_estimado;
+					i++;
+				}rs2.close();	
+			}rs1.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		  return tabla;
+	  }
+	
+	  /**
+	  public Object[][] obtenerTablaEjercicios(String dni){
+		  int num = contarEjercicios(dni);
+		  String query = "SELECT cod_ejercicio FROM RUTINA WHERE dni_usuario="+dni;
+		  ResultSet rs,rs1;
+		  String cod_ejercicio=null;
+		  Object tabla[][]=null;
+		
+			try {
+				rs = stmt.executeQuery(query);
+				while(rs.next()){
+					cod_ejercicio = rs.getString("cod_ejercicio");
+				
+				  
+					tabla = new Object[num][3];
+					String query1 = "SELECT * FROM Ejercicio WHERE cod_ejercicio = "+cod_ejercicio;
+				  	
+				  		 rs1 = stmt.executeQuery(query1);
+				  		int i=0;
+				  		while(rs1.next()){
+				  			tabla[i][0] = rs1.getString("nombre");
+				  			tabla[i][1] = rs1.getString("descripcion");
+				  			tabla[i][2] = rs1.getDouble("tiempo_estimado");
+				  			i++;
+				  		}
+				  		rs1.close();
+				}rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			
+				  	
+			return tabla;
+	  }
+	  */
 	  public List<Ejercicio> obtenerEjercicios(){
 		  List<Ejercicio> listaEjercicios = new ArrayList<Ejercicio>();
 			String query = "SELECT * FROM Ejercicio";
@@ -937,6 +1050,23 @@ public class BD {
 				e.printStackTrace();
 			}
 			return listaEjercicios;
+	  }
+	  
+	  public String obtenerDNIUsuario(String nick,String pass){
+		  
+		  String dni="";
+		  String query="SELECT * FROM Usuario WHERE nick ='"+nick+"' AND contrasenia= '"+pass+"'";
+		  try {
+			  
+			ResultSet rs = stmt.executeQuery(query);
+			dni = rs.getString("DNI");
+			System.out.println("EL PUTO DNI ES: "+dni);
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return dni;
 	  }
 	  
 	  public String obtenerRuta(String nombreEjercicio){

@@ -1,9 +1,11 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -18,12 +20,13 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-//import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
+import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
 
 import BaseDeDatos.BD;
 import Datos.Charla;
 import Datos.Clase;
-//import Utiles.Temas;
+import Utiles.Temas;
+
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -31,7 +34,7 @@ import javax.swing.JScrollPane;
 public class VentanaCharlas extends JFrame {
 
 	private JPanel contentPane;
-	private static BD bd = new BD();
+	private static BD bd;
 	private JTable table;
 	private static VentanaCharlas frame;
 
@@ -42,7 +45,7 @@ public class VentanaCharlas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaCharlas();
+					frame = new VentanaCharlas(bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +57,7 @@ public class VentanaCharlas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCharlas() {
+	public VentanaCharlas(BD bd) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
@@ -65,13 +68,13 @@ public class VentanaCharlas extends JFrame {
 		JPanel panelNorte = new JPanel();
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 
-		JLabel lblClases = new JLabel("CLASES");
-		panelNorte.add(lblClases);
+		JLabel lblCharlas = new JLabel("CHARLAS");
+		panelNorte.add(lblCharlas);
 
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 
-		JButton btnAaa = new JButton("INSCRIBIRSE A LAS CLASES SELECCIONADAS");
+		JButton btnAaa = new JButton("INSCRIBIRSE A LAS CHARLAS SELECCIONADAS");
 		btnAaa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaInscripcionCharla frame = new VentanaInscripcionCharla();
@@ -95,11 +98,15 @@ public class VentanaCharlas extends JFrame {
 		panelCentro.setLayout(null);
 
 		JButton button = new JButton("INSCRIBIR");
-
 		button.setBounds(6, 151, 158, 52);
 		panelCentro.add(button);
 
 		JButton button_1 = new JButton("BORRAR INSCRIPCIÃ“N");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarFila(table_2);
+			}
+		});
 		button_1.setBounds(349, 151, 158, 52);
 		panelCentro.add(button_1);
 
@@ -125,14 +132,14 @@ public class VentanaCharlas extends JFrame {
 
 		table_2 = new JTable();
 		scrollPane_1.setViewportView(table_2);
-		
-		/*JButton btnCambiartema = new JButton("CambiarTema");
+
+		JButton btnCambiartema = new JButton("CambiarTema");
 		btnCambiartema.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new Temas("Tema Substance");
-				    frame.dispose();
-				    new VentanaClases();
+					frame.dispose();
+					new VentanaCharlas(bd);
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -141,9 +148,9 @@ public class VentanaCharlas extends JFrame {
 					e1.printStackTrace();
 				}
 			}
-		});*/
-		//btnCambiartema.setBounds(517, 163, 117, 29);
-		//panelCentro.add(btnCambiartema);
+		});
+		btnCambiartema.setBounds(517, 163, 117, 29);
+		panelCentro.add(btnCambiartema);
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,45 +169,56 @@ public class VentanaCharlas extends JFrame {
 	private JTable table_2;
 
 	private void crearColumnas() {
-		modelTabla_2.addColumn("Cod_Clase");
+		modelTabla_2.addColumn("Cod_charla");
 		modelTabla_2.addColumn("Nombre");
 		modelTabla_2.addColumn("Profesor");
 		modelTabla_2.addColumn("Fecha");
 		modelTabla_2.addColumn("Tiempo");
+		modelTabla_2.addColumn("NumPlazas");
 
-		modelTabla.addColumn("Cod_Clase");
+		modelTabla.addColumn("Cod_charla");
 		modelTabla.addColumn("Nombre");
 		modelTabla.addColumn("Profesor");
 		modelTabla.addColumn("Fecha");
 		modelTabla.addColumn("Tiempo");
+		modelTabla.addColumn("NumPlazas");
 	}
 
 	private void mostrarCharlasEnTabla() {
 		List<Charla> listaCharlas = bd.obtenerCharlas();
 		for (Charla c : listaCharlas) {
-			modelTabla.addRow(new Object[] { c.getCod_charla(), c.getNombre(), c.getImpartidor().getNombre(), c.getfecha(),
-					c.getTiempo() });
+			modelTabla.addRow(new Object[] { c.getCod_charla(), c.getNombre(), c.getImpartidor().getNombre(),
+					c.getfecha(), c.getTiempo() , c.getNumPlazas()});
 		}
 		table.setModel(modelTabla);
 	}
 
 	private void borrarTodas() {
-		for (int i = 0; i < modelTabla_2.getRowCount(); i++) {
-			modelTabla_2.removeRow(i);
-			table_2.setModel(modelTabla_2);
+		
+		int a =modelTabla_2.getRowCount();
+		for( int i=0; i<a; i++) {			
+			modelTabla_2.removeRow(0);
+		}
+	}
+
+	public void borrarFila(JTable table_2) {
+		DefaultTableModel model = (DefaultTableModel) this.table_2.getModel();
+		int[] rows = table_2.getSelectedRows();
+		for (int i = 0; i < rows.length; i++) {
+			model.removeRow(rows[i] - i);
 		}
 	}
 
 	private void inscribirCharla() {
-		String cod_Charla = (String) table.getValueAt(table.getSelectedRow(), 0);
-		boolean dev = false; // Si no estÃ¡ en la tabla2 es false
+		String cod_charla = (String) table.getValueAt(table.getSelectedRow(), 0);
+		boolean dev = false; // Si no estÃƒÂ¡ en la tabla2 es false
 
 		System.out.println();
 
 		if (modelTabla_2.getRowCount() > 0) {
 
 			for (int i = 0; i < modelTabla_2.getRowCount(); i++) {
-				if (modelTabla_2.getValueAt(i, 0).equals(cod_Charla)) {
+				if (modelTabla_2.getValueAt(i, 0).equals(cod_charla)) {
 					dev = true;
 				}
 			}
@@ -208,9 +226,9 @@ public class VentanaCharlas extends JFrame {
 			if (dev == false) {
 				List<Charla> listaCharlas = bd.obtenerCharlas();
 				for (Charla c : listaCharlas) {
-					if (c.getCod_charla().equals(cod_Charla)) {
-						modelTabla_2.addRow(new Object[] { c.getCod_charla(), c.getNombre(), c.getImpartidor().getNombre(),
-								c.getfecha(), c.getTiempo() });
+					if (c.getCod_charla().equals(cod_charla)) {
+						modelTabla_2.addRow(new Object[] { c.getCod_charla(), c.getNombre(),
+								c.getImpartidor().getNombre(), c.getfecha(), c.getTiempo() , c.getNumPlazas()});
 					}
 				}
 				table_2.setModel(modelTabla_2);
@@ -220,12 +238,16 @@ public class VentanaCharlas extends JFrame {
 
 			List<Charla> listaCharlas = bd.obtenerCharlas();
 			for (Charla c : listaCharlas) {
-				if (c.getCod_charla().equals(cod_Charla)) {
+				if (c.getCod_charla().equals(cod_charla)) {
 					modelTabla_2.addRow(new Object[] { c.getCod_charla(), c.getNombre(), c.getImpartidor().getNombre(),
-							c.getfecha(), c.getTiempo() });
+							c.getfecha(), c.getTiempo(), c.getNumPlazas() });
 				}
 			}
 			table_2.setModel(modelTabla_2);
 		}
 	}
+
+	
+	
+	
 }

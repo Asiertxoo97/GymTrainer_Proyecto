@@ -94,7 +94,7 @@ public class VentanaInscripcionCharla extends JFrame {
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 		
-				VentanaCharlas frame = new VentanaCharlas();
+				VentanaCharlas frame = new VentanaCharlas(bd);
 				frame.setVisible(true);
 				VentanaInscripcionCharla.this.dispose();
 			}

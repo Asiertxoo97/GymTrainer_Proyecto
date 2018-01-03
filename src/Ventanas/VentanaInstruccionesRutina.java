@@ -8,12 +8,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BaseDeDatos.BD;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class VentanaInstruccionesRutina extends JFrame {
 
 	private JPanel contentPane;
+	public static String DNI;
+	public static BD bd;
 
 	/**
 	 * Launch the application.
@@ -22,7 +27,7 @@ public class VentanaInstruccionesRutina extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInstruccionesRutina frame = new VentanaInstruccionesRutina();
+					VentanaInstruccionesRutina frame = new VentanaInstruccionesRutina(DNI,bd);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +39,7 @@ public class VentanaInstruccionesRutina extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInstruccionesRutina() {
+	public VentanaInstruccionesRutina(String DNI,BD bd) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -51,11 +56,11 @@ public class VentanaInstruccionesRutina extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAtrs = new JButton("ATRÁS");
+		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				new VentanaMenu(null);
+				new VentanaMenu(bd, DNI);
 				VentanaInstruccionesRutina.this.dispose();
 			}
 		});
@@ -68,7 +73,8 @@ public class VentanaInstruccionesRutina extends JFrame {
 		JButton btnIrRutina = new JButton("IR A LA RUTINA");
 		btnIrRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaRutina();
+				VentanaRutina f =	new VentanaRutina(DNI,bd);
+				f.setVisible(true);
 				VentanaInstruccionesRutina.this.dispose();
 			}
 		});

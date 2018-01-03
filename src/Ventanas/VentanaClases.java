@@ -33,6 +33,7 @@ public class VentanaClases extends JFrame {
 	private static BD bd = new BD();
 	private JTable table;
 	private static VentanaClases frame;
+	public static String DNI;
 
 	/**
 	 * Launch the application.
@@ -41,7 +42,7 @@ public class VentanaClases extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaClases();
+					frame = new VentanaClases(DNI);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +54,7 @@ public class VentanaClases extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaClases() {
+	public VentanaClases(String DNI) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
@@ -73,10 +74,10 @@ public class VentanaClases extends JFrame {
 		JButton btnAaa = new JButton("INSCRIBIRSE A LAS CLASES SELECCIONADAS");
 		panelSur.add(btnAaa);
 
-		JButton btnAtrs = new JButton("ATRÁS");
+		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaMenu(bd);
+				new VentanaMenu(bd,DNI);
 				VentanaClases.this.dispose();
 			}
 		});
@@ -91,7 +92,7 @@ public class VentanaClases extends JFrame {
 		button.setBounds(6, 151, 158, 52);
 		panelCentro.add(button);
 
-		JButton button_1 = new JButton("BORRAR INSCRIPCIÓN");
+		JButton button_1 = new JButton("BORRAR INSCRIPCIÃ“N");
 		button_1.setBounds(349, 151, 158, 52);
 		panelCentro.add(button_1);
 
@@ -159,33 +160,44 @@ public class VentanaClases extends JFrame {
 		modelTabla_2.addColumn("Profesor");
 		modelTabla_2.addColumn("Fecha");
 		modelTabla_2.addColumn("Tiempo");
-
+		modelTabla_2.addColumn("NumPlazas");
+		
 		modelTabla.addColumn("Cod_Clase");
 		modelTabla.addColumn("Nombre");
 		modelTabla.addColumn("Profesor");
 		modelTabla.addColumn("Fecha");
 		modelTabla.addColumn("Tiempo");
+		modelTabla.addColumn("NumPlazas");
 	}
 
 	private void mostrarClasesEnTabla() {
 		List<Clase> listaClases = bd.obtenerClases();
 		for (Clase c : listaClases) {
 			modelTabla.addRow(new Object[] { c.getCodClase(), c.getNombre(), c.getProfesor().getNombre(), c.getFecha(),
-					c.getTiempo() });
+					c.getTiempo(), c.getNumPlazas() });
 		}
 		table.setModel(modelTabla);
 	}
 
 	private void borrarTodas() {
-		for (int i = 0; i < modelTabla_2.getRowCount(); i++) {
-			modelTabla_2.removeRow(i);
-			table_2.setModel(modelTabla_2);
+	
+		int a = modelTabla_2.getRowCount();
+		for ( int i =0; i<a; i++) {
+			modelTabla_2.removeRow(0);
+		}
+	}
+	
+	public void borrarFila(JTable table_2) {
+		DefaultTableModel model = (DefaultTableModel) this.table_2.getModel();
+		int[] rows = table_2.getSelectedRows();
+		for( int i = 0; i < rows.length; i++) {
+			model.removeRow(rows[i] - i);
 		}
 	}
 
 	private void inscribirClase() {
 		String cod_Clase = (String) table.getValueAt(table.getSelectedRow(), 0);
-		boolean dev = false; // Si no está en la tabla2 es false
+		boolean dev = false; // Si no estÃ¡ en la tabla2 es false
 
 		System.out.println();
 
@@ -202,7 +214,7 @@ public class VentanaClases extends JFrame {
 				for (Clase c : listaClases) {
 					if (c.getCodClase().equals(cod_Clase)) {
 						modelTabla_2.addRow(new Object[] { c.getCodClase(), c.getNombre(), c.getProfesor().getNombre(),
-								c.getFecha(), c.getTiempo() });
+								c.getFecha(), c.getTiempo() , c.getNumPlazas()});
 					}
 				}
 				table_2.setModel(modelTabla_2);
@@ -214,7 +226,7 @@ public class VentanaClases extends JFrame {
 			for (Clase c : listaClases) {
 				if (c.getCodClase().equals(cod_Clase)) {
 					modelTabla_2.addRow(new Object[] { c.getCodClase(), c.getNombre(), c.getProfesor().getNombre(),
-							c.getFecha(), c.getTiempo() });
+							c.getFecha(), c.getTiempo() , c.getNumPlazas()});
 				}
 			}
 			table_2.setModel(modelTabla_2);

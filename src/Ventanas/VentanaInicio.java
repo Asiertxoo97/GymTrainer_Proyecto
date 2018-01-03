@@ -1,8 +1,10 @@
 package Ventanas;
 import BaseDeDatos.BD;
+import Datos.Usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +19,8 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;
 
@@ -26,6 +30,7 @@ public class VentanaInicio extends JFrame {
 	private JTextField textFieldNick;
 	private JPasswordField passwordFieldContrasenia;
 	private static BD bd;
+	public static String dni;
 
 
 	/**
@@ -117,7 +122,7 @@ public class VentanaInicio extends JFrame {
 					textFieldNick.setText("");
 					passwordFieldContrasenia.setText("");
 					
-				}else if (bd.existeUsuario(lblNick.getText(), lblContrasenia.getText())==1){
+				}else if (bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==1){
 					//CONSTRASEÑA MAL INTRODUCIDA.
 					JOptionPane.showMessageDialog(null, "La contraseña introducida no es correcta. Vuelva a introducirlo.");
 					textFieldNick.setText("");
@@ -134,7 +139,9 @@ public class VentanaInicio extends JFrame {
 						VentanaInicio.this.dispose();
 						
 					}else{
-					VentanaMenu frame2 = new VentanaMenu(bd);
+						dni=bd.obtenerDNIUsuario(textFieldNick.getText(),passwordFieldContrasenia.getText());
+						
+					VentanaMenu frame2 = new VentanaMenu(bd,dni);
 					frame2.setVisible(true);
 					VentanaInicio.this.dispose();
 					}

@@ -124,7 +124,7 @@ public class VentanaRegistrar extends JFrame {
 					}else{
 						JOptionPane.showMessageDialog(null, "BIENVENIDO");
 						//Ya existe el Usuario
-						VentanaMenu frame2 = new VentanaMenu(bd);
+						VentanaMenu frame2 = new VentanaMenu(bd, dNI);
 						frame2.setVisible(true);
 						VentanaRegistrar.this.dispose();
 						//HACER UN MÉTODO PARA VACIAR CAMPO DESPUÉS DE REGISTRARSE

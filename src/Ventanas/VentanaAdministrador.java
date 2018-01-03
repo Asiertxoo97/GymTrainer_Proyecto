@@ -43,6 +43,8 @@ import javax.swing.JEditorPane;
 
 public class VentanaAdministrador extends JFrame {
 
+	private String OPC;
+	private String COD;
 	private JPanel contentPane;
 	private static BD bd;
 	private JMenu mnModificarClase;
@@ -153,47 +155,77 @@ public class VentanaAdministrador extends JFrame {
 		btnCrear = new JButton("CREAR ");
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(lblProfesor.getText()=="PROFESOR"){
+				if(OPC.equalsIgnoreCase("introducir_clase")){
+					//INTRODUCIR CLASE
 					String profesorDNI = ((String)comboBoxProfesores.getSelectedItem()).substring(3, 14);
-					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth())+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
+					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
 					bd.introducirClase(textCodigo.getText(), textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
 					System.out.println("Clase introducida correctamente. Enhorabuena eres el puto amo!");
-				}else if(lblProfesor.getText()=="IMPARTIDOR"){
+					
+				}else if(OPC.equalsIgnoreCase("introducir_charla")){
+					//INTRODUCIR CHARLA
 					String ImpartidorDNI = ((String)comboBoxImpartidores.getSelectedItem()).substring(3, 14);
-					String fecha =  String.valueOf(Fecha.getDate().getDay())+"/"+String.valueOf(Fecha.getDate().getMonth())+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
+					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
 					bd.introducirCharla(textCodigo.getText(), textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
 					System.out.println("Charla introducida correctamente. Enhorabuena eres el puto amo!");
-				}else if(lblCodigo.getText()=="EJERCICIO Nº1"){
-					
+					System.out.println(fecha);
+				}else if(OPC.equalsIgnoreCase("introducir_rutina")){
+					//INTRODUCIR RUTINA
 					//Crear una lista con los ejercicios seleccionados
 					List<String> ejercicios = new ArrayList<String>(5);
 					
 					
-					ejercicios.add(comboBox_EJERCICIO_1.getSelectedItem().toString().substring(0,2));
-					ejercicios.add(comboBox_EJERCICIO_2.getSelectedItem().toString().substring(0,2));
-					ejercicios.add(comboBox_EJERCICIO_3.getSelectedItem().toString().substring(0,2));
-					ejercicios.add(comboBox_EJERCICIO_4.getSelectedItem().toString().substring(0,2));
-					ejercicios.add(comboBox_EJERCICIO_5.getSelectedItem().toString().substring(0,2));
+					ejercicios.add(comboBox_EJERCICIO_1.getSelectedItem().toString().substring(0,4));
+					ejercicios.add(comboBox_EJERCICIO_2.getSelectedItem().toString().substring(0,4));
+					ejercicios.add(comboBox_EJERCICIO_3.getSelectedItem().toString().substring(0,4));
+					ejercicios.add(comboBox_EJERCICIO_4.getSelectedItem().toString().substring(0,4));
+					ejercicios.add(comboBox_EJERCICIO_5.getSelectedItem().toString().substring(0,4));
 					
 					
 					String opc= JOptionPane.showInputDialog(null, "Introduzca el DNI del usuario al que desea crear una rutina:");
 					
-					if(opc!=null){
-						int conf = JOptionPane.showConfirmDialog(null, "Recuerde que al crear una nueva rutina se eliminará automáticamente la anterior rutina que correspondía a este usuario."
+					if(opc!=null&&bd.existeUsuario(opc)==1){
+						
+							int conf = JOptionPane.showConfirmDialog(null, "Recuerde que al crear una nueva rutina se eliminará automáticamente la anterior rutina que correspondía a este usuario."
 								+ "\n ¿Desea de todo modos continuar y crear una nueva rutina?");
 						if(conf==0){
 							bd.eliminarRutina(opc);
 							introducirRutina(bd,opc,ejercicios);
 							System.out.println("Rutina introducida correctamente.");
+						}else{
+							System.out.println("Rutina introducida INcorrectamente.");
 						}
+					}else{
+						JOptionPane.showMessageDialog(null,"El DNI introducido no corresponde con ningún usuario.");
 					}
 					
 					
-				}else{
-					
+				}else if(OPC.equalsIgnoreCase("introducir_ejercicio")){
+					//INTRODUCIR EJERCICIO
 					bd.introducirEjercicio(textCodigo.getText(),textNombre.getText(),editorPaneDescripcion.getText(),Double.parseDouble(textDuracion.getText()),textGif.getText());
 					System.out.println("Ejercicio introducido correctamente. Enhorabuena eres el puto amo!");
+				
+				}else if(OPC.equalsIgnoreCase("alterar_clase")){
+					//ALTERAR CLASE
+					String profesorDNI = ((String)comboBoxProfesores.getSelectedItem()).substring(3, 14);
+					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
+					bd.alterarClase(COD, textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
+					System.out.println("Clase alterada con éxito.");
+					
+				}else if(OPC.equalsIgnoreCase("alterar_charla")){
+					//ALTERAR CHARLA
+					String ImpartidorDNI = ((String)comboBoxImpartidores.getSelectedItem()).substring(3, 14);
+					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
+					bd.alterarCharla(COD, textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
+					System.out.println("Charla alterada con exito.");
+					
+				}else if(OPC.equalsIgnoreCase("alterar_ejercicio")){
+					//ALTERAR EJERCICIO
+					
+				}else {
+					
 				}
+			
 				
 			}
 		});
@@ -234,6 +266,7 @@ public class VentanaAdministrador extends JFrame {
 		mntmAadirCharla = new JMenuItem("A\u00D1ADIR CHARLA");
 		mntmAadirCharla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnCrear.setText("AÑADIR");
 				panel_8.setVisible(true);
 				textCodigo.setVisible(true);
 				textDuracion.setVisible(true);
@@ -244,6 +277,13 @@ public class VentanaAdministrador extends JFrame {
 				comboBoxProfesores.setVisible(false);
 				comboBoxImpartidores.setVisible(true);
 				Fecha.setVisible(true);
+				lblCodigo.setText("CODIGO");
+				lblNombre.setText("NOMBRE");
+				lblProfesor.setText("IMPARTIDOR");
+				lblDuracion.setText("DURACION");
+				lblPlazas.setText("PLAZAS");
+				lblFecha.setText("FECHA");
+				lblCodigo.setVisible(true);
 				lblNombre.setVisible(true);
 				lblProfesor.setVisible(true);
 				lblDuracion.setVisible(true);
@@ -257,13 +297,55 @@ public class VentanaAdministrador extends JFrame {
 				comboBox_EJERCICIO_3.setVisible(false);
 				comboBox_EJERCICIO_4.setVisible(false);
 				comboBox_EJERCICIO_5.setVisible(false);
-				
+				OPC="introducir_charla";
 				
 			}
 		});
 		mnModificarCharla.add(mntmAadirCharla);
 		
 		mntmAlterarCharla = new JMenuItem("ALTERAR CHARLA");
+		mntmAlterarCharla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el codigo de la charla que deseas alterar:");
+				
+				if(cod!=null){
+					btnCrear.setText("ALTERAR");
+					panel_8.setVisible(true);
+					textCodigo.setVisible(false);
+					textDuracion.setVisible(true);
+					textNombre.setVisible(true);
+					textPlazas.setVisible(true);
+					lblProfesor.setText("IMPARTIDOR");
+					lblPlazas.setText("PLAZAS");
+					comboBoxProfesores.setVisible(false);
+					comboBoxImpartidores.setVisible(true);
+					Fecha.setVisible(true);
+					lblCodigo.setText("CODIGO");
+					lblNombre.setText("NOMBRE");
+					lblProfesor.setText("IMPARTIDOR");
+					lblDuracion.setText("DURACION");
+					lblPlazas.setText("PLAZAS");
+					lblFecha.setText("FECHA");
+					lblCodigo.setVisible(false);
+					lblNombre.setVisible(true);
+					lblProfesor.setVisible(true);
+					lblDuracion.setVisible(true);
+					lblPlazas.setVisible(true);
+					lblFecha.setVisible(true);
+					btnCrear.setVisible(true);
+					editorPaneDescripcion.setVisible(false);
+					textGif.setVisible(false);
+					comboBox_EJERCICIO_1.setVisible(false);
+					comboBox_EJERCICIO_2.setVisible(false);
+					comboBox_EJERCICIO_3.setVisible(false);
+					comboBox_EJERCICIO_4.setVisible(false);
+					comboBox_EJERCICIO_5.setVisible(false);
+					OPC="alterar_charla";
+					COD = cod;
+				}
+				
+			}
+		});
 		mnModificarCharla.add(mntmAlterarCharla);
 		
 		mnModificarClase = new JMenu("MODIFICAR CLASE");
@@ -286,6 +368,7 @@ public class VentanaAdministrador extends JFrame {
 		mntmAadirClase = new JMenuItem("A\u00D1ADIR CLASE");
 		mntmAadirClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnCrear.setText("AÑADIR");
 				panel_8.setVisible(true);
 				textCodigo.setVisible(true);
 				textDuracion.setVisible(true);
@@ -296,6 +379,13 @@ public class VentanaAdministrador extends JFrame {
 				comboBoxProfesores.setVisible(true);
 				comboBoxImpartidores.setVisible(false);
 				Fecha.setVisible(true);
+				lblCodigo.setText("CODIGO");
+				lblNombre.setText("NOMBRE");
+				lblProfesor.setText("PROFESOR");
+				lblDuracion.setText("DURACION");
+				lblPlazas.setText("PLAZAS");
+				lblFecha.setText("FECHA");
+				lblCodigo.setVisible(true);
 				lblNombre.setVisible(true);
 				lblProfesor.setVisible(true);
 				lblDuracion.setVisible(true);
@@ -309,7 +399,7 @@ public class VentanaAdministrador extends JFrame {
 				comboBox_EJERCICIO_3.setVisible(false);
 				comboBox_EJERCICIO_4.setVisible(false);
 				comboBox_EJERCICIO_5.setVisible(false);
-				
+				OPC="introducir_clase";
 				
 			}
 		});
@@ -318,6 +408,48 @@ public class VentanaAdministrador extends JFrame {
 		mnModificarClase.add(mntmAadirClase);
 		
 		mntmAlterarClase = new JMenuItem("ALTERAR CLASE");
+		mntmAlterarClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el codigo de la clase que deseas alterar:");
+				
+				if(cod!=null){
+					btnCrear.setText("ALTERAR");
+					panel_8.setVisible(true);
+					textCodigo.setVisible(false);
+					textDuracion.setVisible(true);
+					textNombre.setVisible(true);
+					textPlazas.setVisible(true);
+					lblProfesor.setText("PROFESOR");
+					lblPlazas.setText("PLAZAS");
+					comboBoxProfesores.setVisible(true);
+					comboBoxImpartidores.setVisible(false);
+					Fecha.setVisible(true);
+					lblCodigo.setText("CODIGO");
+					lblNombre.setText("NOMBRE");
+					lblProfesor.setText("PROFESOR");
+					lblDuracion.setText("DURACION");
+					lblPlazas.setText("PLAZAS");
+					lblFecha.setText("FECHA");
+					lblCodigo.setVisible(false);
+					lblNombre.setVisible(true);
+					lblProfesor.setVisible(true);
+					lblDuracion.setVisible(true);
+					lblPlazas.setVisible(true);
+					lblFecha.setVisible(true);
+					btnCrear.setVisible(true);
+					editorPaneDescripcion.setVisible(false);
+					textGif.setVisible(false);
+					comboBox_EJERCICIO_1.setVisible(false);
+					comboBox_EJERCICIO_2.setVisible(false);
+					comboBox_EJERCICIO_3.setVisible(false);
+					comboBox_EJERCICIO_4.setVisible(false);
+					comboBox_EJERCICIO_5.setVisible(false);
+					OPC="alterar_clase";
+					COD = cod;
+				}
+				
+			}
+		});
 		mnModificarClase.add(mntmAlterarClase);
 		
 		mnMo = new JMenu("MODIFICAR EJERCICIO");
@@ -340,6 +472,7 @@ public class VentanaAdministrador extends JFrame {
 		mntmAadirEjercicio = new JMenuItem("A\u00D1ADIR EJERCICIO");
 		mntmAadirEjercicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnCrear.setText("AÑADIR");
 				panel_8.setVisible(true);
 				textCodigo.setVisible(true);
 				textDuracion.setVisible(true);
@@ -351,6 +484,7 @@ public class VentanaAdministrador extends JFrame {
 				comboBoxProfesores.setVisible(false);
 				comboBoxImpartidores.setVisible(false);
 				Fecha.setVisible(false);
+				lblCodigo.setVisible(true);
 				lblNombre.setVisible(true);
 				lblProfesor.setVisible(true);
 				lblDuracion.setVisible(true);
@@ -364,6 +498,7 @@ public class VentanaAdministrador extends JFrame {
 				comboBox_EJERCICIO_3.setVisible(false);
 				comboBox_EJERCICIO_4.setVisible(false);
 				comboBox_EJERCICIO_5.setVisible(false);
+				OPC="introducir_ejercicio";
 			}
 		});
 		mnMo.add(mntmAadirEjercicio);
@@ -380,6 +515,7 @@ public class VentanaAdministrador extends JFrame {
 		JMenuItem mntmAadirRutina = new JMenuItem("A\u00D1ADIR RUTINA");
 		mntmAadirRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnCrear.setText("AÑADIR");
 				panel_8.setVisible(true);
 				textCodigo.setVisible(false);
 				textDuracion.setVisible(false);
@@ -407,7 +543,7 @@ public class VentanaAdministrador extends JFrame {
 				comboBox_EJERCICIO_3.setVisible(true);
 				comboBox_EJERCICIO_4.setVisible(true);
 				comboBox_EJERCICIO_5.setVisible(true);
-				
+				OPC="introducir_rutina";
 				
 			}
 		});
@@ -533,7 +669,7 @@ public class VentanaAdministrador extends JFrame {
 	public void introducirRutina(BD bd,String dni,List<String>ej){
 		
 		for(int i=0; i <ej.size();i++){
-			bd.introducirRutina(i, "a",ej.get(i).toString());		
+			bd.introducirRutina(i,dni,ej.get(i).toString());		
 		}
 		
 		

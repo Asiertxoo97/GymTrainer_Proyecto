@@ -52,7 +52,7 @@ public class VentanaCalendarioCharlas extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAtrs = new JButton("ATR√ÅS");
+		JButton btnAtrs = new JButton("ATR√?S");
 		panelSur.add(btnAtrs);
 		
 		JPanel panelCentro = new JPanel();
