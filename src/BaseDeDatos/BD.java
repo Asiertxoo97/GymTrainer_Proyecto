@@ -948,18 +948,23 @@ public class BD {
 		  ResultSet rs1,rs2;
 		  String cod_ejercicio,nombre,descripcion;
 		  double tiempo_estimado;
-		  String query1 ="SELECT * FROM Rutina WHERE dni_usuario='"+dni+"'";
+		  String query1 ="SELECT cod_ejercicio FROM Rutina WHERE dni_usuario='"+dni+"'";
 		  try {
 			rs1 = stmt.executeQuery(query1);
 			System.out.println("DENTRO DE algo");
-			while(rs1.next()){
+			
+				while(rs1.next()){
 				System.out.println("DENTRO DE RUTINA");
+						
 				cod_ejercicio = rs1.getString("cod_ejercicio");
-				String query2 = "SELECT * FROM Ejercicio  WHERE cod_ejercicio= '"+cod_ejercicio+"'";
+				
+					String query2 = "SELECT * FROM Ejercicio  WHERE cod_ejercicio= '"+cod_ejercicio+"'";
 				rs2=stmt.executeQuery(query2);
-				int i = 0;
+				
 				System.out.println("DENTRO DE WWWWWWWWWWW");
-				while(rs2.next()){
+				
+				for(int i = 0;i<num;i++){
+					while(rs2.next()){
 					System.out.println("COD_EJERCICIO DENTRO");
 					nombre=rs2.getString("nombre");
 					descripcion=rs2.getString("descripcion");
@@ -968,7 +973,11 @@ public class BD {
 		  			tabla[i][1] = descripcion;
 		  			tabla[i][2] = tiempo_estimado;
 					i++;
-				}rs2.close();	
+					}
+				
+				}rs2.close();
+						
+
 			}rs1.close();
 			
 		} catch (SQLException e) {
