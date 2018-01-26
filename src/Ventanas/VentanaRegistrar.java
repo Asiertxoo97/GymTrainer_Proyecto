@@ -33,7 +33,7 @@ public class VentanaRegistrar extends JFrame {
 	private JPasswordField passwordFieldContrasenia;
 	private JTextField textFieldCuentaBancaria;
 	private JTextField textFieldDNI;
-	private static BD bd;
+
 	/**
 	 * Launch the application.
 	 */
@@ -41,7 +41,7 @@ public class VentanaRegistrar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaRegistrar frame = new VentanaRegistrar(bd);
+					VentanaRegistrar frame = new VentanaRegistrar();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +53,7 @@ public class VentanaRegistrar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRegistrar(BD bd) {
+	public VentanaRegistrar() {
 		
 
 				/*Creamos un manejador de fichero para indicar a qué fichero se mandarán los logs*/
@@ -109,22 +109,22 @@ public class VentanaRegistrar extends JFrame {
 				}
 				else{
 					
-					if(bd.existeUsuario(nic, con) == 0){
+					if(VentanaDecision.bd.existeUsuario(nic, con) == 0){
 						String resp = JOptionPane.showInputDialog("No estás registrado. ¿Quieres registrarte (S/N)?");
 						if(resp.equalsIgnoreCase("S")){
-							bd.registrarUsuario(dNI,nom, nic,con,ape,cuenta);
+							VentanaDecision.bd.registrarUsuario(dNI,nom, nic,con,ape,cuenta);
 							JOptionPane.showMessageDialog(null, "Usuario registrado con éxito","OK",JOptionPane.INFORMATION_MESSAGE);
 						//HACER UN MÉTODO PARA VACIAR CAMPO DESPUÉS DE REGISTRARSE 
 							}else{
 							JOptionPane.showMessageDialog(null, "Hasta otra!!");
 						}
-					}else if(bd.existeUsuario(nic, con) == 1){
+					}else if(VentanaDecision.bd.existeUsuario(nic, con) == 1){
 						JOptionPane.showMessageDialog(null, "La contraseña no es correcta!!");
 						logger.log(Level.SEVERE, "Se ha equivocado en la contraseña");
 					}else{
 						JOptionPane.showMessageDialog(null, "BIENVENIDO");
 						//Ya existe el Usuario
-						VentanaMenu frame2 = new VentanaMenu(bd, dNI);
+						VentanaMenu frame2 = new VentanaMenu();
 						frame2.setVisible(true);
 						VentanaRegistrar.this.dispose();
 						//HACER UN MÉTODO PARA VACIAR CAMPO DESPUÉS DE REGISTRARSE
@@ -142,7 +142,7 @@ public class VentanaRegistrar extends JFrame {
 				//new VentanaInicioSesion();
 				
 
-				new VentanaInicio(bd);
+				new VentanaInicio();
 				VentanaRegistrar.this.dispose();
 //github.com/Asiertxoo97/GymTrainer_Proyecto.git
 			}

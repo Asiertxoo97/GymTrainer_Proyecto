@@ -11,14 +11,14 @@ public class Ejercicio {
 	private String gif;
 	
 	/**
-	 * Constructor vacÌo de Clase Ejercicio
+	 * Constructor vac√≠o de Clase Ejercicio
 	 */
 	public Ejercicio() {
 		super();
 	}
 	
 	/**
-	 * Constructor con par·metros de Clase Ejercicio
+	 * Constructor con par√°metros de Clase Ejercicio
 	 * @param id_eje : Identificador de Ejercicio.
 	 * @param nombre : Nombre de Ejercicio.
 	 * @param descripcion : Descripcion de ejercicio:
@@ -37,7 +37,7 @@ public class Ejercicio {
 	
 	
 	/**
-	 * MÈtodos Get y Set de Clase Ejercicio
+	 * M√©todos Get y Set de Clase Ejercicio
 	 * @return
 	 */
 	public String getId_eje() {
@@ -73,7 +73,7 @@ public class Ejercicio {
 	
 	
 	/**
-	 * MÈtodo toString de Clase Ejercicio
+	 * M√©todo toString de Clase Ejercicio
 	 */
 	
 	@Override
@@ -87,5 +87,4 @@ public class Ejercicio {
 	
 	
 }
-
 

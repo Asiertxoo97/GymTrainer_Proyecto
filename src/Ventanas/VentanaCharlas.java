@@ -2,17 +2,20 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.LookAndFeel;
@@ -25,8 +28,8 @@ import org.jvnet.substance.skin.SubstanceRavenLookAndFeel;
 import BaseDeDatos.BD;
 import Datos.Charla;
 import Datos.Clase;
-import Utiles.Temas;
 
+import javazoom.jlgui.basicplayer.BasicPlayer;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -34,10 +37,12 @@ import javax.swing.JScrollPane;
 public class VentanaCharlas extends JFrame {
 
 	private JPanel contentPane;
-	private static BD bd;
+	private static BD bd = new BD();
 	private JTable table;
 	private static VentanaCharlas frame;
-
+	public static List<String>lista = new ArrayList<>();
+	public static List<String>charlas = new ArrayList<>();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +50,7 @@ public class VentanaCharlas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaCharlas(bd);
+					frame = new VentanaCharlas();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +62,7 @@ public class VentanaCharlas extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaCharlas(BD bd) {
+	public VentanaCharlas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
@@ -77,9 +82,20 @@ public class VentanaCharlas extends JFrame {
 		JButton btnAaa = new JButton("INSCRIBIRSE A LAS CHARLAS SELECCIONADAS");
 		btnAaa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(modelTabla_2.getRowCount()==0){
+					JOptionPane.showMessageDialog(null, "Debes seleccionar al menos una charla");
+				}else{
+				for(int i=0;i<modelTabla_2.getRowCount();i++) {
+					lista.add(String.valueOf(modelTabla_2.getValueAt(i, 0)));
+					charlas.add(String.valueOf(modelTabla_2.getValueAt(i, 1)));
+					VentanaDecision.bd.decrementarNumeroDePlazas(String.valueOf(modelTabla_2.getValueAt(i, 0)), "Charla");	
+				}
+				
 				VentanaInscripcionCharla frame = new VentanaInscripcionCharla();
 				frame.setVisible(true);
 				VentanaCharlas.this.dispose();
+				}
 			}
 		});
 		panelSur.add(btnAaa);
@@ -133,27 +149,10 @@ public class VentanaCharlas extends JFrame {
 		table_2 = new JTable();
 		scrollPane_1.setViewportView(table_2);
 
-		JButton btnCambiartema = new JButton("CambiarTema");
-		btnCambiartema.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new Temas("Tema Substance");
-					frame.dispose();
-					new VentanaCharlas(bd);
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnCambiartema.setBounds(517, 163, 117, 29);
-		panelCentro.add(btnCambiartema);
+		
 
 		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
 				inscribirCharla();
 			}
 		});
@@ -163,18 +162,30 @@ public class VentanaCharlas extends JFrame {
 		crearColumnas();
 		mostrarCharlasEnTabla();
 	}
-
-	private DefaultTableModel modelTabla = new DefaultTableModel();
-	private DefaultTableModel modelTabla_2 = new DefaultTableModel();
-	private JTable table_2;
+	private DefaultTableModel modelTabla =  new DefaultTableModel() {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
+	public static DefaultTableModel modelTabla_2 =  new DefaultTableModel() {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
+	public static JTable table_2;
 
 	private void crearColumnas() {
+
+		
+		eliminarTabla();
 		modelTabla_2.addColumn("Cod_charla");
 		modelTabla_2.addColumn("Nombre");
 		modelTabla_2.addColumn("Profesor");
 		modelTabla_2.addColumn("Fecha");
 		modelTabla_2.addColumn("Tiempo");
 		modelTabla_2.addColumn("NumPlazas");
+		
+		
 
 		modelTabla.addColumn("Cod_charla");
 		modelTabla.addColumn("Nombre");
@@ -184,6 +195,8 @@ public class VentanaCharlas extends JFrame {
 		modelTabla.addColumn("NumPlazas");
 	}
 
+	
+	
 	private void mostrarCharlasEnTabla() {
 		List<Charla> listaCharlas = bd.obtenerCharlas();
 		for (Charla c : listaCharlas) {
@@ -193,14 +206,20 @@ public class VentanaCharlas extends JFrame {
 		table.setModel(modelTabla);
 	}
 
-	private void borrarTodas() {
+	public static void borrarTodas() {
 		
 		int a =modelTabla_2.getRowCount();
 		for( int i=0; i<a; i++) {			
 			modelTabla_2.removeRow(0);
 		}
 	}
-
+	
+	public void eliminarTabla(){
+		for(int i =0;i<table_2.getColumnCount();i++){
+			table_2.removeColumn(table_2.getColumnModel().getColumn(i));
+		}
+		
+	}
 	public void borrarFila(JTable table_2) {
 		DefaultTableModel model = (DefaultTableModel) this.table_2.getModel();
 		int[] rows = table_2.getSelectedRows();
@@ -213,8 +232,7 @@ public class VentanaCharlas extends JFrame {
 		String cod_charla = (String) table.getValueAt(table.getSelectedRow(), 0);
 		boolean dev = false; // Si no estÃƒÂ¡ en la tabla2 es false
 
-		System.out.println();
-
+			
 		if (modelTabla_2.getRowCount() > 0) {
 
 			for (int i = 0; i < modelTabla_2.getRowCount(); i++) {
@@ -234,7 +252,7 @@ public class VentanaCharlas extends JFrame {
 				table_2.setModel(modelTabla_2);
 			}
 
-		} else {
+		} else  {
 
 			List<Charla> listaCharlas = bd.obtenerCharlas();
 			for (Charla c : listaCharlas) {
@@ -246,6 +264,8 @@ public class VentanaCharlas extends JFrame {
 			table_2.setModel(modelTabla_2);
 		}
 	}
+		
+	
 
 	
 	

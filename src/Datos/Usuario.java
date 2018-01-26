@@ -10,18 +10,18 @@ public class Usuario {
 	private String cuenta_bancaria;
 	
 	/**
-	 * Constructor vacÌo de Clase Usuario
+	 * Constructor vac√≠o de Clase Usuario
 	 */
 	
 	public Usuario() {
 		super();
 	}
 	/**
-	 * Constructor con par·metros de Clase Usuario.
+	 * Constructor con par√°metros de Clase Usuario.
 	 * @param dNI
 	 * @param nombre : Nombre del usuario
-	 * @param nick : Nick del usuario. Se usar· para acceder al perfil.
-	 * @param constrasenia : ContraseÒa del usuario.
+	 * @param nick : Nick del usuario. Se usar√° para acceder al perfil.
+	 * @param constrasenia : Contrase√±a del usuario.
 	 * @param apellido :Apellido del usuario.
 	 * @param cuenta_bancaria : Cuenta bancaria del usuario.
 	 */
@@ -36,7 +36,7 @@ public class Usuario {
 		this.cuenta_bancaria = cuenta_bancaria;
 	}
 	/**
-	 * MÈtodos Get y Set de Clase Usuario
+	 * M√©todos Get y Set de Clase Usuario
 	 * @return
 	 */
 	public String getDNI() {
@@ -79,7 +79,7 @@ public class Usuario {
 	}
 	
 	/**
-	 * MÈtodo toString de Clase Usuario
+	 * M√©todo toString de Clase Usuario
 	 */
 	
 	@Override

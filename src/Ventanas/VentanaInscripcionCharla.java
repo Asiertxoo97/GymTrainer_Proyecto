@@ -23,7 +23,6 @@ public class VentanaInscripcionCharla extends JFrame {
 	private JTextField textFieldDNI;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellidos;
-	private  BD bd;
 	private  JTextField textFieldUsuarioPaypal;
 	private  JTextField textFieldContraseniaPaypal;
 	private  JLabel lblContraseaPaypal;
@@ -59,6 +58,7 @@ public class VentanaInscripcionCharla extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
+		VentanaDecision.primeraVez = false;
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -73,18 +73,45 @@ public class VentanaInscripcionCharla extends JFrame {
 		btnInscribirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cuentaBancaria;
+				 String charla;
+				 String charlas = null;
+				 boolean correcto=false;
+				 
 				if(rdbtnPaypal.isSelected()){
 					 cuentaBancaria = textFieldUsuarioPaypal.getText()+"//"+textFieldContraseniaPaypal.getText();
-			bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText(), textFieldApellidos.getText(), cuentaBancaria);
+					 VentanaDecision.bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText(), textFieldApellidos.getText(), cuentaBancaria);
+					 for(int i=0;i<VentanaCharlas.table_2.getRowCount();i++) {
+						  charla= VentanaCharlas.charlas.get(i);
+							 charlas ="\n"+ charla +"\n";
+							if(!VentanaDecision.bd.insertarInscripcion(VentanaCharlas.lista.get(i),textFieldDNI.getText() , "charla")){
+								correcto=true;
+							}
+							 							
+						}
+				
+					 
+					
 				}
 				else if(rdbtnTarjetaCrdito.isSelected()){
 					
 					cuentaBancaria= textFieldUsuarioPaypal.getText()+"//"+textFieldContraseniaPaypal.getText();;
-					bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText(),textFieldApellidos.getText(), cuentaBancaria);
+					VentanaDecision.bd.registrarParticipante(textFieldDNI.getText(), textFieldNombre.getText(),textFieldApellidos.getText(), cuentaBancaria);
+					for(int i=0;i<VentanaCharlas.table_2.getRowCount();i++) {
+						 charla= VentanaCharlas.charlas.get(i);
+						 charlas ="\n"+ charla +"\n";
+						 if(!VentanaDecision.bd.insertarInscripcion(VentanaCharlas.lista.get(i),textFieldDNI.getText() , "charla")){
+							 correcto=true;
+						}
+						 
+					}
+					
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Debes introducir una cuenta bancaria.");
 				}
+				if(correcto){
+					 JOptionPane.showMessageDialog(null, "Te has inscrito correctamente para las siguientes charlas:"+charlas);	
+				 }
 			}
 		});
 		
@@ -93,8 +120,8 @@ public class VentanaInscripcionCharla extends JFrame {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-		
-				VentanaCharlas frame = new VentanaCharlas(bd);
+				
+				VentanaDecision frame = new VentanaDecision();
 				frame.setVisible(true);
 				VentanaInscripcionCharla.this.dispose();
 			}
@@ -137,7 +164,7 @@ public class VentanaInscripcionCharla extends JFrame {
 				lblUsuarioPaypal.setVisible(true);
 				lblContraseaPaypal.setVisible(true);
 				lblUsuarioPaypal.setText("USUARIO PAYPAL");
-				lblContraseaPaypal.setText("CONTRASEÑA PAYPAL");
+				lblContraseaPaypal.setText("CONTRASEÃ‘A PAYPAL");
 				if(!rdbtnPaypal.isSelected() && !rdbtnTarjetaCrdito.isSelected()){
 					 rdbtnPaypal.setEnabled(true);
 					 rdbtnTarjetaCrdito.setEnabled(true);

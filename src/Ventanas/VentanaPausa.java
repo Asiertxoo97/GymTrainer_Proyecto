@@ -36,7 +36,9 @@ public class VentanaPausa extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaPausa() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(0);
+		setResizable(false);
+		
 		setBounds(100, 100, 378, 146);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,4 +95,3 @@ public class VentanaPausa extends JFrame {
 	}
 		
 	}
-

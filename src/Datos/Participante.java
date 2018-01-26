@@ -10,21 +10,21 @@ public class Participante {
 		private String codigo;
 		
 		/**
-		 * Constructor vacÌo de Clase Participante
+		 * Constructor vac√≠o de Clase Participante
 		 * 
 		 */
 		public Participante() {
 				super();
 		 }
 		/**
-		 * Constructor con par·metros de Clase Participante
+		 * Constructor con par√°metros de Clase Participante
 		 * @param dNI
 		 * @param nombre : Nombre del usuario
 		 * @param apellido1 : Primer apellido del usuario.
 		 * @param apellido2 : Segundo apellido del usuario.
 		 * @param cuenta_bancaria : Cuenta bancaria del usuario.
-		 * @param codigo : Codigo String de 10 dÌgitos que ser· unico para cada participante 
- 		 *				   ser· creado aleatoriamentee cada vez que un participante se aliste a una charla.
+		 * @param codigo : Codigo String de 10 d√≠gitos que ser√° unico para cada participante 
+ 		 *				   ser√° creado aleatoriamentee cada vez que un participante se aliste a una charla.
 		 */
 		public Participante(String dNI, String nombre, String apellido1, String apellido2, String cuenta_bancaria,
 				String codigo) {
@@ -38,7 +38,7 @@ public class Participante {
 		}
 
 		/**
-		 * MÈtodos Get y Set de Clase Participante
+		 * M√©todos Get y Set de Clase Participante
 		 * 
 		 * @return
 		 */
@@ -103,7 +103,7 @@ public class Participante {
 		}
 
 		/**
-		 * MÈtodo toString de Clase Participante
+		 * M√©todo toString de Clase Participante
 		 * 
 		 */
 

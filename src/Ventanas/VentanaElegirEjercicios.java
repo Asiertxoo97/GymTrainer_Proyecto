@@ -2,6 +2,7 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,17 +12,11 @@ import javax.swing.border.EmptyBorder;
 
 import BaseDeDatos.BD;
 import Paneles.PanelEjercicios;
-import Ventanas.VentanasEjercicios.VentanaAbdominales;
-import Ventanas.VentanasEjercicios.VentanaBiceps;
-import Ventanas.VentanasEjercicios.VentanaCuadriA;
-import Ventanas.VentanasEjercicios.VentanaCuadriceps;
-import Ventanas.VentanasEjercicios.VentanaEspalda;
-import Ventanas.VentanasEjercicios.VentanaGemelo;
-import Ventanas.VentanasEjercicios.VentanaGluteos;
-import Ventanas.VentanasEjercicios.VentanaHombros;
-import Ventanas.VentanasEjercicios.VentanaLumbares;
-import Ventanas.VentanasEjercicios.VentanaPecho;
-import Ventanas.VentanasEjercicios.VentanaTriceps;
+import Ventanas.VentanaMenu;
+import Ventanas.VentanaEjercicio;
+
+
+import Ventanas.VentanaMenu;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -31,8 +26,7 @@ import javax.swing.JLabel;
 public class VentanaElegirEjercicios extends JFrame {
 
 	private JPanel contentPane;
-	public static BD bd; //Declaramos el atributo BD (public) para poder usarlo en todo el proyecto
-
+	
 
 	/**
 	 * Launch the application.
@@ -55,8 +49,7 @@ public class VentanaElegirEjercicios extends JFrame {
 	 */
 	public VentanaElegirEjercicios() { 
 		
-		//Creamos el objeto BD
-		bd = new BD(); //Dentro del constructor se conecta a la base de datos y crea la sentencia
+		
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,11 +61,11 @@ public class VentanaElegirEjercicios extends JFrame {
 		
 		
 		//Funciona
-		JButton btnSalir = new JButton("ATR�S");
+		JButton btnSalir = new JButton("ATRÃ�S");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaElegirEjercicios.this.dispose();
-				VentanaMenu frame = new VentanaMenu(bd, null);
+				VentanaMenu frame = new VentanaMenu();
 				frame.setVisible(true);
 			}
 		});
@@ -88,7 +81,7 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnAbdo){
-					VentanaAbdominales nuevaVentana = new VentanaAbdominales();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de abdominales","abdominales");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -106,7 +99,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnPecho){
-					VentanaPecho nuevaVentana = new VentanaPecho();
+					//VentanaPecho nuevaVentana = new VentanaPecho();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de pecho","pecho");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -126,7 +120,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnGluteos){
-					VentanaGluteos nuevaVentana = new VentanaGluteos();
+					//VentanaGluteos nuevaVentana = new VentanaGluteos();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de gluteos","gluteo");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -143,7 +138,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btngem1){
-					VentanaGemelo nuevaVentana = new VentanaGemelo();
+					//VentanaGemelo nuevaVentana = new VentanaGemelo();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de gemelos","gemelo");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -160,7 +156,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btngem2){
-					VentanaGemelo nuevaVentana = new VentanaGemelo();
+					//VentanaGemelo nuevaVentana = new VentanaGemelo();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de gemelos","gemelo");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -177,7 +174,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnCuadriAtras1){
-					VentanaCuadriceps nuevaVentana = new VentanaCuadriceps();
+					//VentanaIsquiotibiales nuevaVentana = new VentanaIsquiotibiales();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de isquiotibiales","cdetras");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -194,7 +192,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnCuadriAtras2){
-					VentanaCuadriceps nuevaVentana = new VentanaCuadriceps();
+					//VentanaIsquiotibiales nuevaVentana = new VentanaIsquiotibiales();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de isquiotibiales","cdetras");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -207,7 +206,7 @@ public class VentanaElegirEjercicios extends JFrame {
 		lblHagaClickSobre.setBounds(262, 6, 219, 16);
 		e.add(lblHagaClickSobre);
 		
-		JLabel lblMsculoParaVer = new JLabel("músculo para ver los");
+		JLabel lblMsculoParaVer = new JLabel("mÃšculo para ver los");
 		lblMsculoParaVer.setBounds(261, 20, 140, 16);
 		e.add(lblMsculoParaVer);
 		
@@ -231,7 +230,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnBiceps1){
-					VentanaBiceps nuevaVentana = new VentanaBiceps();
+					//VentanaBiceps nuevaVentana = new VentanaBiceps();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de biceps","biceps");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -248,7 +248,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnBiceps2){
-					VentanaBiceps nuevaVentana = new VentanaBiceps();
+					//VentanaBiceps nuevaVentana = new VentanaBiceps();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de biceps","biceps");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -265,7 +266,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnTriceps1){
-					VentanaTriceps nuevaVentana = new VentanaTriceps();
+					//VentanaTriceps nuevaVentana = new VentanaTriceps();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de triceps","triceps");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -282,33 +284,14 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnTriceps2){
-					VentanaTriceps nuevaVentana = new VentanaTriceps();
+					//VentanaTriceps nuevaVentana = new VentanaTriceps();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de triceps","triceps");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
 			}
 		});
-		/*Practica1-2017
-		 * paquete base de datos
-		 * 	bd
-		 * paquete contenedores
-		 * paquete test
-		 * paquete tipos de
-		 * paquete ventanas
-		 * 	8 ventanas
-		 * jre system
-		 * junit 4
-		 * referenced
-		 * doc
-		 * imagenes
-		 * meta
-		 * nueva carpeta
-		 * org
-		 * productos
-		 * base de datos.db
-		 * prueba.log
-		 * ---
-		 */
+
 		btnTriceps2.setBounds(527, 113, 24, 34);
 		e.add(btnTriceps2);
 		
@@ -320,7 +303,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnCuadriDelante1){
-					VentanaCuadriA nuevaVentana = new VentanaCuadriA();
+					//VentanaCuadriA nuevaVentana = new VentanaCuadriA();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de cuadriceps","cdelante");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -337,7 +321,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnCuadriDelante2){
-					VentanaCuadriA nuevaVentana = new VentanaCuadriA();
+					//VentanaCuadriA nuevaVentana = new VentanaCuadriA();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de cuadriceps","cdelante");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -354,7 +339,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnLumbares){
-					VentanaLumbares nuevaVentana = new VentanaLumbares();
+					//VentanaLumbares nuevaVentana = new VentanaLumbares();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de lumbares","lumbar");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -371,7 +357,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnEspalda){
-					VentanaEspalda nuevaVentana = new VentanaEspalda();
+					//VentanaEspalda nuevaVentana = new VentanaEspalda();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de espalda","espalda");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -388,7 +375,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnHombros1){
-					VentanaHombros nuevaVentana = new VentanaHombros();
+					//VentanaHombros nuevaVentana = new VentanaHombros();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de hombros","hombro");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -405,7 +393,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnHombros2){
-					VentanaHombros nuevaVentana = new VentanaHombros();
+					//VentanaHombros nuevaVentana = new VentanaHombros();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de hombros","hombro");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -422,7 +411,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnHombros3){
-					VentanaHombros nuevaVentana = new VentanaHombros();
+					//VentanaHombros nuevaVentana = new VentanaHombros();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de hombros","hombro");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}
@@ -439,7 +429,8 @@ public class VentanaElegirEjercicios extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JButton botonPulsado=(JButton)e.getSource();
 				if(botonPulsado==btnHombros4){
-					VentanaHombros nuevaVentana = new VentanaHombros();
+					//VentanaHombros nuevaVentana = new VentanaHombros();
+					VentanaEjercicio nuevaVentana = new VentanaEjercicio("Ejercicios de hombros","hombro");
 					nuevaVentana.setVisible(true);
 					VentanaElegirEjercicios.this.dispose();
 				}

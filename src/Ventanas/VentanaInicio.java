@@ -29,8 +29,8 @@ public class VentanaInicio extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNick;
 	private JPasswordField passwordFieldContrasenia;
-	private static BD bd;
 	public static String dni;
+	public static String nick;
 
 
 	/**
@@ -40,7 +40,7 @@ public class VentanaInicio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicio frame = new VentanaInicio(bd);
+					VentanaInicio frame = new VentanaInicio();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class VentanaInicio extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaInicio(BD bd) {
+	public VentanaInicio() {
 		
 		
 		setResizable(false);
@@ -79,7 +79,7 @@ public class VentanaInicio extends JFrame {
 		JButton btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaRegistrar(bd);
+				new VentanaRegistrar();
 			}
 		});
 		panelSur.add(btnRegistrar);
@@ -116,13 +116,13 @@ public class VentanaInicio extends JFrame {
 		JButton btnIniciarSesion = new JButton("INICIAR SESIÓN");
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==0){
+				if(VentanaDecision.bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==0){
 					//NICK MAL INTRODUCIDO. 
 					JOptionPane.showMessageDialog(null, "El Nick introducido no es correcto. Vuelva a introducirlo o registrese.");
 					textFieldNick.setText("");
 					passwordFieldContrasenia.setText("");
 					
-				}else if (bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==1){
+				}else if (VentanaDecision.bd.existeUsuario(textFieldNick.getText(), passwordFieldContrasenia.getText())==1){
 					//CONSTRASEÑA MAL INTRODUCIDA.
 					JOptionPane.showMessageDialog(null, "La contraseña introducida no es correcta. Vuelva a introducirlo.");
 					textFieldNick.setText("");
@@ -134,14 +134,14 @@ public class VentanaInicio extends JFrame {
 					if(textFieldNick.getText().equals("admin")&&passwordFieldContrasenia.getText().equals("admin")){
 						//EL USUARIO ES ADMINISTRADOR; ACCEDE A VENTANA ADMINISTRADOR Y TIENE VENTAJAS DE ADMINISTRADOR
 		//TODO			//VentanaAdministrador frame = new VentanaAdministrador();
-						VentanaAdministrador frame2 = new VentanaAdministrador(bd);
+						VentanaAdministrador frame2 = new VentanaAdministrador();
 						frame2.setVisible(true);
 						VentanaInicio.this.dispose();
 						
 					}else{
-						dni=bd.obtenerDNIUsuario(textFieldNick.getText(),passwordFieldContrasenia.getText());
-						
-					VentanaMenu frame2 = new VentanaMenu(bd,dni);
+						dni=VentanaDecision.bd.obtenerDNIUsuario(textFieldNick.getText(),passwordFieldContrasenia.getText());
+						nick=textFieldNick.getText();
+					VentanaMenu frame2 = new VentanaMenu();
 					frame2.setVisible(true);
 					VentanaInicio.this.dispose();
 					}

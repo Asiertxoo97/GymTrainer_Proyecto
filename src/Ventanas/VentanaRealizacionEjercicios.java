@@ -55,7 +55,7 @@ public class VentanaRealizacionEjercicios extends JFrame {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAtrs = new JButton("ATRÃ?S");
+		JButton btnAtrs = new JButton("ATRÃƒ?S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaSeleccionEjercicios();
@@ -75,5 +75,4 @@ public class VentanaRealizacionEjercicios extends JFrame {
 		
 		
 	}
-
 }

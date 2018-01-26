@@ -2,6 +2,7 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import BaseDeDatos.BD;
-
+import Ventanas.VentanaElegirEjercicios;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -25,7 +26,7 @@ public class VentanaMenu extends JFrame {
 
 	ImageIcon Imagen;
 	private JPanel contentPane;
-	private static BD bd;
+	
 	public static String DNI;
 	/**
 	 * Launch the application.
@@ -37,7 +38,7 @@ public class VentanaMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaMenu frame = new VentanaMenu(bd,DNI);
+					VentanaMenu frame = new VentanaMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +50,7 @@ public class VentanaMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMenu(BD bd,String dni) {
+	public VentanaMenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 550);
 		contentPane = new JPanel();
@@ -98,7 +99,7 @@ public class VentanaMenu extends JFrame {
 		JButton btnRutina = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/RutinaMenu.jpg"), 370, 165));
 		btnRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaInstruccionesRutina(DNI,bd);
+				new VentanaInstruccionesRutina();
 				VentanaMenu.this.dispose();
 			}
 		});
@@ -108,7 +109,8 @@ public class VentanaMenu extends JFrame {
 		JButton btnClases = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/Clases.jpg"), 370, 165));
 		btnClases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaClases(DNI);
+				VentanaMostrarClases fr=new VentanaMostrarClases();
+				fr.setVisible(true);
 				VentanaMenu.this.dispose();
 			}
 		});

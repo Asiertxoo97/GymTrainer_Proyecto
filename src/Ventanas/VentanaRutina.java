@@ -1,5 +1,6 @@
 package Ventanas;
 
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -18,11 +20,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import BaseDeDatos.BD;
 
 import javax.swing.JLabel;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
@@ -30,14 +37,13 @@ import javax.swing.JProgressBar;
 public class VentanaRutina extends JFrame {
 
 	private JPanel contentPane,panelDerecha;
-	private static BD bd;
 	private JLabel lblGIF;
 	private String nombre;
 	private JProgressBar progressBar;
 	private double tiempo;
 	private Thread th;
 	public static boolean reanudar;
-	public static  String DNI;
+
 
 
 	
@@ -48,8 +54,8 @@ public class VentanaRutina extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DNI=VentanaInicio.dni;
-					VentanaRutina frame = new VentanaRutina(DNI,bd);
+					
+					VentanaRutina frame = new VentanaRutina();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,7 +75,7 @@ public class VentanaRutina extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaRutina(String DNI,BD bd) {
+	public VentanaRutina() {
 		reanudar = false;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
@@ -90,7 +96,7 @@ public class VentanaRutina extends JFrame {
 		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaMenu(bd, DNI);
+				new VentanaMenu();
 				VentanaRutina.this.dispose();
 			}
 		});
@@ -111,13 +117,21 @@ public class VentanaRutina extends JFrame {
 		JPanel panelIzquierda = new JPanel();
 		panelCentro.add(panelIzquierda);
 		String nombresColumnas[] = {"NOMBRE","DESCRIPCIÃ“N","TIEMPO ESTIMADO"};
-		Object datos[][] = bd.obtenerTablaRutina(VentanaInicio.dni);
-		JTable tablaArriba = new JTable(datos,nombresColumnas);
-
+		Object datos[][] = VentanaDecision.bd.obtenerTablaRutina(VentanaInicio.dni);
+		//JTable tablaArriba = new JTable(datos,nombresColumnas);
+		DefaultTableModel modelo =  new DefaultTableModel() {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		modelo.setDataVector(datos, nombresColumnas);
+		JTable tablaArriba = new JTable(modelo);
 		panelIzquierda.setLayout(new BorderLayout());
 		panelIzquierda.add(tablaArriba.getTableHeader(), BorderLayout.PAGE_START); //PodrÃŒamos poner NORTH
 		panelIzquierda.add(tablaArriba, BorderLayout.CENTER);
 		panelCentro.add(panelIzquierda);
+		
+		
 		tablaArriba.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -152,12 +166,12 @@ public class VentanaRutina extends JFrame {
 				if(filaSeleccionada!=-1){
 					TableModel modelo = tablaArriba.getModel();
 					nombre = (String)modelo.getValueAt(filaSeleccionada, 0);
-					String gif = bd.obtenerRuta(nombre);
+					String gif = VentanaDecision.bd.obtenerRuta(nombre);
 					ImageIcon im = new ImageIcon(gif);
 					//lblGIF.setIcon(redimensionarImagen(VentanaRutina.class.getResource("/"+gif), 312, 283));
 					lblGIF.setIcon(im);
 					
-					tiempo = bd.obtenerTiempoRutina(nombre);
+					tiempo = VentanaDecision.bd.obtenerTiempoRutina(nombre);
 					progressBar.setMaximum((int)tiempo);
 					
 					panelDerecha.updateUI();
@@ -170,11 +184,11 @@ public class VentanaRutina extends JFrame {
 		panelDerecha.setLayout(null);
 		
 		lblGIF = new JLabel("");
-		lblGIF.setBounds(0, 6, 312, 283);
+		lblGIF.setBounds(44, 10, 552, 603);
 		panelDerecha.add(lblGIF);
 		
 		progressBar = new JProgressBar();
-		progressBar.setBounds(44, 301, 230, 25);
+		progressBar.setBounds(44, 481, 550, 25);
 		panelDerecha.add(progressBar);
 	
 		btnComenzarRutina.addActionListener(new ActionListener() {
@@ -197,6 +211,28 @@ public class VentanaRutina extends JFrame {
 								e1.printStackTrace();
 							}
 						}
+						/** 
+						 * try {
+						 	 * Clip sonido = AudioSystem.getClip();
+							 * sonido.open(AudioSystem.getAudioInputStream(new File("pitido.wav")));
+							 * sonido.start();
+							 * 
+							 * 	} catch (LineUnavailableException e) {
+							 * 		// TODO Auto-generated catch block
+							 * 			e.printStackTrace();
+							 * 	} catch (IOException e) {
+							 * 		// TODO Auto-generated catch block
+							 * 			e.printStackTrace();
+							 * 	} catch (UnsupportedAudioFileException e) {
+							 * 		// TODO Auto-generated catch block
+							 * 			e.printStackTrace();
+							 * 	} 
+							 * 
+							 * 
+							 */
+							
+						
+						
 					}
 				};
 				th = new Thread(r);

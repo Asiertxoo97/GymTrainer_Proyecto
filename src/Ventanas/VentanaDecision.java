@@ -1,5 +1,7 @@
 package Ventanas;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -11,10 +13,16 @@ import javax.swing.border.EmptyBorder;
 import BaseDeDatos.BD;
 
 import javax.swing.JLabel;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.awt.event.ActionEvent;
@@ -26,14 +34,17 @@ public class VentanaDecision extends JFrame implements ActionListener {
 	ImageIcon Imagen;
 	private JPanel contentPane;
 
-	private static BD bd;
+	public static BD bd;
 	private static Connection con;
+	public static boolean primeraVez = true;
 //github.com/Asiertxoo97/GymTrainer_Proyecto.git
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		
 		//Creamos la Base de Datos
 		bd = new BD();
 		//Creamos las tablas
@@ -88,7 +99,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 
 				
 
-				new VentanaInicio(bd);
+				new VentanaInicio();
 
 				VentanaDecision.this.dispose();
 			}
@@ -101,7 +112,7 @@ public class VentanaDecision extends JFrame implements ActionListener {
 		JButton btnCharlas = new JButton(redimensionarImagen(VentanaMenu.class.getResource("/Imagen/Charlas.jpg"), 375, 185));
 		btnCharlas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaCharlas(bd);
+				new VentanaCharlas();
 				VentanaDecision.this.dispose();
 			}
 		});

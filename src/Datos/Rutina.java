@@ -10,7 +10,7 @@ public class Rutina {
 
 	
 	/**
-	 *M…TODO CON PAR¡METROS 
+	 *M√âTODO CON PAR√ÅMETROS 
 	 * 
 	 */
 	

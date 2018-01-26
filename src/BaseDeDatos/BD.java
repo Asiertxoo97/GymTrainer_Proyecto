@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.JOptionPane;
+
 import Datos.Charla;
 import Datos.Clase;
 import Datos.Ejercicio;
@@ -96,7 +98,7 @@ public class BD {
 		try {
 			stmt.setQueryTimeout(30);
 			String Participante = "CREATE TABLE Participante (DNI string,nombre string,apellido string,"
-					+ "cuenta_bancaria string,codigo string)";
+					+ "cuenta_bancaria string)";
 			stmt.executeUpdate(Participante);
 		} catch (SQLException e) {
 		} // Tabla ya existe. Nada que hacer.
@@ -341,7 +343,7 @@ public class BD {
 		List<Clase> listaClases = new ArrayList<Clase>();
 		List<Profesor> listaProfesores = obtenerProfesores();
 		String query = "SELECT * FROM Clase";
-		String queryNum = "SELECT COUNT(*) FROM Clase";
+		//String queryNum = "SELECT COUNT(*) FROM Clase";
 		String cod_clase;
 		String nombre;
 		String dni_profesor;
@@ -351,7 +353,7 @@ public class BD {
 
 		try {
 			ResultSet rs = stmt.executeQuery(query);
-			ResultSet rsNum = stmt.executeQuery(queryNum);
+			//ResultSet rsNum = stmt.executeQuery(queryNum);
 			cod_clase = rs.getString("cod_clase");
 			nombre = rs.getString("nombre");
 			dni_profesor = rs.getString("dni_profesor");
@@ -359,7 +361,7 @@ public class BD {
 			tiempo = rs.getDouble("tiempo");
 			numPlazas = rs.getInt("numPlazas");
 
-			for (int i = 0; i < rsNum.getFetchSize(); i++) {
+			for (int i = 0; i < listaProfesores.size(); i++) {
 				if (listaProfesores.get(i).getDni_prof().equals(dni_profesor)) {
 					listaClases.add(new Clase(cod_clase, listaProfesores.get(i), nombre, fecha, tiempo, numPlazas));
 				}
@@ -374,8 +376,9 @@ public class BD {
 				dni_profesor = rs.getString("dni_profesor");
 				fecha = rs.getString("fecha");
 				tiempo = rs.getDouble("tiempo");
+				numPlazas = rs.getInt("numPlazas");
 
-				for (int i = 0; i < rsNum.getFetchSize(); i++) {
+				for (int i = 0; i < listaProfesores.size(); i++) {
 					if (listaProfesores.get(i).getDni_prof().equals(dni_profesor)) {
 						listaClases.add(new Clase(cod_clase, listaProfesores.get(i), nombre, fecha, tiempo, numPlazas));
 					}
@@ -390,6 +393,102 @@ public class BD {
 		return listaClases;
 	}
 
+	public int numeroClasesInscritas(String DNI){
+		int num=0;
+		String query1 = "SELECT * FROM Inscripciones WHERE tipo_inscripciones='clase' AND dni_usuario='"+DNI+"'";
+		try {
+			ResultSet rs1 = stmt.executeQuery(query1);
+		
+			while(rs1.next()){
+				num++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return num;
+	}
+	
+	public List<String> obtenerCodigosClases(String DNI){
+		List <String> cod= new ArrayList<String>();
+		String codi;
+		String query = "SELECT cod_clase FROM Inscripciones WHERE tipo_inscripciones='clase' AND dni_usuario='"+DNI+"'";
+		try {
+			ResultSet rs=stmt.executeQuery(query);
+			while(rs.next()){
+				codi=rs.getString("cod_clase");
+				cod.add(codi);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cod;
+	}
+	
+	public List<Clase> obtenerClasesInscritas(String DNI){
+		List<Clase> listaClases = new ArrayList<Clase>();
+		List<Profesor> listaProfesores = obtenerProfesores();	
+		List<String> codigos = new ArrayList<String>();
+		codigos= obtenerCodigosClases(DNI);
+		
+		
+			for(int j=0;j<codigos.size();j++){
+					String query = "SELECT * FROM Clase WHERE cod_clase='"+codigos.get(j)+"'";
+					
+					String cod_clase;
+					String nombre;
+					String dni_profesor;
+					String fecha;
+					double tiempo;
+					int numPlazas;
+
+					try {
+						ResultSet rs2 = stmt.executeQuery(query);
+
+						cod_clase = rs2.getString("cod_clase");
+						nombre = rs2.getString("nombre");
+						dni_profesor = rs2.getString("dni_profesor");
+						fecha = rs2.getString("fecha");
+						tiempo = rs2.getDouble("tiempo");
+						numPlazas = rs2.getInt("numPlazas");
+
+						for (int i1 = 0; i1 < listaProfesores.size(); i1++) {
+							if (listaProfesores.get(i1).getDni_prof().equals(dni_profesor)) {
+								listaClases.add(new Clase(cod_clase, listaProfesores.get(i1), nombre, fecha, tiempo, numPlazas));
+							}
+						}
+						System.out.println(listaClases.get(0).toString());
+
+						if (!rs2.next())
+							System.out.println("No se han obtenido resultados de la select");
+						while (rs2.next()) { // Mientras el ResultSet tenga datos
+							cod_clase = rs2.getString("cod_clase");
+							nombre = rs2.getString("nombre");
+							dni_profesor = rs2.getString("dni_profesor");
+							fecha = rs2.getString("fecha");
+							tiempo = rs2.getDouble("tiempo");
+							numPlazas = rs2.getInt("numPlazas");
+
+							for (int i1 = 0; i1 < listaProfesores.size(); i1++) {
+								if (listaProfesores.get(i1).getDni_prof().equals(dni_profesor)) {
+									listaClases.add(new Clase(cod_clase, listaProfesores.get(i1), nombre, fecha, tiempo, numPlazas));
+								}
+							}	
+						}
+
+						rs2.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+		}
+			return listaClases;
+		}
+
+	
+	
 	public void eliminarClase(String cod_clase){
 
 		String query = "DELETE FROM Clase WHERE cod_clase ='" +cod_clase+ "'";
@@ -402,6 +501,8 @@ public class BD {
 		;
 		
 	}
+	
+	
 	public void eliminarCharla(String cod_charla){
 
 		String query = "DELETE FROM Charla WHERE cod_charla ='" +cod_charla+ "'";
@@ -492,6 +593,7 @@ public class BD {
 				dni_impartidor = rs.getString("dni_impartidor");
 				fecha = rs.getString("fecha");
 				tiempo = rs.getDouble("tiempo");
+				numPlazas = rs.getInt("numPlazas");
 
 				for (int i = 0; i < listaImpartidores.size(); i++) {
 					if (listaImpartidores.get(i).getDni_impar().equals(dni_impartidor)) {
@@ -547,8 +649,8 @@ public class BD {
 		 */
 		
 
-		String query = "INSERT INTO Participante(DNI,nombre,apellido,cuenta_bancaria,codigo) "
-				+ "VALUES('" + dNI + "','" + nom + "','" + ape + "','" + cuen + "','" + "CODIGO" + "')";
+		String query = "INSERT INTO Participante(DNI,nombre,apellido,cuenta_bancaria) "
+				+ "VALUES('" + dNI + "','" + nom + "','" + ape + "','" + cuen  + "')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
@@ -646,7 +748,20 @@ public class BD {
 		}
 		;
 	}
-
+	
+	public void alterarEjercicio(String cod, String nom,String des, double dur, String gif){
+		String query = "UPDATE Ejercicio SET nombre = '"+ nom +"' ,descripcion= '"+ des +"' ,tiempo_estimado = '"+ dur +"'"
+				+ ",GIF= '"+ gif +"' WHERE cod_ejercicio ='"+cod+"'";
+				 
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+	}
+	
 	public void alterarClase(String cod,String nombre, String dni_profesor, String fecha, double tiempo,int numPlazas){
 		String query = "UPDATE Clase SET nombre = '"+ nombre +"' ,dni_profesor= '"+ dni_profesor +"' ,fecha = '"+ fecha +"'"
 				+ ",tiempo= '"+ tiempo +"',numPlazas= '"+ numPlazas +"' WHERE cod_clase ='"+cod+"'";
@@ -661,6 +776,7 @@ public class BD {
 		
 		
 	}
+	
 	
 	  public ArrayList<String> obtenerRutasFotosAbdominales(){
 	  System.out.println("Vamos a obtener las rutas de las fotos");
@@ -1103,6 +1219,47 @@ public class BD {
 		  }
 		  
 		  return tiempo;
+	  }
+	  
+	  public boolean insertarInscripcion(String codigo, String dni, String tipo) {
+		  String query="SELECT * FROM Inscripciones WHERE cod_clase='"+codigo+"' AND dni_usuario='"+dni+"' AND tipo_inscripciones='"+tipo+"'";
+		  boolean existe=false;
+		  boolean alistado=false;
+		  try {
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				existe=true;
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if(!existe) {
+		  query="INSERT INTO Inscripciones VALUES('"+codigo+"','"+dni+"','"+tipo+"')";
+		  try {
+			stmt.executeUpdate(query);
+		  } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		  }
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No puedes inscribirte dos veces en la misma "+tipo);
+			alistado=true;
+		}
+		return alistado;
+	  }
+	  
+	  
+	  public void decrementarNumeroDePlazas(String codigo, String nombreTabla) {
+		  String query = "UPDATE "+nombreTabla+" SET numPlazas=numPlazas-1 WHERE cod_"+nombreTabla+"='"+codigo+"'";
+		  try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	  }
 
 }

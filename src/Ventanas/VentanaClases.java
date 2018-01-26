@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.LookAndFeel;
@@ -30,7 +31,7 @@ import javax.swing.JScrollPane;
 public class VentanaClases extends JFrame {
 
 	private JPanel contentPane;
-	private static BD bd = new BD();
+	
 	private JTable table;
 	private static VentanaClases frame;
 	public static String DNI;
@@ -42,7 +43,7 @@ public class VentanaClases extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new VentanaClases(DNI);
+					frame = new VentanaClases();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +55,7 @@ public class VentanaClases extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaClases(String DNI) {
+	public VentanaClases() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
@@ -72,12 +73,31 @@ public class VentanaClases extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 
 		JButton btnAaa = new JButton("INSCRIBIRSE A LAS CLASES SELECCIONADAS");
+		btnAaa.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<modelTabla_2.getRowCount();i++) {
+				
+					if(!VentanaDecision.bd.insertarInscripcion(String.valueOf(modelTabla_2.getValueAt(i, 0)), VentanaInicio.dni, "clase")){
+						VentanaDecision.bd.decrementarNumeroDePlazas(String.valueOf(modelTabla_2.getValueAt(i, 0)), "Clase");
+					}
+				}
+						
+			
+				modelTabla.setRowCount(0);
+				table.setModel(modelTabla);
+				mostrarClasesEnTabla();
+				contentPane.updateUI();
+			}
+		});
 		panelSur.add(btnAaa);
 
 		JButton btnAtrs = new JButton("ATRÃ�S");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaMenu(bd,DNI);
+				new VentanaMenu();
 				VentanaClases.this.dispose();
 			}
 		});
@@ -93,6 +113,11 @@ public class VentanaClases extends JFrame {
 		panelCentro.add(button);
 
 		JButton button_1 = new JButton("BORRAR INSCRIPCIÃ“N");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarFila(table_2);
+			}
+		});
 		button_1.setBounds(349, 151, 158, 52);
 		panelCentro.add(button_1);
 
@@ -119,25 +144,6 @@ public class VentanaClases extends JFrame {
 		table_2 = new JTable();
 		scrollPane_1.setViewportView(table_2);
 		
-		/*JButton btnCambiartema = new JButton("CambiarTema");
-		btnCambiartema.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new Temas("Tema Substance");
-				    frame.dispose();
-				    new VentanaClases();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});*/
-		//btnCambiartema.setBounds(517, 163, 117, 29);
-		//panelCentro.add(btnCambiartema);
-
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				inscribirClase();
@@ -150,8 +156,17 @@ public class VentanaClases extends JFrame {
 		mostrarClasesEnTabla();
 	}
 
-	private DefaultTableModel modelTabla = new DefaultTableModel();
-	private DefaultTableModel modelTabla_2 = new DefaultTableModel();
+	
+	private DefaultTableModel modelTabla =  new DefaultTableModel() {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
+	private DefaultTableModel modelTabla_2 =  new DefaultTableModel() {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
 	private JTable table_2;
 
 	private void crearColumnas() {
@@ -171,7 +186,7 @@ public class VentanaClases extends JFrame {
 	}
 
 	private void mostrarClasesEnTabla() {
-		List<Clase> listaClases = bd.obtenerClases();
+		List<Clase> listaClases = VentanaDecision.bd.obtenerClases();
 		for (Clase c : listaClases) {
 			modelTabla.addRow(new Object[] { c.getCodClase(), c.getNombre(), c.getProfesor().getNombre(), c.getFecha(),
 					c.getTiempo(), c.getNumPlazas() });
@@ -210,7 +225,7 @@ public class VentanaClases extends JFrame {
 			}
 
 			if (dev == false) {
-				List<Clase> listaClases = bd.obtenerClases();
+				List<Clase> listaClases = VentanaDecision.bd.obtenerClases();
 				for (Clase c : listaClases) {
 					if (c.getCodClase().equals(cod_Clase)) {
 						modelTabla_2.addRow(new Object[] { c.getCodClase(), c.getNombre(), c.getProfesor().getNombre(),
@@ -222,7 +237,7 @@ public class VentanaClases extends JFrame {
 
 		} else {
 
-			List<Clase> listaClases = bd.obtenerClases();
+			List<Clase> listaClases = VentanaDecision.bd.obtenerClases();
 			for (Clase c : listaClases) {
 				if (c.getCodClase().equals(cod_Clase)) {
 					modelTabla_2.addRow(new Object[] { c.getCodClase(), c.getNombre(), c.getProfesor().getNombre(),

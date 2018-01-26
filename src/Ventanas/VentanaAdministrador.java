@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 //import org.jvnet.substance.SubstanceComboBoxUI.ComboBoxPropertyChangeHandler;
 
-import BaseDeDatos.BD;
+
 import Datos.Ejercicio;
 import Datos.Impartidor;
 import Datos.Profesor;
@@ -46,7 +46,6 @@ public class VentanaAdministrador extends JFrame {
 	private String OPC;
 	private String COD;
 	private JPanel contentPane;
-	private static BD bd;
 	private JMenu mnModificarClase;
 	private JMenuItem mntmEliminarClase;
 	private JMenuItem mntmAadirClase;
@@ -89,7 +88,7 @@ public class VentanaAdministrador extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaAdministrador frame = new VentanaAdministrador(bd);
+					VentanaAdministrador frame = new VentanaAdministrador();
 					frame.setVisible(true);
 					panel_8.setVisible(true);
 					textCodigo.setVisible(false);
@@ -123,7 +122,7 @@ public class VentanaAdministrador extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaAdministrador(BD bd) {
+	public VentanaAdministrador() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 580, 365);
 		contentPane = new JPanel();
@@ -146,7 +145,7 @@ public class VentanaAdministrador extends JFrame {
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				VentanaAdministrador.this.dispose();
-				VentanaInicio frame = new VentanaInicio(bd);
+				VentanaInicio frame = new VentanaInicio();
 				frame.setVisible(true);
 			}
 		});
@@ -159,15 +158,15 @@ public class VentanaAdministrador extends JFrame {
 					//INTRODUCIR CLASE
 					String profesorDNI = ((String)comboBoxProfesores.getSelectedItem()).substring(3, 14);
 					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
-					bd.introducirClase(textCodigo.getText(), textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
-					System.out.println("Clase introducida correctamente. Enhorabuena eres el puto amo!");
+					VentanaDecision.bd.introducirClase(textCodigo.getText(), textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
+					System.out.println("Clase introducida correctamente.");
 					
 				}else if(OPC.equalsIgnoreCase("introducir_charla")){
 					//INTRODUCIR CHARLA
 					String ImpartidorDNI = ((String)comboBoxImpartidores.getSelectedItem()).substring(3, 14);
 					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
-					bd.introducirCharla(textCodigo.getText(), textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
-					System.out.println("Charla introducida correctamente. Enhorabuena eres el puto amo!");
+					VentanaDecision.bd.introducirCharla(textCodigo.getText(), textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
+					System.out.println("Charla introducida correctamente.");
 					System.out.println(fecha);
 				}else if(OPC.equalsIgnoreCase("introducir_rutina")){
 					//INTRODUCIR RUTINA
@@ -184,44 +183,45 @@ public class VentanaAdministrador extends JFrame {
 					
 					String opc= JOptionPane.showInputDialog(null, "Introduzca el DNI del usuario al que desea crear una rutina:");
 					
-					if(opc!=null&&bd.existeUsuario(opc)==1){
+					if(opc!=null&&VentanaDecision.bd.existeUsuario(opc)==1){
 						
-							int conf = JOptionPane.showConfirmDialog(null, "Recuerde que al crear una nueva rutina se eliminará automáticamente la anterior rutina que correspondía a este usuario."
-								+ "\n ¿Desea de todo modos continuar y crear una nueva rutina?");
+							int conf = JOptionPane.showConfirmDialog(null, "Recuerde que al crear una nueva rutina se eliminara automaticamente la anterior rutina que corresponda a este usuario."
+								+ "\n Desea de todo modos continuar y crear una nueva rutina?");
 						if(conf==0){
-							bd.eliminarRutina(opc);
-							introducirRutina(bd,opc,ejercicios);
+							VentanaDecision.bd.eliminarRutina(opc);
+							introducirRutina(opc,ejercicios);
 							System.out.println("Rutina introducida correctamente.");
 						}else{
 							System.out.println("Rutina introducida INcorrectamente.");
 						}
 					}else{
-						JOptionPane.showMessageDialog(null,"El DNI introducido no corresponde con ningún usuario.");
+						JOptionPane.showMessageDialog(null,"El DNI introducido no corresponde con ningun usuario.");
 					}
 					
 					
 				}else if(OPC.equalsIgnoreCase("introducir_ejercicio")){
 					//INTRODUCIR EJERCICIO
-					bd.introducirEjercicio(textCodigo.getText(),textNombre.getText(),editorPaneDescripcion.getText(),Double.parseDouble(textDuracion.getText()),textGif.getText());
-					System.out.println("Ejercicio introducido correctamente. Enhorabuena eres el puto amo!");
+					VentanaDecision.bd.introducirEjercicio(textCodigo.getText(),textNombre.getText(),editorPaneDescripcion.getText(),Double.parseDouble(textDuracion.getText()),textGif.getText());
+					System.out.println("Ejercicio introducido correctamente.");
 				
 				}else if(OPC.equalsIgnoreCase("alterar_clase")){
 					//ALTERAR CLASE
 					String profesorDNI = ((String)comboBoxProfesores.getSelectedItem()).substring(3, 14);
 					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
-					bd.alterarClase(COD, textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
-					System.out.println("Clase alterada con éxito.");
+					VentanaDecision.bd.alterarClase(COD, textNombre.getText(), profesorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
+					System.out.println("Clase alterada con exito.");
 					
 				}else if(OPC.equalsIgnoreCase("alterar_charla")){
 					//ALTERAR CHARLA
 					String ImpartidorDNI = ((String)comboBoxImpartidores.getSelectedItem()).substring(3, 14);
 					String fecha =  String.valueOf(Fecha.getDate().toString().substring(8, 10))+"/"+String.valueOf(Fecha.getDate().getMonth()+1)+"/"+String.valueOf(Fecha.getDate().getYear()+1900);
-					bd.alterarCharla(COD, textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
+					VentanaDecision.bd.alterarCharla(COD, textNombre.getText(), ImpartidorDNI, fecha , Double.parseDouble(textDuracion.getText()),Integer.parseInt(textPlazas.getText()));
 					System.out.println("Charla alterada con exito.");
 					
 				}else if(OPC.equalsIgnoreCase("alterar_ejercicio")){
 					//ALTERAR EJERCICIO
-					
+					VentanaDecision.bd.alterarEjercicio(COD,textNombre.getText(),editorPaneDescripcion.getText(),Double.parseDouble(textDuracion.getText()),textGif.getText());
+					System.out.println("Ejercicio alterado con exito.");
 				}else {
 					
 				}
@@ -252,18 +252,21 @@ public class VentanaAdministrador extends JFrame {
 		JMenuItem mntmEliminarCharla = new JMenuItem("ELIMINAR CHARLA");
 		mntmEliminarCharla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la charla que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la charla con cï¿½digo "+cod);
+				String cod = JOptionPane.showInputDialog("Introduzca el codigo de la charla que deseas eliminar:");
+				if(!cod.equals(null)){
+					int opc =JOptionPane.showConfirmDialog(null, "Estas seguro de querer eliminar la charla con codigo "+cod);
 				if(opc==0){
-					bd.eliminarCharla(cod);
-					System.out.println("Charla con cï¿½digo "+cod+" eliminada.");
+					VentanaDecision.bd.eliminarCharla(cod);
+					System.out.println("Charla con codigo "+cod+" eliminada.");
 				}
+				}
+				
 				
 			}
 		});
 		mnModificarCharla.add(mntmEliminarCharla);
 		
-		mntmAadirCharla = new JMenuItem("A\u00D1ADIR CHARLA");
+		mntmAadirCharla = new JMenuItem("AÑADIR CHARLA");
 		mntmAadirCharla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnCrear.setText("AÑADIR");
@@ -354,18 +357,19 @@ public class VentanaAdministrador extends JFrame {
 		mntmEliminarClase = new JMenuItem("ELIMINAR CLASE");
 		mntmEliminarClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo de la clase que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar la clase con cï¿½digo "+cod);
+				String cod = JOptionPane.showInputDialog("Introduzca el codigo de la clase que deseas eliminar:");
+			if(!cod.equals(null)){
+				int opc =JOptionPane.showConfirmDialog(null, "Esta seguro de querer eliminar la clase con codigo "+cod);
 				if(opc==0){
-					bd.eliminarClase(cod);
-					System.out.println("Clase con cï¿½digo "+cod+" eliminada.");
+					VentanaDecision.bd.eliminarClase(cod);
+					System.out.println("Clase con codigo "+cod+" eliminada.");
 				}
-				
+			}
 			}
 		});
 		mnModificarClase.add(mntmEliminarClase);
 		
-		mntmAadirClase = new JMenuItem("A\u00D1ADIR CLASE");
+		mntmAadirClase = new JMenuItem("AÑADIR CLASE");
 		mntmAadirClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnCrear.setText("AÑADIR");
@@ -458,20 +462,23 @@ public class VentanaAdministrador extends JFrame {
 		mntmElim = new JMenuItem("ELIMINAR EJERCICIO");
 		mntmElim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String cod = JOptionPane.showInputDialog("Introduzca el cï¿½digo del ejercicio que deseas eliminar:");
-				int opc =JOptionPane.showConfirmDialog(null, "Estï¿½ seguro de querer eliminar el ejercicio con cï¿½digo "+cod);
+				String cod = JOptionPane.showInputDialog("Introduzca el codigo del ejercicio que deseas eliminar:");
+			if(!cod.equals(null)){
+				int opc =JOptionPane.showConfirmDialog(null, "Esta seguro de querer eliminar el ejercicio con codigo "+cod);
 				if(opc==0){
-					bd.eliminarEjercicio(cod);
-					System.out.println("Ejercicio con cï¿½digo "+cod+" eliminado.");
+					VentanaDecision.bd.eliminarEjercicio(cod);
+					System.out.println("Ejercicio con codigo "+cod+" eliminado.");
 				}
-				
+			}
 			}
 		});
 		mnMo.add(mntmElim);
 		
-		mntmAadirEjercicio = new JMenuItem("A\u00D1ADIR EJERCICIO");
+		mntmAadirEjercicio = new JMenuItem("AÑADIR EJERCICIO");
 		mntmAadirEjercicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
 				btnCrear.setText("AÑADIR");
 				panel_8.setVisible(true);
 				textCodigo.setVisible(true);
@@ -504,15 +511,63 @@ public class VentanaAdministrador extends JFrame {
 		mnMo.add(mntmAadirEjercicio);
 		
 		mntmAlterarEjercicio = new JMenuItem("ALTERAR EJERCICIO");
+		mntmAlterarEjercicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+				String cod = JOptionPane.showInputDialog("Introduzca el codigo del ejercicio que deseas alterar:");
+				
+				if(cod!=null){
+				btnCrear.setText("ALTERAR");
+				panel_8.setVisible(true);
+				textCodigo.setVisible(true);
+				textDuracion.setVisible(true);
+				textNombre.setVisible(true);
+				textPlazas.setVisible(false);
+				lblDuracion.setText("DURACION EJERCICIO");
+				lblProfesor.setText("DESCRIPCION");
+				lblPlazas.setText("GIF");
+				comboBoxProfesores.setVisible(false);
+				comboBoxImpartidores.setVisible(false);
+				Fecha.setVisible(false);
+				lblCodigo.setVisible(true);
+				lblNombre.setVisible(true);
+				lblProfesor.setVisible(true);
+				lblDuracion.setVisible(true);
+				lblPlazas.setVisible(true);
+				lblFecha.setVisible(false);
+				btnCrear.setVisible(true);
+				editorPaneDescripcion.setVisible(true);
+				textGif.setVisible(true);
+				comboBox_EJERCICIO_1.setVisible(false);
+				comboBox_EJERCICIO_2.setVisible(false);
+				comboBox_EJERCICIO_3.setVisible(false);
+				comboBox_EJERCICIO_4.setVisible(false);
+				comboBox_EJERCICIO_5.setVisible(false);
+				OPC="introducir_ejercicio";
+				}
+			}
+		});
 		mnMo.add(mntmAlterarEjercicio);
 		
 		mnModificarRutina = new JMenu("MODIFICAR RUTINA");
 		menuBar.add(mnModificarRutina);
 		
 		mntmEliminarRutina = new JMenuItem("ELIMINAR RUTINA");
+		mntmEliminarRutina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cod = JOptionPane.showInputDialog("Introduzca el dni del usuario al que desea eliminar la rutina:");
+				if(!cod.equals(null)){
+				int opc =JOptionPane.showConfirmDialog(null, "Esta seguro de querer eliminar la rutina del usuario con DNI "+cod);
+				if(opc==0){
+					VentanaDecision.bd.eliminarRutina(cod);
+					System.out.println("Rutinad el usuario "+cod+" eliminada.");
+				}
+				}
+			}
+		});
 		mnModificarRutina.add(mntmEliminarRutina);
 		
-		JMenuItem mntmAadirRutina = new JMenuItem("A\u00D1ADIR RUTINA");
+		JMenuItem mntmAadirRutina = new JMenuItem("AÑADIR RUTINA");
 		mntmAadirRutina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnCrear.setText("AÑADIR");
@@ -641,7 +696,7 @@ public class VentanaAdministrador extends JFrame {
 		comboBox_EJERCICIO_5.setBounds(130, 182, 285, 20);
 		panel_8.add(comboBox_EJERCICIO_5);
 		
-		List<Ejercicio> listaEjercicios = bd.obtenerEjercicios();
+		List<Ejercicio> listaEjercicios = VentanaDecision.bd.obtenerEjercicios();
 		for(Ejercicio e:listaEjercicios){
 			String ejercicio= e.getId_eje()+"    "+e.getNombre()+"    "+e.getDescripcion()+"    "+e.getTiempo_estimado();
 			comboBox_EJERCICIO_1.addItem(ejercicio);
@@ -651,13 +706,13 @@ public class VentanaAdministrador extends JFrame {
 			comboBox_EJERCICIO_5.addItem(ejercicio);
 		}
 		
-		List<Profesor> listaProfesor = bd.obtenerProfesores();
+		List<Profesor> listaProfesor = VentanaDecision.bd.obtenerProfesores();
 		for(Profesor p:listaProfesor){
 			String profesor= "    "+p.getDni_prof()+"    "+p.getNombre()+"    "+p.getApellidos();
 			comboBoxProfesores.addItem(profesor);
 		}
 		
-		List<Impartidor> listaImpartidor = bd.obtenerImpartidores();
+		List<Impartidor> listaImpartidor = VentanaDecision.bd.obtenerImpartidores();
 		for(Impartidor p:listaImpartidor){
 			String impartidor= "    "+p.getDni_impar()+"    "+p.getNombre()+"    "+p.getApellidos();
 			comboBoxImpartidores.addItem(impartidor);
@@ -666,10 +721,10 @@ public class VentanaAdministrador extends JFrame {
 		
 		
 	}
-	public void introducirRutina(BD bd,String dni,List<String>ej){
+	public void introducirRutina(String dni,List<String>ej){
 		
 		for(int i=0; i <ej.size();i++){
-			bd.introducirRutina(i,dni,ej.get(i).toString());		
+			VentanaDecision.bd.introducirRutina(i,dni,ej.get(i).toString());		
 		}
 		
 		
